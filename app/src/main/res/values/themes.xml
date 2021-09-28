@@ -21,4 +21,29 @@
         <item name="android:clipChildren">false</item>
         <item name="android:padding">8dp</item>
     </style>
+
+    <style name="MainActivityHeadingStyle">
+        <item name="android:textSize">20sp</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingTop">8dp</item>
+    </style>
+
+    <style name="MainActivityCategoryTitle">
+        <item name="backgroundColor">@color/colorPrimaryVariant</item>
+        <item name="android:background">@drawable/curved_corners_text_background_shape</item>
+        <item name="android:elevation">8dp</item>
+        <item name="android:padding">8dp</item>
+    </style>
+
+    <style name="DetailsActivityItemNameStyle">
+        <item name="android:textSize">20sp</item>
+        <item name="android:layout_marginTop">4dp</item>
+        <item name="android:layout_marginBottom">4dp</item>
+    </style>
+
+    <style name="DetailsActivityDescriptionHeadingStyle">
+        <item name="android:textSize">16sp</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_marginBottom">8dp</item>
+    </style>
 </resources>

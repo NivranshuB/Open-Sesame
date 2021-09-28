@@ -39,24 +39,24 @@
 
                 <TextView
                     android:id="@+id/item_name"
+                    style="@style/DetailsActivityItemNameStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Door name" />
 
                 <TextView
+                    style="@style/MainActivityCategoryTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="$230.98"
                     android:layout_alignParentRight="true"
-                    android:background="@drawable/curved_corners_text_background_shape"
-                    android:padding="8dp"
-                    android:elevation="8dp"/>
+                    android:text="$230.98" />
 
                 <TextView
                     android:id="@+id/item_description_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/item_name"
+                    style="@style/DetailsActivityDescriptionHeadingStyle"
                     android:text="Description" />
 
                 <TextView
@@ -70,6 +70,7 @@
                     android:id="@+id/item_specifications_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    style="@style/DetailsActivityDescriptionHeadingStyle"
                     android:layout_below="@id/item_decription_text"
                     android:text="Specifications" />
 
@@ -79,6 +80,16 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/item_specifications_title"
                     android:text="1560 x 651 x 42mm" />
+
+                <TextView
+                    android:id="@+id/extra_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/item_specification_text"
+                    android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris et mattis elit, in fringilla tellus. Etiam aliquam efficitur urna, id facilisis ligula porta id. Curabitur libero ligula, pulvinar ac convallis nec, hendrerit a lacus.
+\n\n
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris et mattis elit, in fringilla tellus. Etiam aliquam efficitur urna, id facilisis ligula porta id. Curabitur libero ligula, pulvinar ac convallis nec, hendrerit a lacus.\n
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris et mattis elit, in fringilla tellus. Etiam aliquam efficitur urna, id facilisis ligula porta id. Curabitur libero ligula, pulvinar ac convallis nec, hendrerit a lacus." />
             </RelativeLayout>
 
         </androidx.cardview.widget.CardView>
