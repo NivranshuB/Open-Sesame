@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@drawable/rounded_corners_background"
+    android:orientation="vertical"
     tools:context=".ListActivity">
 
     <RelativeLayout
@@ -14,23 +14,17 @@
         android:gravity="center"
         android:padding="16dp">
 
-        <TextView
-            android:id="@+id/category_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Wooden"
-            android:textSize="32dp" />
-
         <androidx.cardview.widget.CardView
             android:id="@+id/card_view_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/category_title"
-            android:layout_marginTop="8dp">
+            app:cardCornerRadius="4dp"
+>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:padding="8dp"
                 android:orientation="vertical">
 
                 <ImageView
@@ -40,10 +34,18 @@
                     android:src="@drawable/door3" />
 
                 <TextView
+                    style="@style/CardItemTextStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="Testing" />
+
+                <TextView
+                    style="@style/CardItemTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="$654.98" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -57,7 +59,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
+                android:padding="8dp"
                 android:orientation="vertical">
 
                 <ImageView
@@ -67,10 +69,18 @@
                     android:src="@drawable/door3" />
 
                 <TextView
+                    style="@style/CardItemTextStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="Testing" />
+
+                <TextView
+                    style="@style/CardItemTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="$654.98" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -86,7 +96,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
+                android:padding="8dp"
                 android:orientation="vertical">
 
                 <ImageView
@@ -96,10 +106,18 @@
                     android:src="@drawable/door3" />
 
                 <TextView
+                    style="@style/CardItemTextStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="Testing" />
+
+                <TextView
+                    style="@style/CardItemTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="$654.98" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -114,7 +132,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
+                android:padding="8dp"
                 android:orientation="vertical">
 
                 <ImageView
@@ -124,10 +142,18 @@
                     android:src="@drawable/door3" />
 
                 <TextView
+                    style="@style/CardItemTextStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="Testing" />
+
+                <TextView
+                    style="@style/CardItemTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="$654.98" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 

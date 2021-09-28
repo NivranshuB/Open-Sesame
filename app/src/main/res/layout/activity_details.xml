@@ -28,8 +28,7 @@
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
+            android:layout_height="match_parent">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -53,14 +52,15 @@
 
                 <TextView
                     android:id="@+id/item_description_title"
+                    style="@style/DetailsActivityDescriptionHeadingStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/item_name"
-                    style="@style/DetailsActivityDescriptionHeadingStyle"
                     android:text="Description" />
 
                 <TextView
                     android:id="@+id/item_decription_text"
+                    style="@style/DetailsActivityDescriptionTextStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/item_description_title"
@@ -68,14 +68,15 @@
 
                 <TextView
                     android:id="@+id/item_specifications_title"
+                    style="@style/DetailsActivityDescriptionHeadingStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/DetailsActivityDescriptionHeadingStyle"
                     android:layout_below="@id/item_decription_text"
                     android:text="Specifications" />
 
                 <TextView
                     android:id="@+id/item_specification_text"
+                    style="@style/DetailsActivityDescriptionTextStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/item_specifications_title"
@@ -83,6 +84,7 @@
 
                 <TextView
                     android:id="@+id/extra_text"
+                    style="@style/DetailsActivityDescriptionTextStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/item_specification_text"
