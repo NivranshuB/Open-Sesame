@@ -13,4 +13,12 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="CategoryCardView" parent="CardView">
+        <item name="cardBackgroundColor">@android:color/transparent</item>
+        <item name="elevation">8dp</item>
+        <item name="android:clipToPadding">false</item>
+        <item name="android:clipChildren">false</item>
+        <item name="android:padding">8dp</item>
+    </style>
 </resources>
