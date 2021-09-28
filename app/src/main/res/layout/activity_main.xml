@@ -32,6 +32,7 @@
             android:orientation="horizontal">
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/card_view_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp">
@@ -68,7 +69,7 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:id="@+id/image_1"
+                        android:id="@+id/image_2"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
                         android:src="@drawable/door1" />
@@ -94,7 +95,7 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:id="@+id/image_1"
+                        android:id="@+id/image_3"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
                         android:src="@drawable/door1" />
@@ -165,7 +166,7 @@
                 app:cardCornerRadius="4dp">
 
                 <ImageView
-                    android:id="@+id/wooden_image_background"
+                    android:id="@+id/metal_image_background"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:scaleType="centerCrop"
@@ -198,7 +199,7 @@
                 app:cardCornerRadius="4dp">
 
                 <ImageView
-                    android:id="@+id/wooden_image_background"
+                    android:id="@+id/glass_image_background"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:scaleType="centerCrop"
@@ -232,7 +233,7 @@
                 app:cardCornerRadius="4dp">
 
                 <ImageView
-                    android:id="@+id/wooden_image_background"
+                    android:id="@+id/artistic_image_background"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:scaleType="centerCrop"

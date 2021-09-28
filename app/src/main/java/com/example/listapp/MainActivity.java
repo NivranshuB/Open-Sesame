@@ -1,6 +1,7 @@
 package com.example.listapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,6 +23,15 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent woodenIntent = new Intent(getBaseContext(), ListActivity.class);
                 startActivity(woodenIntent);
+            }
+        });
+
+        CardView cardView = (CardView) findViewById(R.id.card_view_1);
+        cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent detailIntent = new Intent(getBaseContext(), DetailsActivity.class);
+                startActivity(detailIntent);
             }
         });
     }
