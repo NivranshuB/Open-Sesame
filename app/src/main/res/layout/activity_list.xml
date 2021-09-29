@@ -11,21 +11,25 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:clipChildren="false"
+        android:clipToPadding="false"
         android:gravity="center"
         android:padding="16dp">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/card_view_1"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="4dp"
->
+            app:cardCornerRadius="16dp"
+            app:cardElevation="8dp">
 
             <LinearLayout
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="8dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="8dp">
 
                 <ImageView
                     android:id="@+id/image_1"
@@ -43,6 +47,7 @@
                 <TextView
                     style="@style/CardItemTextStyle"
                     android:layout_width="wrap_content"
+                    android:textColor="#484848"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="$654.98" />
@@ -54,13 +59,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/card_view_1"
-            android:layout_marginTop="8dp">
+            android:layout_marginTop="8dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="8dp">
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="8dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="8dp">
 
                 <ImageView
                     android:id="@+id/image_1"
@@ -80,6 +87,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:textColor="#484848"
                     android:text="$654.98" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
@@ -90,14 +98,16 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="24dp"
             android:layout_toRightOf="@id/card_view_1"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="8dp"
 
             >
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="8dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="8dp">
 
                 <ImageView
                     android:id="@+id/image_1"
@@ -116,6 +126,7 @@
                     style="@style/CardItemTextStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="#484848"
                     android:layout_gravity="center"
                     android:text="$654.98" />
             </LinearLayout>
@@ -127,13 +138,15 @@
             android:layout_below="@id/card_view_2"
             android:layout_marginLeft="24dp"
             android:layout_marginTop="8dp"
-            android:layout_toRightOf="@id/card_view_3">
+            android:layout_toRightOf="@id/card_view_3"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="8dp">
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="8dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="8dp">
 
                 <ImageView
                     android:id="@+id/image_1"
@@ -151,6 +164,7 @@
                 <TextView
                     style="@style/CardItemTextStyle"
                     android:layout_width="wrap_content"
+                    android:textColor="#484848"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="$654.98" />

@@ -35,19 +35,24 @@
         <item name="backgroundColor">@color/colorPrimaryVariant</item>
         <item name="android:background">@drawable/curved_corners_text_background_shape</item>
         <item name="android:elevation">8dp</item>
-        <item name="android:padding">8dp</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="android:layout_width">wrap_content</item>
         <item name="android:textAllCaps">true</item>
     </style>
 
     <style name="DetailsActivityItemNameStyle">
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">24sp</item>
         <item name="android:layout_marginTop">4dp</item>
         <item name="android:layout_marginBottom">4dp</item>
         <item name="android:textColor">@color/white</item>
     </style>
 
     <style name="DetailsActivityDescriptionHeadingStyle">
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">20sp</item>
         <item name="android:layout_marginTop">8dp</item>
         <item name="android:layout_marginBottom">8dp</item>
         <item name="android:textColor">@color/white</item>
@@ -58,6 +63,7 @@
     </style>
 
     <style name="CardItemTextStyle">
+        <item name="android:layout_marginTop">4dp</item>
         <item name="android:textColor">@color/black</item>
     </style>
 </resources>

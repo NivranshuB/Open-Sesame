@@ -253,7 +253,7 @@
             <TextView
                 android:id="@+id/wooden_text"
                 style="@style/MainActivityCategoryTitle"
-                android:layout_width="128dp"
+
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="48dp"
                 android:text="Wooden" />
@@ -298,7 +298,6 @@
 
             <TextView
                 style="@style/MainActivityCategoryTitle"
-                android:layout_width="128dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="48dp"
                 android:text="Metal" />
@@ -329,7 +328,6 @@
 
             <TextView
                 style="@style/MainActivityCategoryTitle"
-                android:layout_width="128dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="48dp"
                 android:text="Glass" />
@@ -361,7 +359,6 @@
 
             <TextView
                 style="@style/MainActivityCategoryTitle"
-                android:layout_width="128dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="48dp"
                 android:text="Artistic" />
