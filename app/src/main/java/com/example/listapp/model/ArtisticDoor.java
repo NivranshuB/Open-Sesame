@@ -1,5 +1,10 @@
 package com.example.listapp.model;
 
+/**
+ * Open Sesame
+ *
+ * -Responsibilities of an artistic door...
+ */
 public class ArtisticDoor extends Door {
 
     String materialImage;
