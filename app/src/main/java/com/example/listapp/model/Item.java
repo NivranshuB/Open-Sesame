@@ -25,12 +25,12 @@ public interface Item {
     /**
      * @return the full qualified name of the first image of this Item instance
      */
-    String getFirstString();
+    String getFirstImage();
 
     /**
      * @return the full qualified name of the material image of this Item instance
      */
-    String getMaterial();
+    String getMaterialImage();
 
     /**
      * @return the list of all full qualified names of the images of this item instance (ignore the
