@@ -23,6 +23,12 @@ public interface Item {
     String getName();
 
     /**
+     * @return the price of this Item instance
+     * @return
+     */
+    float getPrice();
+
+    /**
      * @return the full qualified name of the first image of this Item instance
      */
     String getFirstImage();
