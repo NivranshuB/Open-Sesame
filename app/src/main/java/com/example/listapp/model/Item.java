@@ -20,7 +20,7 @@ public interface Item {
     /**
      * @return the name of this Item instance
      */
-    String getName();
+    List<String> getName();
 
     /**
      * @return the price of this Item instance
@@ -42,7 +42,7 @@ public interface Item {
      * @return the list of all full qualified names of the images of this item instance (ignore the
      * material image)
      */
-    List<String> getImages();
+    List<String> getImage();
 
     /**
      * @return the string description of this Item

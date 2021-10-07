@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "657042318043",
+    "project_id": "opensesame-56ebe",
+    "storage_bucket": "opensesame-56ebe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:657042318043:android:e5cdc0b1e31d555a79e2fe",
+        "android_client_info": {
+          "package_name": "com.example.listapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "657042318043-jue0b6dlgtbdl1oriogog4e39o3kmn4b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCWAerhl5zvfwvTmXDDc2DyEyVYNNYDI-Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "657042318043-jue0b6dlgtbdl1oriogog4e39o3kmn4b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

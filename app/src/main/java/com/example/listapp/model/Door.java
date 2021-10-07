@@ -11,11 +11,11 @@ import java.util.List;
  */
 public abstract class Door implements Item {
 
-    int id, height, width, length, weight, price, viewCount;
-    String name;
-    List<String> colors;
-    List<String> images;
+    int id, weight, viewCount;
+    float price;
+    List<Integer> dimensions;
     String description;
+    List<String> colour, image, name;
 
     /**
      * @return the Id of this Item instance
@@ -29,13 +29,18 @@ public abstract class Door implements Item {
     }
 
     /**
+     * @return the price of this Item instance
+     */
+    public float getPrice(){ return price;}
+
+    /**
      * @return the name of this Item instance
      */
-    public String getName() {
+    public List<String> getName() {
         return name;
     }
 
-    public void setName(String newName) {
+    public void setName(List<String> newName) {
         name = newName;
     }
 
@@ -43,19 +48,19 @@ public abstract class Door implements Item {
      * @return the full qualified name of the first image of this Item instance
      */
     public String getFirstImage() {
-        return images.get(0);
+        return image.get(0);
     }
 
     /**
      * @return the list of all full qualified names of the images of this item instance (ignore the
      * material image)
      */
-    public List<String> getImages() {
-        return images;
+    public List<String> getImage() {
+        return image;
     }
 
     public void setImages(List<String> newImageUrls) {
-        images = newImageUrls;
+        image = newImageUrls;
     }
 
     /**
