@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -6,42 +7,85 @@
     android:layout_margin="1dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+
     <androidx.cardview.widget.CardView
-        android:layout_width="120dp"
-        android:layout_height="160dp"
+        android:layout_width="140dp"
+        android:layout_height="180dp"
         app:cardCornerRadius="10dp"
         app:cardElevation="2dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true">
+
+        <View
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_gravity="top|right|end"
+            android:background="@drawable/wood_edge"
+            android:translationZ="90dp"
+            android:rotation="0" />
+
+        <View
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="bottom|right|end"
+            android:background="@drawable/wood_edge"
+            android:rotation="90" />
+
+        <TextView
+            android:id="@+id/pa"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:textSize="10dp"
+            android:layout_below="@+id/panelBar"
+            android:layout_centerHorizontal="true"
+            android:alpha="1"
+            android:translationZ="100dp"
+            android:layout_gravity="top|right|end"
+            android:layout_marginTop="3dp"
+            android:layout_marginRight="5dp"
+            android:rotation="45"
+            android:textColor="@color/white"
+            android:text="Oak" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <ImageView
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+                android:id="@+id/panelImage"
+                android:layout_width="140dp"
+                android:layout_height="100dp"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
-                android:id="@+id/panelImage"></ImageView>
+                android:src="@drawable/wooden_door"></ImageView>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:text="Door"
-                android:id="@+id/panelName"
+            <View
+                android:id="@+id/panelBar"
+                android:layout_width="80dp"
+                android:layout_height="2dp"
                 android:layout_below="@+id/panelImage"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="10dp"></TextView>
+                android:layout_marginTop="1dp"
+                android:background="@drawable/gold_gradient" />
 
             <TextView
+                android:id="@+id/panelName"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_below="@+id/panelBar"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:textSize="20dp"
+                android:text="Door"></TextView>
+
+            <TextView
+                android:id="@+id/panelPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="15dp"
-                android:text="$100.00"
-                android:id="@+id/panelPrice"
                 android:layout_below="@+id/panelName"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="5dp"></TextView>
+                android:layout_marginTop="5dp"
+                android:text="$100.00"></TextView>
 
         </RelativeLayout>
 
@@ -49,3 +93,4 @@
 
 
 </RelativeLayout>
+
