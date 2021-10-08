@@ -14,7 +14,6 @@
             android:exported="true" />
         <activity
             android:name=".ListActivity"
-            android:label="@string/wood_category"
             android:exported="true" />
         <activity
             android:name=".MainActivity"
