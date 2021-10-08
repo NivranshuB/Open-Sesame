@@ -30,63 +30,42 @@ public class ItemAdapter extends ArrayAdapter {
 
     private class ViewHolder {
         //The common views of an item card go here
-        View materialEdgeTop;
-        View materialEdgeBottom;
-        TextView materialName;
-        ImageView panelImage;
-        View panelBar;
-        TextView panelName;
-        TextView panelPrice;
 
         public ViewHolder(View currentListViewItem) {
-            //The elements common among all door items
-            materialEdgeTop = currentListViewItem.findViewById(R.id.materialEdgeTop);
-            materialEdgeBottom = currentListViewItem.findViewById(R.id.materialEdgeBottom);
-            materialName = currentListViewItem.findViewById(R.id.materialName);
-            panelImage = currentListViewItem.findViewById(R.id.panelImage);
-            panelBar = currentListViewItem.findViewById(R.id.panelBar);
-            panelName = currentListViewItem.findViewById(R.id.panelName);
-            panelPrice = currentListViewItem.findViewById(R.id.panelPrice);
+            //The elements common among all items assigned here
+
         }
     }
 
-    private class WoodenDoorViewHolder extends ViewHolder {
-        //The special views of a wooden door card go here
-        TextView materialName;
+        private class DoorViewHolder extends ViewHolder {
+            //The special views of a door card go here
+            View materialEdgeTop;
+            View materialEdgeBottom;
+            TextView materialName;
+            ImageView panelImage;
+            View panelBar;
+            TextView panelName;
+            TextView panelPrice;
 
-        public WoodenDoorViewHolder(View currentListViewItem) {
-            super(currentListViewItem);
-            //The elements special to wooden doors assigned here
-            materialName = currentListViewItem.findViewById(R.id.materialName);
+            public DoorViewHolder(View currentListViewItem) {
+                super(currentListViewItem);
+                //The special items of door items (wood door, metal door, glass door) assigned here
+                materialEdgeTop = currentListViewItem.findViewById(R.id.materialEdgeTop);
+                materialEdgeBottom = currentListViewItem.findViewById(R.id.materialEdgeBottom);
+                materialName = currentListViewItem.findViewById(R.id.materialName);
+                panelImage = currentListViewItem.findViewById(R.id.panelImage);
+                panelBar = currentListViewItem.findViewById(R.id.panelBar);
+                panelName = currentListViewItem.findViewById(R.id.panelName);
+                panelPrice = currentListViewItem.findViewById(R.id.panelPrice);
+            }
         }
-    }
 
-    private class GlassDoorViewHolder extends ViewHolder {
-        //The special views of a glass door card go here
+        private class DoorknobViewHolder extends ViewHolder {
+        //The special views of an doorknob card go here
 
-        public GlassDoorViewHolder(View currentListViewItem) {
-            super(currentListViewItem);
-            //The elements special to glass doors assigned here
-        }
-    }
-
-    private class MetalDoorViewHolder extends ViewHolder {
-        //The special views of a metal door card go here
-        TextView materialName;
-
-        public MetalDoorViewHolder(View currentListViewItem) {
-            super(currentListViewItem);
-            //The elements special to metal doors assigned here
-            materialName = currentListViewItem.findViewById(R.id.materialName);
-        }
-    }
-
-    private class ArtisticDoorViewHolder extends ViewHolder {
-        //The special views of an artistic door card go here
-
-        public ArtisticDoorViewHolder(View currentListViewItem) {
-            super(currentListViewItem);
-            //The elements special to artistic doors assigned here
+            public DoorknobViewHolder(View currentListViewItem) {
+                super(currentListViewItem);
+                //The elements special to doorknobs assigned here
         }
     }
 
@@ -114,35 +93,27 @@ public class ItemAdapter extends ArrayAdapter {
 
         //Get the Number object for the current position
         Item currentItem = items.get(position);
-        if (currentItem.getClass() == WoodenDoor.class)
-            // Populate the Current ListView Item with Numbers data and layout
-            return populateWoodenDoorItem(currentItem, currentListViewItem);
-
-        else if (currentItem.getClass() == GlassDoor.class)
-            // Populate the Current ListView Item with Colors data and layout
-            return populateGlassDoorItem(currentItem, currentListViewItem);
-
-        else if (currentItem.getClass() == MetalDoor.class)
-            // Populate the Current ListView Item with Colors data and layout
-            return populateMetalDoorItem(currentItem, currentListViewItem);
-
-        else if (currentItem.getClass() == ArtisticDoor.class)
-            // Populate the Current ListView Item with Colors data and layout
-            return populateArtisticDoorItem(currentItem, currentListViewItem);
-
-        else return null;
+        if (currentItem.getClass() == WoodenDoor.class || currentItem.getClass() == GlassDoor.class
+        || currentItem.getClass() == MetalDoor.class) {
+            return populateDoorItem(currentItem, currentListViewItem);
+        } else if (currentItem.getClass() == GlassDoor.class) {
+            return populateDoorknobItem(currentItem, currentListViewItem);
+        } else {
+            return null;
+        }
 
     }
 
     /**
-     * Special method that creates a unique view for a door item
+     * Special method that creates a unique view for a door item depending on what the category of
+     * that door is (either wooden, metal or glass).
      * @param currentItem
      * @param currentListViewItem
      * @return
      */
     private View populateDoorItem(Item currentItem, View currentListViewItem) {
 
-        ViewHolder doorViewHolder = new ViewHolder(currentListViewItem);
+        DoorViewHolder doorViewHolder = new DoorViewHolder(currentListViewItem);
 
         Drawable material = mContext.getResources().getDrawable(R.drawable.gold_gradient);
         String materialName = "";
@@ -175,38 +146,6 @@ public class ItemAdapter extends ArrayAdapter {
         return currentListViewItem;
     }
 
-    /**
-     * Special method that creates a unique view for a wooden door item
-     * @param currentItem
-     * @param currentListViewItem
-     * @return
-     */
-    private View populateWoodenDoorItem(Item currentItem, View currentListViewItem) {
-        //todo
-        return null;
-    }
-
-    /**
-     * Special method that creates a unique view for a glass door item
-     * @param currentItem
-     * @param currentListViewItem
-     * @return
-     */
-    private View populateGlassDoorItem(Item currentItem, View currentListViewItem) {
-        //todo
-        return null;
-    }
-
-    /**
-     * Special method that creates a unique view for a metal door item
-     * @param currentItem
-     * @param currentListViewItem
-     * @return
-     */
-    private View populateMetalDoorItem(Item currentItem, View currentListViewItem) {
-        //todo
-        return null;
-    }
 
     /**
      * Special method that creates a unique view for an artistic door item
@@ -214,7 +153,7 @@ public class ItemAdapter extends ArrayAdapter {
      * @param currentListViewItem
      * @return
      */
-    private View populateArtisticDoorItem(Item currentItem, View currentListViewItem) {
+    private View populateDoorknobItem(Item currentItem, View currentListViewItem) {
         //todo
         return null;
     }
