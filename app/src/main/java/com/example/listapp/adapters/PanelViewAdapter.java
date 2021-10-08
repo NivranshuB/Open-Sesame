@@ -15,6 +15,7 @@ import com.example.listapp.R;
 import com.example.listapp.model.Item;
 
 import java.util.ArrayList;
+import java.util.List;
 
 //Todo : Fix setting the panelImage programatically from image path specified in Item model
 
@@ -43,8 +44,16 @@ public class PanelViewAdapter extends RecyclerView.Adapter<PanelViewAdapter.Pane
     @Override
     public void onBindViewHolder(@NonNull PanelViewHolder holder, int position) {
         //holder.panelImage.setImageResource(itemList.get(position).getFirstImage());
-        holder.panelName.setText(itemList.get(position).getName());
+        holder.panelName.setText(combineNameArray(itemList.get(position).getName()));
         holder.panelPrice.setText("$" + Float.toString(itemList.get(position).getPrice()));
+    }
+
+    private String combineNameArray(List<String> input) {
+        String output = "";
+        for (String s : input) {
+            output = output + s + " ";
+        }
+        return output;
     }
 
     @Override
