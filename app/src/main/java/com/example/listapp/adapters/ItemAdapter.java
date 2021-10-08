@@ -1,14 +1,18 @@
 package com.example.listapp.adapters;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.listapp.R;
 import com.example.listapp.model.ArtisticDoor;
 import com.example.listapp.model.GlassDoor;
 import com.example.listapp.model.Item;
@@ -26,18 +30,34 @@ public class ItemAdapter extends ArrayAdapter {
 
     private class ViewHolder {
         //The common views of an item card go here
+        View materialEdgeTop;
+        View materialEdgeBottom;
+        TextView materialName;
+        ImageView panelImage;
+        View panelBar;
+        TextView panelName;
+        TextView panelPrice;
 
         public ViewHolder(View currentListViewItem) {
             //The elements common among all door items
+            materialEdgeTop = currentListViewItem.findViewById(R.id.materialEdgeTop);
+            materialEdgeBottom = currentListViewItem.findViewById(R.id.materialEdgeBottom);
+            materialName = currentListViewItem.findViewById(R.id.materialName);
+            panelImage = currentListViewItem.findViewById(R.id.panelImage);
+            panelBar = currentListViewItem.findViewById(R.id.panelBar);
+            panelName = currentListViewItem.findViewById(R.id.panelName);
+            panelPrice = currentListViewItem.findViewById(R.id.panelPrice);
         }
     }
 
     private class WoodenDoorViewHolder extends ViewHolder {
         //The special views of a wooden door card go here
+        TextView materialName;
 
         public WoodenDoorViewHolder(View currentListViewItem) {
             super(currentListViewItem);
             //The elements special to wooden doors assigned here
+            materialName = currentListViewItem.findViewById(R.id.materialName);
         }
     }
 
@@ -52,10 +72,12 @@ public class ItemAdapter extends ArrayAdapter {
 
     private class MetalDoorViewHolder extends ViewHolder {
         //The special views of a metal door card go here
+        TextView materialName;
 
         public MetalDoorViewHolder(View currentListViewItem) {
             super(currentListViewItem);
             //The elements special to metal doors assigned here
+            materialName = currentListViewItem.findViewById(R.id.materialName);
         }
     }
 
@@ -110,6 +132,47 @@ public class ItemAdapter extends ArrayAdapter {
 
         else return null;
 
+    }
+
+    /**
+     * Special method that creates a unique view for a door item
+     * @param currentItem
+     * @param currentListViewItem
+     * @return
+     */
+    private View populateDoorItem(Item currentItem, View currentListViewItem) {
+
+        ViewHolder doorViewHolder = new ViewHolder(currentListViewItem);
+
+        Drawable material = mContext.getResources().getDrawable(R.drawable.gold_gradient);
+        String materialName = "";
+
+        if (currentItem.getClass() == WoodenDoor.class) {
+            material = mContext.getResources().getDrawable(R.drawable.wood_edge);
+            materialName = currentItem.getName();
+        } else if (currentItem.getClass() ==  MetalDoor.class) {
+            material = mContext.getResources().getDrawable(R.drawable.metal_edge);
+            materialName = currentItem.getName();
+        } else if (currentItem.getClass() == GlassDoor.class) {
+            material = mContext.getResources().getDrawable(R.drawable.glass_edge);
+        } else {
+            return null;
+        }
+
+        doorViewHolder.materialEdgeTop.setBackground(material);
+        doorViewHolder.materialEdgeBottom.setBackground(material);
+        doorViewHolder.materialName.setText(materialName);
+
+        //Set the attributed of list_view_number_item views
+        int imageId = mContext.getResources().getIdentifier(
+                currentItem.getFirstImage(), "drawable", mContext.getPackageName());
+
+        doorViewHolder.panelImage.setImageResource(imageId);
+
+        doorViewHolder.panelName.setText(currentItem.getName());
+        doorViewHolder.panelPrice.setText(String.valueOf(currentItem.getPrice()));
+
+        return currentListViewItem;
     }
 
     /**
