@@ -7,7 +7,7 @@
     tools:context=".DetailsActivity">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/custom_toolbar"
+        android:id="@+id/custom_toolbar_details"
         style="@style/CustomToolBarStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

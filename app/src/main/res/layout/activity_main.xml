@@ -9,7 +9,7 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/custom_toolbar"
-        style="@style/CustomToolBarStyle"
+        style="@style/CustomMainToolBarStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
