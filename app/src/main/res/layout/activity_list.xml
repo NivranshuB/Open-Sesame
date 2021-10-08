@@ -1,177 +1,187 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/rounded_corners_background"
     android:orientation="vertical"
     tools:context=".ListActivity">
 
-    <RelativeLayout
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/custom_toolbar"
+        style="@style/CustomToolBarStyle"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clipChildren="false"
-        android:clipToPadding="false"
-        android:gravity="center"
-        android:padding="16dp">
+        android:layout_height="wrap_content" />
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/card_view_1"
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_corners_background">
 
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="8dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:gravity="center"
+            android:padding="16dp">
 
-            <LinearLayout
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_view_1"
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="8dp">
+                app:cardCornerRadius="16dp"
+                app:cardElevation="8dp">
 
-                <ImageView
-                    android:id="@+id/image_1"
-                    android:layout_width="160dp"
-                    android:layout_height="320dp"
-                    android:src="@drawable/door3" />
+                <LinearLayout
 
-                <TextView
-                    style="@style/CardItemTextStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="Testing" />
+                    android:orientation="vertical"
+                    android:padding="8dp">
 
-                <TextView
-                    style="@style/CardItemTextStyle"
-                    android:layout_width="wrap_content"
-                    android:textColor="#484848"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="$654.98" />
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
+                    <ImageView
+                        android:id="@+id/image_1"
+                        android:layout_width="160dp"
+                        android:layout_height="320dp"
+                        android:src="@drawable/door3" />
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/card_view_3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/card_view_1"
-            android:layout_marginTop="8dp"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="8dp">
+                    <TextView
+                        style="@style/CardItemTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="Testing" />
 
-            <LinearLayout
+                    <TextView
+                        style="@style/CardItemTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="$654.98"
+                        android:textColor="#484848" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_view_3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="8dp">
+                android:layout_below="@id/card_view_1"
+                android:layout_marginTop="8dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="8dp">
 
-                <ImageView
-                    android:id="@+id/image_1"
-                    android:layout_width="160dp"
-                    android:layout_height="320dp"
-                    android:src="@drawable/door3" />
-
-                <TextView
-                    style="@style/CardItemTextStyle"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="Testing" />
+                    android:orientation="vertical"
+                    android:padding="8dp">
 
-                <TextView
-                    style="@style/CardItemTextStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:textColor="#484848"
-                    android:text="$654.98" />
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
+                    <ImageView
+                        android:id="@+id/image_1"
+                        android:layout_width="160dp"
+                        android:layout_height="320dp"
+                        android:src="@drawable/door3" />
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/card_view_2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="24dp"
-            android:layout_toRightOf="@id/card_view_1"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="8dp"
+                    <TextView
+                        style="@style/CardItemTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="Testing" />
 
-            >
+                    <TextView
+                        style="@style/CardItemTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="$654.98"
+                        android:textColor="#484848" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
-            <LinearLayout
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_view_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="8dp">
+                android:layout_marginLeft="16dp"
+                android:layout_toRightOf="@id/card_view_1"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="8dp"
 
-                <ImageView
-                    android:id="@+id/image_1"
-                    android:layout_width="160dp"
-                    android:layout_height="320dp"
-                    android:src="@drawable/door3" />
+                >
 
-                <TextView
-                    style="@style/CardItemTextStyle"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="Testing" />
+                    android:orientation="vertical"
+                    android:padding="8dp">
 
-                <TextView
-                    style="@style/CardItemTextStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#484848"
-                    android:layout_gravity="center"
-                    android:text="$654.98" />
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
+                    <ImageView
+                        android:id="@+id/image_1"
+                        android:layout_width="160dp"
+                        android:layout_height="320dp"
+                        android:src="@drawable/door3" />
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/card_view_2"
-            android:layout_marginLeft="24dp"
-            android:layout_marginTop="8dp"
-            android:layout_toRightOf="@id/card_view_3"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="8dp">
+                    <TextView
+                        style="@style/CardItemTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="Testing" />
 
-            <LinearLayout
+                    <TextView
+                        style="@style/CardItemTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="$654.98"
+                        android:textColor="#484848" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="8dp">
+                android:layout_below="@id/card_view_2"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_toRightOf="@id/card_view_3"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="8dp">
 
-                <ImageView
-                    android:id="@+id/image_1"
-                    android:layout_width="160dp"
-                    android:layout_height="320dp"
-                    android:src="@drawable/door3" />
-
-                <TextView
-                    style="@style/CardItemTextStyle"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="Testing" />
+                    android:orientation="vertical"
+                    android:padding="8dp">
 
-                <TextView
-                    style="@style/CardItemTextStyle"
-                    android:layout_width="wrap_content"
-                    android:textColor="#484848"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="$654.98" />
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
+                    <ImageView
+                        android:id="@+id/image_1"
+                        android:layout_width="160dp"
+                        android:layout_height="320dp"
+                        android:src="@drawable/door3" />
 
-    </RelativeLayout>
+                    <TextView
+                        style="@style/CardItemTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="Testing" />
 
+                    <TextView
+                        style="@style/CardItemTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="$654.98"
+                        android:textColor="#484848" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
-</ScrollView>
+        </RelativeLayout>
+
+    </ScrollView>
+</LinearLayout>

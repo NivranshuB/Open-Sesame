@@ -1,6 +1,7 @@
 package com.example.listapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
@@ -16,6 +17,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.custom_toolbar);
+        setSupportActionBar(toolbar);
 
         RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.relative_layout_wooden);
         relativeLayout.setOnClickListener(new View.OnClickListener() {

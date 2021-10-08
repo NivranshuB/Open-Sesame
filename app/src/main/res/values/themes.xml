@@ -5,6 +5,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryVariant">@color/colorPrimary</item>
         <item name="colorOnPrimary">@color/white</item>
+        <item name="toolbarStyle">@style/CustomToolBarStyle</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
         <item name="colorSecondaryVariant">@color/teal_700</item>
@@ -12,6 +13,14 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+    </style>
+
+    <style name="CustomToolBarStyle">
+        <item name="android:theme">@style/Theme.AppCompat.Light.NoActionBar</item>
+        <item name="titleTextColor">@color/white</item>
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
+        <item name="elevation">4dp</item>
     </style>
 
     <style name="CategoryCardView" parent="CardView">
