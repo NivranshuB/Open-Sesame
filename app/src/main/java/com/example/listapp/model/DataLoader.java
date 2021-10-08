@@ -24,6 +24,7 @@ public class DataLoader implements IDataLoader {
     private String[] DOOR_TYPES = {"metallic", "glass", "wooden"};
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference doorRef = db.collection("door");
+    private CollectionReference handleRef = db.collection("handles");
 
 
     /**
