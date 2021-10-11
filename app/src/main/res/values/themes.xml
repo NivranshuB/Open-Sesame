@@ -26,6 +26,7 @@
         <item name="elevation">8dp</item>
     </style>
 
+
     <style name="CategoryCardView" parent="CardView">
         <item name="cardBackgroundColor">@android:color/transparent</item>
         <item name="elevation">8dp</item>
