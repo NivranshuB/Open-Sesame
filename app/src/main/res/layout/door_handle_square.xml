@@ -21,6 +21,7 @@
             android:layout_height="match_parent">
 
             <ImageView
+                android:id="@+id/lockStatus"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_alignParentRight="true"
@@ -47,7 +48,7 @@
                 android:background="@drawable/green_gradient" />
 
             <ImageView
-                android:id="@+id/panelImage1"
+                android:id="@+id/panelImage"
                 android:layout_width="110dp"
                 android:layout_height="55dp"
                 android:layout_below="@id/panelName"
@@ -61,12 +62,12 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="fill_horizontal"
                 android:gravity="center"
-                android:layout_below="@id/panelImage1"
+                android:layout_below="@id/panelImage"
                 android:layout_marginTop="5dp"
                 android:orientation="horizontal" >
 
                 <ImageView
-                    android:id="@+id/panelImage2"
+                    android:id="@+id/galleryImage1"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_centerHorizontal="false"
@@ -74,7 +75,7 @@
                     android:src="@drawable/Handle3_2"></ImageView>
 
                 <ImageView
-                    android:id="@+id/panelImage3"
+                    android:id="@+id/galleryImage2"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_centerHorizontal="false"
