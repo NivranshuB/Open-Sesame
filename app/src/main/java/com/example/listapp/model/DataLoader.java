@@ -5,6 +5,9 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.DocumentSnapshot;
+
+import org.w3c.dom.Document;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -127,7 +130,16 @@ public class DataLoader implements IDataLoader {
         return null;
     }
 
-
+    public Item getItemByID(int id) {
+        final Item[] item = new Item[1];
+        doorRef.whereEqualTo("id", id).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                item[0] = queryDocumentSnapshots.getDocuments().get(0).toObject(Item.class);
+            }
+        });
+        return item[0];
+    }
 
     @Override
     public List<Item> sortItemListByViewCount() {
