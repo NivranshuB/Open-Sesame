@@ -106,4 +106,19 @@ public abstract class Door implements Item {
     public void resetViewCount() {
         viewCount = 0;
     }
+
+    /**
+     * A door instance cannot be lockable only a handle instance can therefore return false.
+     */
+    public boolean getLockable() {
+        return false;
+    }
+
+    /**
+     * A door instance cannot have a lock type only a handle instance can so return an empty string
+     * for lockType.
+     */
+    public String getLockType() {
+        return "";
+    }
 }
