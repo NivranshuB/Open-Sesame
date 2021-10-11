@@ -63,4 +63,14 @@ public interface Item {
      * Reset the view count of this image to 0
      */
     void resetViewCount();
+
+    /**
+     * @return if a Handle object is lockable or not
+     */
+    boolean getLockable();
+
+    /**
+     * @return the string representing the type of lock for a Handle object
+     */
+    String getLockType();
 }

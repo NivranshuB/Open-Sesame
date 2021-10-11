@@ -13,7 +13,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.listapp.R;
-import com.example.listapp.model.ArtisticDoor;
 import com.example.listapp.model.GlassDoor;
 import com.example.listapp.model.Item;
 import com.example.listapp.model.MetalDoor;
