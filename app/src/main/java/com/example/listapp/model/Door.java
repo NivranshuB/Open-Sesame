@@ -29,6 +29,22 @@ public abstract class Door implements Item {
     }
 
     /**
+     * @return the price of the item
+     */
+    public float getPrice() {
+        return price;
+    }
+
+    /**
+     * If a door has a material type (wooden doors and metal doors) then this method will be
+     * overriden by the sub class and will return the materialType field value. Else this method
+     * returns an empty string.
+     */
+    public String getMaterialType() {
+        return "";
+    }
+
+    /**
      * @return the name of this Item instance
      */
     public String getName() {
