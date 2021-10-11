@@ -1,6 +1,20 @@
 package com.example.listapp.model;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.DocumentSnapshot;
+
+import org.w3c.dom.Document;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Open Sesame
@@ -11,27 +25,120 @@ import java.util.List;
  */
 public class DataLoader implements IDataLoader {
 
+    private HashMap<String, ArrayList<Item>> doorMap = new HashMap<>();
+    private String[] DOOR_TYPES = {"metallic", "glass", "wooden"};
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private CollectionReference doorRef = db.collection("door");
+    private CollectionReference handleRef = db.collection("handles");
+
+
+    /**
+     * Initialise the client's copy of the database's documents. Currently a naive solution
+     * that basically retrieves every document from the database.
+     */
     @Override
     public void initialiseData() {
-        //todo
+        initialiseMap();
+
+        // Store doors if the query was successful.
+        doorRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                // Loop through all documents returned. In this implementation, this is all documents in door collection.
+                for (QueryDocumentSnapshot curr : queryDocumentSnapshots) {
+                    // Get data of each document to check the category type before deciding which type of Door child object to map to.
+                    Map<String, Object> currObj = curr.getData();
+                    for (String objType : (List<String>)currObj.get("categories")) {
+                        if (objType.equals(DOOR_TYPES[0])) {
+                            MetalDoor door = curr.toObject(MetalDoor.class);
+                            doorMap.get(DOOR_TYPES[0]).add(door);
+                        } else if (objType.equals(DOOR_TYPES[1])) {
+                            GlassDoor door = curr.toObject(GlassDoor.class);
+                            doorMap.get(DOOR_TYPES[1]).add(door);
+                        } else if (objType.equals(DOOR_TYPES[2])) {
+                            WoodenDoor door = curr.toObject(WoodenDoor.class);
+                            doorMap.get(DOOR_TYPES[2]).add(door);
+                        }
+
+                    }
+                }
+            }
+        });
     }
 
     @Override
     public List<Item> getItemsByString(String matchString) {
-        //todo
-        return null;
+        String[] matchList = matchString.split("\\s+");
+        List<Item> resultList = new ArrayList<>();
+
+        doorRef.whereArrayContainsAny("name", Arrays.asList(matchList)).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                for (QueryDocumentSnapshot curr : queryDocumentSnapshots) {
+                    // Get data of each document to check the category type before deciding which type of Door child object to map to.
+                    Map<String, Object> currObj = curr.getData();
+                    for (String objType : (List<String>) currObj.get("categories")) {
+                        Item door = null;
+                        if (objType.equals(DOOR_TYPES[0])) {
+                            door = curr.toObject(MetalDoor.class);
+                        } else if (objType.equals(DOOR_TYPES[1])) {
+                            door = curr.toObject(GlassDoor.class);
+                        } else if (objType.equals(DOOR_TYPES[2])) {
+                            door = curr.toObject(WoodenDoor.class);
+                        }
+                        resultList.add(door);
+                    }
+                }
+            }
+        });
+        return resultList;
     }
+
 
     @Override
     public List<Item> getItemsByCriteria(String categoryName) {
-        //todo
-        return null;
+        List<String> categoryList = new ArrayList<>();
+        categoryList.add(categoryName);
+        List<Item> resultList = new ArrayList<>();
+
+        doorRef.whereArrayContainsAny("name", categoryList).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                for (QueryDocumentSnapshot curr : queryDocumentSnapshots) {
+                    // Get data of each document to check the category type before deciding which type of Door child object to map to.
+                    Map<String, Object> currObj = curr.getData();
+                    for (String objType : (List<String>) currObj.get("categories")) {
+                        Item door = null;
+                        if (objType.equals(DOOR_TYPES[0])) {
+                            door = curr.toObject(MetalDoor.class);
+                        } else if (objType.equals(DOOR_TYPES[1])) {
+                            door = curr.toObject(GlassDoor.class);
+                        } else if (objType.equals(DOOR_TYPES[2])) {
+                            door = curr.toObject(WoodenDoor.class);
+                        }
+                        resultList.add(door);
+                    }
+                }
+            }
+        });
+        return resultList;
     }
 
     @Override
     public Item getItemByName(String itemName) {
         //todo
         return null;
+    }
+
+    public Item getItemByID(int id) {
+        final Item[] item = new Item[1];
+        doorRef.whereEqualTo("id", id).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                item[0] = queryDocumentSnapshots.getDocuments().get(0).toObject(Item.class);
+            }
+        });
+        return item[0];
     }
 
     @Override
@@ -43,5 +150,16 @@ public class DataLoader implements IDataLoader {
     @Override
     public void persistData(Item itemChanged) {
         //todo
+    }
+
+    /**
+     * Initialise the maps to store data.
+     */
+    private void initialiseMap() {
+
+        for (String doorType : DOOR_TYPES) {
+            doorMap.put(doorType, new ArrayList<Item>());
+        }
+
     }
 }

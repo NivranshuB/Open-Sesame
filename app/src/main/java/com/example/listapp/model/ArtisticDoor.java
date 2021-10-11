@@ -9,6 +9,9 @@ public class ArtisticDoor extends Door {
 
     String materialImage;
 
+
+
+
     /**
      * @return the full qualified name of the material image of this Item instance
      */

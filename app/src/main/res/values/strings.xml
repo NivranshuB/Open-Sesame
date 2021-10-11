@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">ListApp</string>
+    <string name="app_name">OPEN SESAME</string>
+    <string name="wood_category">WOODEN DOORS</string>
+    <string name="search_icon">Search icon</string>
 </resources>
