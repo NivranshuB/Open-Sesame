@@ -33,7 +33,6 @@ public class GlassDoor extends Door {
     /**
      * @return the full qualified name of the material image of this Item instance
      */
-    @Override
     public String getMaterialImage() {
         return null;
     }
