@@ -36,7 +36,7 @@ public interface Item {
     /**
      * @return the full qualified name of the material image of this Item instance
      */
-    String getMaterialImage();
+    String getMaterialType();
 
     /**
      * @return the list of all full qualified names of the images of this item instance (ignore the
@@ -63,4 +63,14 @@ public interface Item {
      * Reset the view count of this image to 0
      */
     void resetViewCount();
+
+    /**
+     * @return if a Handle object is lockable or not
+     */
+    boolean getLockable();
+
+    /**
+     * @return the string representing the type of lock for a Handle object
+     */
+    String getLockType();
 }

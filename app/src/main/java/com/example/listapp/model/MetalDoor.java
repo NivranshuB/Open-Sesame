@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class MetalDoor extends Door {
 
-    String materialImage;
+    String materialType;
 
     public MetalDoor()
     {
@@ -34,11 +34,11 @@ public class MetalDoor extends Door {
      * @return the full qualified name of the material image of this Item instance
      */
     @Override
-    public String getMaterialImage() {
-        return null;
+    public String getMaterialType() {
+        return materialType;
     }
 
-    public void setMaterialImage(String newMaterialImage) {
-        materialImage = newMaterialImage;
+    public void setMaterialType(String newMaterialType) {
+        materialType = newMaterialType;
     }
 }

@@ -2,20 +2,15 @@ package com.example.listapp.model;
 
 import java.util.List;
 
-/**
- * Open Sesame
- *
- * This class represents a standard door item instance that implements the Item interface. This
- * class is abstract and only contains the fields and methods that all the different categories of
- * doors will have.
- */
-public abstract class Door implements Item {
+public abstract class Handle implements Item {
 
-    int id, weight, viewCount;
-    float price;
-    List<Integer> dimensions;
+    int id, height, width, length, weight, price, viewCount;
+    String name;
+    List<String> colors;
+    List<String> images;
     String description;
-    List<String> colour, image, name;
+    Boolean lockable;
+    String lockType;
 
     /**
      * @return the Id of this Item instance
@@ -29,10 +24,11 @@ public abstract class Door implements Item {
     }
 
     /**
-     * @return the price of this Item instance
+     * @return the price of the item
      */
-    public float getPrice(){ return price;}
-
+    public float getPrice() {
+        return price;
+    }
 
     /**
      * If a door has a material type (wooden doors and metal doors) then this method will be
@@ -44,13 +40,32 @@ public abstract class Door implements Item {
     }
 
     /**
+     * For a Handle object return the lock type of the object.
+     */
+    public String getLockType() {
+        return "";
+    }
+
+    public void setLockType(String lock) {
+        lockType = lock;
+    }
+
+    public boolean getLockable() {
+        return lockable;
+    }
+
+    public void setLockable(boolean lockStatus) {
+        lockable = lockStatus;
+    }
+
+    /**
      * @return the name of this Item instance
      */
-    public List<String> getName() {
+    public String getName() {
         return name;
     }
 
-    public void setName(List<String> newName) {
+    public void setName(String newName) {
         name = newName;
     }
 
@@ -58,19 +73,19 @@ public abstract class Door implements Item {
      * @return the full qualified name of the first image of this Item instance
      */
     public String getFirstImage() {
-        return image.get(0);
+        return images.get(0);
     }
 
     /**
      * @return the list of all full qualified names of the images of this item instance (ignore the
      * material image)
      */
-    public List<String> getImage() {
-        return image;
+    public List<String> getImages() {
+        return images;
     }
 
     public void setImages(List<String> newImageUrls) {
-        image = newImageUrls;
+        images = newImageUrls;
     }
 
     /**
@@ -104,20 +119,5 @@ public abstract class Door implements Item {
      */
     public void resetViewCount() {
         viewCount = 0;
-    }
-
-    /**
-     * A door instance cannot be lockable only a handle instance can therefore return false.
-     */
-    public boolean getLockable() {
-        return false;
-    }
-
-    /**
-     * A door instance cannot have a lock type only a handle instance can so return an empty string
-     * for lockType.
-     */
-    public String getLockType() {
-        return "";
     }
 }
