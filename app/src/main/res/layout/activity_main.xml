@@ -1,165 +1,393 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f2f2f2"
-    tools:context=".MainActivity">
+    android:orientation="vertical"
+    tools:context=".MainActivity"
+    android:background="#f2f2f2">
 
-    <LinearLayout
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/custom_toolbar"
+        style="@style/CustomMainToolBarStyle"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="8dp">
+        android:layout_height="wrap_content" />
 
-        <TextView
-            android:id="@+id/most_viewed_title"
-            style="@style/MainActivityHeadingStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Most Viewed" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_corners_background">
 
-
-        <androidx.recyclerview.widget.RecyclerView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/panelRecyclerView"
-            android:orientation="horizontal"></androidx.recyclerview.widget.RecyclerView>
+            android:orientation="vertical"
+            android:padding="8dp">
 
-
-        <TextView
-            style="@style/MainActivityHeadingStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="8dp"
-            android:text="Categories" />
-
-        <RelativeLayout
-            android:id="@+id/relative_layout_wooden"
-            style="@style/CategoryCardView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp">
 
             <TextView
-                android:id="@+id/wooden_text"
-                style="@style/MainActivityCategoryTitle"
-
+                android:id="@+id/most_viewed_title"
+                style="@style/MainActivityHeadingStyle"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="48dp"
-                android:text="Wooden" />
+                android:text="Most Viewed" />
 
-            <androidx.cardview.widget.CardView
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/panelRecyclerView"
+                android:orientation="horizontal"></androidx.recyclerview.widget.RecyclerView>
+
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/most_viewed_title"
+
+
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/card_view_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="8dp">
+
+                            <ImageView
+                                android:id="@+id/image_1"
+                                android:layout_width="80dp"
+                                android:layout_height="80dp"
+                                android:src="@drawable/door1" />
+
+                            <TextView
+                                style="@style/CardItemTextStyle"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:ellipsize="end"
+                                android:gravity="center"
+                                android:maxLines="1"
+                                android:text="Testing" />
+
+                            <TextView
+                                style="@style/CardItemTextStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:text="$250.99" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="8dp">
+
+                            <ImageView
+                                android:id="@+id/image_2"
+                                android:layout_width="80dp"
+                                android:layout_height="80dp"
+                                android:src="@drawable/door1" />
+
+                            <TextView
+                                style="@style/CardItemTextStyle"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:ellipsize="end"
+                                android:gravity="center"
+                                android:maxLines="1"
+                                android:text="Testing" />
+
+                            <TextView
+                                style="@style/CardItemTextStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:text="$250.99" />
+                        </LinearLayout>
+
+
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="8dp">
+
+                            <ImageView
+                                android:id="@+id/image_3"
+                                android:layout_width="80dp"
+                                android:layout_height="80dp"
+                                android:src="@drawable/door1" />
+
+                            <TextView
+                                style="@style/CardItemTextStyle"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:ellipsize="end"
+                                android:gravity="center"
+                                android:maxLines="1"
+                                android:text="Testing" />
+
+                            <TextView
+                                style="@style/CardItemTextStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:text="$250.99" />
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/card_view_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="8dp">
+
+                            <ImageView
+                                android:id="@+id/image_4"
+                                android:layout_width="80dp"
+                                android:layout_height="80dp"
+                                android:src="@drawable/door1" />
+
+                            <TextView
+                                style="@style/CardItemTextStyle"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:ellipsize="end"
+                                android:gravity="center"
+                                android:maxLines="1"
+                                android:text="Testing" />
+
+                            <TextView
+                                style="@style/CardItemTextStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:text="$250.99" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/card_view_5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="8dp">
+
+                            <ImageView
+                                android:id="@+id/image_5"
+                                android:layout_width="80dp"
+                                android:layout_height="80dp"
+                                android:src="@drawable/door1" />
+
+                            <TextView
+                                style="@style/CardItemTextStyle"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:ellipsize="end"
+                                android:gravity="center"
+                                android:maxLines="1"
+                                android:text="Testing" />
+
+                            <TextView
+                                style="@style/CardItemTextStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:text="$250.99" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                </LinearLayout>
+
+            </HorizontalScrollView>
+
+
+            <TextView
+                style="@style/MainActivityHeadingStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="8dp"
+                android:text="Categories" />
+
+            <RelativeLayout
+                android:id="@+id/relative_layout_wooden"
+                style="@style/CategoryCardView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:elevation="8dp"
-                app:cardCornerRadius="4dp">
+                android:layout_marginBottom="8dp">
 
-                <ImageView
-                    android:id="@+id/wooden_image_background"
+                <TextView
+                    android:id="@+id/wooden_text"
+                    style="@style/MainActivityCategoryTitle"
+
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="48dp"
+                    android:text="Wooden" />
+
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="96dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/door8" />
-            </androidx.cardview.widget.CardView>
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:elevation="8dp"
+                    app:cardCornerRadius="4dp">
 
-        </RelativeLayout>
+                    <ImageView
+                        android:id="@+id/wooden_image_background"
+                        android:layout_width="match_parent"
+                        android:layout_height="96dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/door8" />
+                </androidx.cardview.widget.CardView>
 
-        <RelativeLayout
-            style="@style/CategoryCardView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp">
+            </RelativeLayout>
 
-            <androidx.cardview.widget.CardView
+            <RelativeLayout
+                style="@style/CategoryCardView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                app:cardCornerRadius="4dp">
+                android:layout_marginBottom="8dp">
 
-                <ImageView
-                    android:id="@+id/metal_image_background"
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="96dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/door9" />
-            </androidx.cardview.widget.CardView>
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:cardCornerRadius="4dp">
 
-            <TextView
-                style="@style/MainActivityCategoryTitle"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="48dp"
-                android:text="Metal" />
+                    <ImageView
+                        android:id="@+id/metal_image_background"
+                        android:layout_width="match_parent"
+                        android:layout_height="96dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/door9" />
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    style="@style/MainActivityCategoryTitle"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="48dp"
+                    android:text="Metal" />
 
 
-        </RelativeLayout>
+            </RelativeLayout>
 
-        <RelativeLayout
-            style="@style/CategoryCardView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp">
-
-            <androidx.cardview.widget.CardView
+            <RelativeLayout
+                style="@style/CategoryCardView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                app:cardCornerRadius="4dp">
+                android:layout_marginBottom="8dp">
 
-                <ImageView
-                    android:id="@+id/glass_image_background"
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="96dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/door5" />
-            </androidx.cardview.widget.CardView>
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:cardCornerRadius="4dp">
 
-            <TextView
-                style="@style/MainActivityCategoryTitle"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="48dp"
-                android:text="Glass" />
+                    <ImageView
+                        android:id="@+id/glass_image_background"
+                        android:layout_width="match_parent"
+                        android:layout_height="96dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/door5" />
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    style="@style/MainActivityCategoryTitle"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="48dp"
+                    android:text="Glass" />
 
 
-        </RelativeLayout>
+            </RelativeLayout>
 
-        <RelativeLayout
-            style="@style/CategoryCardView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp">
-
-            <androidx.cardview.widget.CardView
+            <RelativeLayout
+                style="@style/CategoryCardView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp">
 
-                app:cardCornerRadius="4dp">
-
-                <ImageView
-                    android:id="@+id/artistic_image_background"
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="96dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/door7" />
-            </androidx.cardview.widget.CardView>
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
 
-            <TextView
-                style="@style/MainActivityCategoryTitle"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="48dp"
-                android:text="Artistic" />
+                    app:cardCornerRadius="4dp">
+
+                    <ImageView
+                        android:id="@+id/artistic_image_background"
+                        android:layout_width="match_parent"
+                        android:layout_height="96dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/door7" />
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    style="@style/MainActivityCategoryTitle"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="48dp"
+                    android:text="Artistic" />
 
 
-        </RelativeLayout>
+            </RelativeLayout>
 
-    </LinearLayout>
+        </LinearLayout>
 
 
-</ScrollView>
+    </ScrollView>
+
+</LinearLayout>
