@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f2f2f2"
+    android:layout_margin="1dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="140dp"
+        android:layout_height="180dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="2dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/unlock"
+                android:translationZ="100dp"></ImageView>
+
+            <TextView
+                android:id="@+id/panelName"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="2dp"
+                android:text="Door Handle"
+                android:textSize="20dp"></TextView>
+
+            <View
+                android:id="@+id/panelBar"
+                android:layout_width="120dp"
+                android:layout_height="2dp"
+                android:layout_below="@+id/panelName"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="1dp"
+                android:background="@drawable/green_gradient" />
+
+            <ImageView
+                android:id="@+id/panelImage1"
+                android:layout_width="110dp"
+                android:layout_height="55dp"
+                android:layout_below="@id/panelName"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/Handle3_1"></ImageView>
+
+            <LinearLayout
+                android:id="@+id/imageGallery"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="fill_horizontal"
+                android:gravity="center"
+                android:layout_below="@id/panelImage1"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:id="@+id/panelImage2"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_centerHorizontal="false"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/Handle3_2"></ImageView>
+
+                <ImageView
+                    android:id="@+id/panelImage3"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_centerHorizontal="false"
+                    android:src="@drawable/Handle3_3"></ImageView>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/panelPrice"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_below="@id/imageGallery"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:background="#004D40"
+                android:text="$100.00"
+                android:textAlignment="center"
+                android:textColor="@color/white"></TextView>
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+</RelativeLayout>
+
