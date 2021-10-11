@@ -7,17 +7,17 @@ package com.example.listapp.model;
  */
 public class WoodenDoor extends Door {
 
-    String materialImage;
+    String materialType;
 
     /**
      * @return the full qualified name of the material image of this Item instance
      */
     @Override
-    public String getMaterialImage() {
-        return null;
+    public String getMaterialType() {
+        return materialType;
     }
 
-    public void setMaterialImage(String newMaterialImage) {
-        materialImage = newMaterialImage;
+    public void setMaterialImage(String newMaterialType) {
+        materialType = newMaterialType;
     }
 }

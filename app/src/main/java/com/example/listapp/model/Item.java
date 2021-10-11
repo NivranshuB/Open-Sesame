@@ -36,7 +36,7 @@ public interface Item {
     /**
      * @return the full qualified name of the material image of this Item instance
      */
-    String getMaterialImage();
+    String getMaterialType();
 
     /**
      * @return the list of all full qualified names of the images of this item instance (ignore the
