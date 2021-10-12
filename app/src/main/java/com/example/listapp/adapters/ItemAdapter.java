@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.listapp.R;
 import com.example.listapp.model.DoorHandle;
@@ -26,9 +27,9 @@ import java.util.List;
  * or ListView. The card view representing the item instance will be different depending on what
  * category that item belongs to.
  */
-public class ItemAdapter extends ArrayAdapter {
+public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> { //ArrayAdapter,
 
-    private class ViewHolder {
+    protected class ViewHolder extends RecyclerView.ViewHolder {
         //The common views of an item card go here
         ImageView panelImage;
         View panelBar;
@@ -36,6 +37,7 @@ public class ItemAdapter extends ArrayAdapter {
         TextView panelPrice;
 
         public ViewHolder(View currentListViewItem) {
+            super(currentListViewItem);
             //The elements common among all items assigned here
             panelImage = currentListViewItem.findViewById(R.id.panelImage);
             panelBar = currentListViewItem.findViewById(R.id.panelBar);
@@ -44,31 +46,31 @@ public class ItemAdapter extends ArrayAdapter {
         }
     }
 
-        private class DoorViewHolder extends ViewHolder {
-            //The special views of a door card go here
-            View materialEdgeTop;
-            View materialEdgeBottom;
-            TextView materialName;
+    private class DoorViewHolder extends ViewHolder {
+        //The special views of a door card go here
+        View materialEdgeTop;
+        View materialEdgeBottom;
+        TextView materialName;
 
-            public DoorViewHolder(View currentListViewItem) {
-                super(currentListViewItem);
-                //The special items of door items (wood door, metal door, glass door) assigned here
-                materialEdgeTop = currentListViewItem.findViewById(R.id.materialEdgeTop);
-                materialEdgeBottom = currentListViewItem.findViewById(R.id.materialEdgeBottom);
-                materialName = currentListViewItem.findViewById(R.id.materialName);
-            }
+        public DoorViewHolder(View currentListViewItem) {
+            super(currentListViewItem);
+            //The special items of door items (wood door, metal door, glass door) assigned here
+            materialEdgeTop = currentListViewItem.findViewById(R.id.materialEdgeTop);
+            materialEdgeBottom = currentListViewItem.findViewById(R.id.materialEdgeBottom);
+            materialName = currentListViewItem.findViewById(R.id.materialName);
         }
+    }
 
-        private class HandleViewHolder extends ViewHolder {
+    private class HandleViewHolder extends ViewHolder {
         //The special views of an doorknob card go here
-            ImageView lockStatus, galleryImage1, galleryImage2;
+        ImageView lockStatus, galleryImage1, galleryImage2;
 
-            public HandleViewHolder(View currentListViewItem) {
-                super(currentListViewItem);
-                //The elements special to doorknobs assigned here
-                lockStatus = currentListViewItem.findViewById(R.id.lockStatus);
-                galleryImage1 = currentListViewItem.findViewById(R.id.galleryImage1);
-                galleryImage2 = currentListViewItem.findViewById(R.id.galleryImage2);
+        public HandleViewHolder(View currentListViewItem) {
+            super(currentListViewItem);
+            //The elements special to doorknobs assigned here
+            lockStatus = currentListViewItem.findViewById(R.id.lockStatus);
+            galleryImage1 = currentListViewItem.findViewById(R.id.galleryImage1);
+            galleryImage2 = currentListViewItem.findViewById(R.id.galleryImage2);
         }
     }
 
@@ -77,7 +79,7 @@ public class ItemAdapter extends ArrayAdapter {
     Context mContext;
 
     public ItemAdapter(@NonNull Context context, int resource, List<Item> objects) {
-        super(context, resource, objects);
+//        super(context, resource, objects);
         layoutID = resource;
         mContext = context;
         items = objects;
@@ -85,31 +87,59 @@ public class ItemAdapter extends ArrayAdapter {
 
     @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        //Get a reference to the current ListView item
-        View currentListViewItem = convertView;
-
-        // Check if the existing view is being reused, otherwise inflate the view
-        if (currentListViewItem == null) {
-            currentListViewItem = LayoutInflater.from(getContext()).inflate(layoutID, parent, false);
-        }
-
-        //Get the Number object for the current position
-        Item currentItem = items.get(position);
-        if (currentItem.getClass() == WoodenDoor.class || currentItem.getClass() == GlassDoor.class
-        || currentItem.getClass() == MetalDoor.class) {
-            return populateDoorItem(currentItem, currentListViewItem);
-        } else if (currentItem.getClass() == DoorHandle.class) {
-            return populateHandleItem(currentItem, currentListViewItem);
-        } else {
-            return null;
-        }
-
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_square, parent, false);
+        return new ViewHolder(view);
     }
+
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        holder.panelName.setText(mergeStringList(items.get(position).getName()));
+    }
+
+    private String mergeStringList(List<String> stringList) {
+        String mergedString = "";
+
+        for (String s : stringList) {
+            mergedString += s + " ";
+        }
+
+        return mergedString;
+    }
+
+    @Override
+    public int getItemCount() {
+        return items.size();
+    }
+
+//    @NonNull
+//    @Override
+//    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+//        //Get a reference to the current ListView item
+//        View currentListViewItem = convertView;
+//
+//        // Check if the existing view is being reused, otherwise inflate the view
+//        if (currentListViewItem == null) {
+//            currentListViewItem = LayoutInflater.from(getContext()).inflate(layoutID, parent, false);
+//        }
+//
+//        //Get the Number object for the current position
+//        Item currentItem = items.get(position);
+//        if (currentItem.getClass() == WoodenDoor.class || currentItem.getClass() == GlassDoor.class
+//                || currentItem.getClass() == MetalDoor.class) {
+//            return populateDoorItem(currentItem, currentListViewItem);
+//        } else if (currentItem.getClass() == DoorHandle.class) {
+//            return populateHandleItem(currentItem, currentListViewItem);
+//        } else {
+//            return null;
+//        }
+//
+//    }
 
     /**
      * Special method that creates a unique view for a door item depending on what the category of
      * that door is (either wooden, metal or glass).
+     *
      * @param currentItem
      * @param currentListViewItem
      * @return
@@ -124,7 +154,7 @@ public class ItemAdapter extends ArrayAdapter {
         if (currentItem.getClass() == WoodenDoor.class) {
             material = mContext.getResources().getDrawable(R.drawable.wood_edge);
             materialName = stringListToString(currentItem.getName());
-        } else if (currentItem.getClass() ==  MetalDoor.class) {
+        } else if (currentItem.getClass() == MetalDoor.class) {
             material = mContext.getResources().getDrawable(R.drawable.metal_edge);
             materialName = stringListToString(currentItem.getName());
         } else if (currentItem.getClass() == GlassDoor.class) {
@@ -152,6 +182,7 @@ public class ItemAdapter extends ArrayAdapter {
 
     /**
      * Special method that creates a unique view for an artistic door item
+     *
      * @param currentItem
      * @param currentListViewItem
      * @return
