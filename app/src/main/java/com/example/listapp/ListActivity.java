@@ -1,6 +1,7 @@
 package com.example.listapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
@@ -30,6 +31,9 @@ public class ListActivity extends AppCompatActivity {
         itemAdapter = new ItemAdapter(this, R.layout.item_square, dataLoader.getItemsByCriteria(intent.getStringExtra("categoryName")));
 
         recyclerView.setAdapter(itemAdapter);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.custom_toolbar_list);
+        toolbar.setTitle(intent.getStringExtra("categoryName"));
 
     }
 }
