@@ -369,18 +369,18 @@
                     app:cardCornerRadius="4dp">
 
                     <ImageView
-                        android:id="@+id/artistic_image_background"
+                        android:id="@+id/handle_image_background"
                         android:layout_width="match_parent"
                         android:layout_height="96dp"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/door7" />
+                        android:src="@drawable/handle_background" />
                 </androidx.cardview.widget.CardView>
 
                 <TextView
                     style="@style/MainActivityCategoryTitle"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="48dp"
-                    android:text="Artistic" />
+                    android:text="Handle" />
 
 
             </RelativeLayout>
