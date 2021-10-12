@@ -94,7 +94,13 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> { 
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+
+        int imageIndex = mContext.getResources().getIdentifier(items.get(position).getImage().get(0), "drawable", mContext.getPackageName());
+
         holder.panelName.setText(mergeStringList(items.get(position).getName()));
+        holder.panelPrice.setText("$" + items.get(position).getPrice());
+        holder.panelImage.setImageResource(imageIndex);
+//        holder.panelBar
     }
 
     private String mergeStringList(List<String> stringList) {
