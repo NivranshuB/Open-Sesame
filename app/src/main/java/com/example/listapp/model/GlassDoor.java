@@ -29,15 +29,4 @@ public class GlassDoor extends Door {
         this.colour = colour;
         this.image = image;
     }
-
-    /**
-     * @return the full qualified name of the material image of this Item instance
-     */
-    public String getMaterialImage() {
-        return null;
-    }
-
-    public void setMaterialImage(String newMaterialImage) {
-        materialImage = newMaterialImage;
-    }
 }

@@ -76,7 +76,7 @@ public abstract class Handle implements Item {
      * @return the list of all full qualified names of the images of this item instance (ignore the
      * material image)
      */
-    public List<String> getImages() {
+    public List<String> getImage() {
         return images;
     }
 
