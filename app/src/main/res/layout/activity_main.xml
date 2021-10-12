@@ -400,7 +400,7 @@
                     app:cardCornerRadius="4dp">
 
                     <ImageView
-                        android:id="@+id/artistic_image_background"
+                        android:id="@+id/handle_image_background"
                         android:layout_width="match_parent"
                         android:layout_height="96dp"
                         android:scaleType="centerCrop"
