@@ -5,7 +5,7 @@ import java.util.List;
 public abstract class Handle implements Item {
 
     int id, height, width, length, weight, price, viewCount;
-    String name;
+    List<String> name;
     List<String> colors;
     List<String> images;
     String description;
@@ -61,11 +61,11 @@ public abstract class Handle implements Item {
     /**
      * @return the name of this Item instance
      */
-    public String getName() {
+    public List<String> getName() {
         return name;
     }
 
-    public void setName(String newName) {
+    public void setName(List<String> newName) {
         name = newName;
     }
 
@@ -80,7 +80,7 @@ public abstract class Handle implements Item {
      * @return the list of all full qualified names of the images of this item instance (ignore the
      * material image)
      */
-    public List<String> getImages() {
+    public List<String> getImage() {
         return images;
     }
 

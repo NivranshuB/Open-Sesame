@@ -123,10 +123,10 @@ public class ItemAdapter extends ArrayAdapter {
 
         if (currentItem.getClass() == WoodenDoor.class) {
             material = mContext.getResources().getDrawable(R.drawable.wood_edge);
-            materialName = currentItem.getName();
+            materialName = currentItem.getMaterialType();
         } else if (currentItem.getClass() ==  MetalDoor.class) {
             material = mContext.getResources().getDrawable(R.drawable.metal_edge);
-            materialName = currentItem.getName();
+            materialName = currentItem.getMaterialType();
         } else if (currentItem.getClass() == GlassDoor.class) {
             material = mContext.getResources().getDrawable(R.drawable.glass_edge);
         } else {
@@ -143,7 +143,7 @@ public class ItemAdapter extends ArrayAdapter {
 
         doorViewHolder.panelImage.setImageResource(imageId);
 
-        doorViewHolder.panelName.setText(currentItem.getName());
+        doorViewHolder.panelName.setText(convertSingleString(currentItem.getName()));
         doorViewHolder.panelPrice.setText(String.valueOf(currentItem.getPrice()));
 
         return currentListViewItem;
@@ -160,16 +160,16 @@ public class ItemAdapter extends ArrayAdapter {
 
         HandleViewHolder handleViewHolder = new HandleViewHolder(currentListViewItem);
 
-        handleViewHolder.panelName.setText(currentItem.getName());
+        handleViewHolder.panelName.setText(convertSingleString(currentItem.getName()));
 
         //Set the attributed of list_view_number_item views
         int imageId = mContext.getResources().getIdentifier(
                 currentItem.getFirstImage(), "drawable", mContext.getPackageName());
 
-        int galleryImage1Id = mContext.getResources().getIdentifier(currentItem.getImages().get(1),
+        int galleryImage1Id = mContext.getResources().getIdentifier(currentItem.getImage().get(1),
                 "drawable", mContext.getPackageName());
 
-        int galleryImage2Id = mContext.getResources().getIdentifier(currentItem.getImages().get(2),
+        int galleryImage2Id = mContext.getResources().getIdentifier(currentItem.getImage().get(2),
                 "drawable", mContext.getPackageName());
 
         handleViewHolder.panelImage.setImageResource(imageId);
@@ -189,5 +189,13 @@ public class ItemAdapter extends ArrayAdapter {
         handleViewHolder.panelPrice.setText(String.valueOf(currentItem.getPrice()));
 
         return currentListViewItem;
+    }
+
+    private String convertSingleString(List<String> stringList) {
+        String nameString = "";
+        for (String s : stringList) {
+            nameString = nameString + s;
+        }
+        return nameString;
     }
 }
