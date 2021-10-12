@@ -295,6 +295,7 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/relative_layout_metal"
                 style="@style/CategoryCardView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -325,6 +326,7 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/relative_layout_glass"
                 style="@style/CategoryCardView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -355,6 +357,7 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/relative_layout_handles"
                 style="@style/CategoryCardView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

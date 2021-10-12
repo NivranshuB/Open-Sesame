@@ -32,14 +32,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.custom_toolbar);
         setSupportActionBar(toolbar);
 
-        RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.relative_layout_wooden);
-        relativeLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent woodenIntent = new Intent(getBaseContext(), ListActivity.class);
-                startActivity(woodenIntent);
-            }
-        });
+        createCategoryClickListeners();
 
         CardView cardView = (CardView) findViewById(R.id.card_view_1);
         cardView.setOnClickListener(new View.OnClickListener() {
@@ -60,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
     private void initPanelItems() {
         // TODO: 05/10/2021 Requires implementation of code to retrieve data from Firestore DB and helper functions to sort and etc, in order to populate panelItems list.
     }
@@ -72,6 +64,48 @@ public class MainActivity extends AppCompatActivity {
         panelRecyclerView.setLayoutManager(linearLayoutManager);
         PanelViewAdapter panelViewAdapter = new PanelViewAdapter(panelItems, this);
         panelRecyclerView.setAdapter(panelViewAdapter);
+    }
+
+    private void createCategoryClickListeners() {
+        RelativeLayout relativeLayoutWooden = (RelativeLayout) findViewById(R.id.relative_layout_wooden);
+        relativeLayoutWooden.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent woodenIntent = new Intent(getBaseContext(), ListActivity.class);
+                woodenIntent.putExtra("categoryName", "wooden");
+                startActivity(woodenIntent);
+            }
+        });
+
+        RelativeLayout relativeLayoutMetal = (RelativeLayout) findViewById(R.id.relative_layout_metal);
+        relativeLayoutMetal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent woodenIntent = new Intent(getBaseContext(), ListActivity.class);
+                woodenIntent.putExtra("categoryName", "metal");
+                startActivity(woodenIntent);
+            }
+        });
+
+        RelativeLayout relativeLayoutGlass = (RelativeLayout) findViewById(R.id.relative_layout_glass);
+        relativeLayoutGlass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent woodenIntent = new Intent(getBaseContext(), ListActivity.class);
+                woodenIntent.putExtra("categoryName", "glass");
+                startActivity(woodenIntent);
+            }
+        });
+
+        RelativeLayout relativeLayoutHandles = (RelativeLayout) findViewById(R.id.relative_layout_handles);
+        relativeLayoutHandles.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent woodenIntent = new Intent(getBaseContext(), ListActivity.class);
+                woodenIntent.putExtra("categoryName", "doorHandle");
+                startActivity(woodenIntent);
+            }
+        });
     }
 
 }

@@ -3,7 +3,9 @@ package com.example.listapp;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.example.listapp.adapters.ItemAdapter;
 import com.example.listapp.model.DataLoader;
@@ -24,7 +26,8 @@ public class ListActivity extends AppCompatActivity {
         dataLoader = new DataLoader();
         dataLoader.initialiseData();
 
-        itemAdapter = new ItemAdapter(this, R.layout.item_square, dataLoader.getItemsByCriteria("wooden"));
+        Intent intent = getIntent();
+        itemAdapter = new ItemAdapter(this, R.layout.item_square, dataLoader.getItemsByCriteria(intent.getStringExtra("categoryName")));
 
         recyclerView.setAdapter(itemAdapter);
 
