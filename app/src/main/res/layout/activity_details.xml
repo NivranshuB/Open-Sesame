@@ -64,6 +64,7 @@
                         android:text="Door name" />
 
                     <TextView
+                        android:id="@+id/item_price"
                         style="@style/MainActivityCategoryTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
@@ -79,7 +80,7 @@
                         android:text="Description" />
 
                     <TextView
-                        android:id="@+id/item_decription_text"
+                        android:id="@+id/item_description_text"
                         style="@style/DetailsActivityDescriptionTextStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -91,7 +92,7 @@
                         style="@style/DetailsActivityDescriptionHeadingStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/item_decription_text"
+                        android:layout_below="@id/item_description_text"
                         android:text="Specifications" />
 
                     <TextView
