@@ -162,4 +162,11 @@ public abstract class Door implements Item {
     public String getLockType() {
         return "";
     }
+
+    /**
+     * Returns the dimensions array of a Door item.
+     */
+    public List<Integer> getDimensions() {
+        return dimensions;
+    }
 }
