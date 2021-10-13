@@ -21,8 +21,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.provider.Settings;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.listapp.adapters.PanelViewAdapter;
 import com.example.listapp.model.DataCallback;
@@ -34,9 +37,27 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    private class ViewHolder {
+        //The views in main activity go here
+        RelativeLayout wooden_category_button;
+        RelativeLayout metal_category_button;
+        RelativeLayout glass_category_button;
+        RelativeLayout handle_category_button;
+
+        public ViewHolder() {
+            //The elements common among all items assigned here
+            wooden_category_button = findViewById(R.id.relative_layout_wooden);
+            metal_category_button = findViewById(R.id.relative_layout_metal);
+            glass_category_button = findViewById(R.id.relative_layout_glass);
+            handle_category_button = findViewById(R.id.relative_layout_handle);
+        }
+    }
+
     //variables
     private List<Item> panelItems = new ArrayList<>();
     DataLoader dataLoader = new DataLoader();
+
+    ViewHolder mainActivityVH;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,10 +67,46 @@ public class MainActivity extends AppCompatActivity {
         initPanelItems();
         Log.d("afterInit", "On creation after initPanelItems()");
 
+        mainActivityVH = new ViewHolder();
+
+        mainActivityVH.wooden_category_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent listActivity = new Intent(getBaseContext(), ListActivity.class);
+                listActivity.putExtra("type", "wooden");
+                startActivity(listActivity);
+            }
+        });
+
+        mainActivityVH.metal_category_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent listActivity = new Intent(getBaseContext(), ListActivity.class);
+                listActivity.putExtra("type", "metal");
+                startActivity(listActivity);
+            }
+        });
+
+        mainActivityVH.glass_category_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent listActivity = new Intent(getBaseContext(), ListActivity.class);
+                listActivity.putExtra("type", "glass");
+                startActivity(listActivity);
+            }
+        });
+
+        mainActivityVH.handle_category_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent listActivity = new Intent(getBaseContext(), ListActivity.class);
+                listActivity.putExtra("type", "handle");
+                startActivity(listActivity);
+            }
+        });
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.custom_toolbar);
         setSupportActionBar(toolbar);
-
-        createCategoryClickListeners();
 
         CardView cardView = (CardView) findViewById(R.id.card_view_1);
         cardView.setOnClickListener(new View.OnClickListener() {
@@ -63,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
 //                startActivity(detailIntent);
             }
         });
-    }
+     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
