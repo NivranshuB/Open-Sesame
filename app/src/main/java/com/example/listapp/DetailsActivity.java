@@ -2,12 +2,14 @@ package com.example.listapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.listapp.adapters.ImageAdapter;
 import com.example.listapp.model.Door;
 import com.example.listapp.model.Item;
 import com.example.listapp.model.WoodenDoor;
@@ -50,7 +52,7 @@ public class DetailsActivity extends AppCompatActivity {
         String nameString = "";
 
         for (String s : itemSelected.getName()) {
-            nameString += " " + s;
+            nameString += s + " ";
         }
 
         List<Integer> dimensions = itemSelected.getDimensions();
@@ -59,8 +61,12 @@ public class DetailsActivity extends AppCompatActivity {
 
         detailsActivityVh.itemName.setText(nameString);
         detailsActivityVh.description.setText(itemSelected.getDescription());
-        detailsActivityVh.price.setText("$" + itemSelected.getPrice());
+        detailsActivityVh.price.setText("$" + Double.valueOf(itemSelected.getPrice()));
         detailsActivityVh.itemSpecification.setText(dimensionString);
+
+        ViewPager viewPager = findViewById(R.id.imageViewPager);
+        ImageAdapter adapter = new ImageAdapter(this, itemSelected.getImage());
+        viewPager.setAdapter(adapter);
     }
 
     private void createDefaultItem() {
@@ -73,8 +79,8 @@ public class DetailsActivity extends AppCompatActivity {
         name.add("Authentic");
         name.add("Gloss");
         name.add("Finished");
-        name.add("Timber");
-        name.add("Door");
+        name.add("Gold");
+        name.add("Doorknob");
 
         List<String> colour = new ArrayList<>();
         colour.add("#000000");
@@ -87,6 +93,18 @@ public class DetailsActivity extends AppCompatActivity {
         images.add("handle3_3");
 
         itemSelected = new WoodenDoor(1, 560, 43, 50.50f, dimensions, name,
-                "dsafk sadflkd dslfka dsa", colour, images);
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris et " +
+                        "mattis elit, in fringilla tellus. Etiam aliquam efficitur urna, id " +
+                        "ligula porta id. Curabitur libero ligula, pulvinar ac convallis nec, " +
+                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris et " +
+                        "mattis elit, in fringilla tellus. Etiam aliquam efficitur urna, id " +
+                        "ligula porta id. Curabitur libero ligula, pulvinar ac convallis nec, " +
+                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris et " +
+                        "mattis elit, in fringilla tellus. Etiam aliquam efficitur urna, id " +
+                        "ligula porta id. Curabitur libero ligula, pulvinar ac convallis nec, " +
+                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris et " +
+                        "mattis elit, in fringilla tellus. Etiam aliquam efficitur urna, id " +
+                        "ligula porta id. Curabitur libero ligula, pulvinar ac convallis nec, " +
+                        "hendrerit a lacus.", colour, images);
     }
 }
