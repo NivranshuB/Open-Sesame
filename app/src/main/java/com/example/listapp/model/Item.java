@@ -73,4 +73,6 @@ public interface Item {
      * @return the string representing the type of lock for a Handle object
      */
     String getLockType();
+
+    List<Integer> getDimensions();
 }

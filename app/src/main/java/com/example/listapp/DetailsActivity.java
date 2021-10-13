@@ -33,7 +33,6 @@ public class DetailsActivity extends AppCompatActivity {
         }
     }
 
-    Item defaultItem;
     Item itemSelected;
 
     @Override
@@ -50,14 +49,18 @@ public class DetailsActivity extends AppCompatActivity {
 
         String nameString = "";
 
-        for (String s : defaultItem.getName()) {
+        for (String s : itemSelected.getName()) {
             nameString += " " + s;
         }
 
-        detailsActivityVh.itemName.setText(nameString);
-        detailsActivityVh.description.setText(defaultItem.getDescription());
-        detailsActivityVh.price.setText("$" + defaultItem.getPrice());
+        List<Integer> dimensions = itemSelected.getDimensions();
+        String dimensionString = dimensions.get(0) + " x " + dimensions.get(1) + " x " +
+                dimensions.get(2) + " (mm)";
 
+        detailsActivityVh.itemName.setText(nameString);
+        detailsActivityVh.description.setText(itemSelected.getDescription());
+        detailsActivityVh.price.setText("$" + itemSelected.getPrice());
+        detailsActivityVh.itemSpecification.setText(dimensionString);
     }
 
     private void createDefaultItem() {
@@ -83,7 +86,7 @@ public class DetailsActivity extends AppCompatActivity {
         images.add("handle3_2");
         images.add("handle3_3");
 
-        defaultItem = new WoodenDoor(1, 560, 43, 50.50f, dimensions, name,
+        itemSelected = new WoodenDoor(1, 560, 43, 50.50f, dimensions, name,
                 "dsafk sadflkd dslfka dsa", colour, images);
     }
 }
