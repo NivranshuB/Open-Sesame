@@ -62,4 +62,14 @@ public interface IDataLoader {
      */
     public void persistData(Item itemChanged);
 
+    /**
+     * This method retrieves a single item from the database which matches the id specified in the
+     * input.
+     *
+     * @param id: Id of item to retrieve from database
+     * @return Single item that has the name specified
+     *         If no matches return 'null'
+     */
+    public Item getItemByID(int id);
+
 }
