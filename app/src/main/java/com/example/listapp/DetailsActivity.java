@@ -5,13 +5,17 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 import androidx.core.view.ViewCompat;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.listapp.adapters.ImageAdapter;
+import com.example.listapp.model.DataLoader;
 import com.example.listapp.model.Door;
+import com.example.listapp.model.IDataLoader;
 import com.example.listapp.model.Item;
 import com.example.listapp.model.WoodenDoor;
 
@@ -42,6 +46,7 @@ public class DetailsActivity extends AppCompatActivity {
     }
 
     Item itemSelected;
+    IDataLoader dataLoader = new DataLoader();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +60,16 @@ public class DetailsActivity extends AppCompatActivity {
 
         ViewHolder detailsActivityVh = new ViewHolder();
 
-        createDefaultItem();
+        Intent thisIntent = getIntent();
+        String itemId = thisIntent.getStringExtra("id");
+        Toast.makeText(this, "Showing item with id " + itemId, Toast.LENGTH_LONG).show();
+
+        if (itemId != null) {
+            int id = Integer.valueOf(itemId);
+            itemSelected = dataLoader.getItemByID(id);
+        } else {
+            createDefaultItem();
+        }
 
         String nameString = "";
 
