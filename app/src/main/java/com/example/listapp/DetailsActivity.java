@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.listapp.adapters.ImageAdapter;
+import com.example.listapp.model.DataCallback;
 import com.example.listapp.model.DataLoader;
 import com.example.listapp.model.Door;
 import com.example.listapp.model.IDataLoader;
@@ -66,7 +67,17 @@ public class DetailsActivity extends AppCompatActivity {
 
         if (itemId != null) {
             int id = Integer.valueOf(itemId);
-            itemSelected = dataLoader.getItemByID(id);
+            dataLoader.getItemByID(id, new DataCallback() {
+                @Override
+                public void dataListCallback(List<Item> itemList) {
+                    // No implementation needed
+                }
+
+                @Override
+                public void itemCallback(Item item) {
+                    itemSelected = item;
+                }
+            });
         } else {
             createDefaultItem();
         }
@@ -77,7 +88,7 @@ public class DetailsActivity extends AppCompatActivity {
             nameString += s + " ";
         }
 
-        List<Integer> dimensions = itemSelected.getDimensions();
+        List<Long> dimensions = itemSelected.getDimensions();
         String dimensionString = dimensions.get(0) + " x " + dimensions.get(1) + " x " +
                 dimensions.get(2) + " (mm)";
 
@@ -92,10 +103,10 @@ public class DetailsActivity extends AppCompatActivity {
     }
 
     private void createDefaultItem() {
-        List<Integer> dimensions = new ArrayList<>();
-        dimensions.add(Integer.valueOf(2355));
-        dimensions.add(Integer.valueOf(566));
-        dimensions.add(Integer.valueOf(36));
+        List<Long> dimensions = new ArrayList<>();
+        dimensions.add(new Long(2355));
+        dimensions.add(new Long (566));
+        dimensions.add(new Long(36));
 
         List<String> name = new ArrayList<>();
         name.add("Authentic");
@@ -120,9 +131,9 @@ public class DetailsActivity extends AppCompatActivity {
         Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_up);
         relativeLayout.startAnimation(animation);
 
-        ViewCompat.setTransitionName(findViewById(R.id.details_image_view), "topPicksImageTransition");
+        ViewCompat.setTransitionName(findViewById(R.id.imageViewPager), "topPicksImageTransition");
 
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris et " +
+        itemSelected = new WoodenDoor(1, 560, 43, 50.50f, dimensions, name,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris et " +
                         "mattis elit, in fringilla tellus. Etiam aliquam efficitur urna, id " +
                         "ligula porta id. Curabitur libero ligula, pulvinar ac convallis nec, " +
                         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris et " +

@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
             wooden_category_button = findViewById(R.id.relative_layout_wooden);
             metal_category_button = findViewById(R.id.relative_layout_metal);
             glass_category_button = findViewById(R.id.relative_layout_glass);
-            handle_category_button = findViewById(R.id.relative_layout_handle);
+            handle_category_button = findViewById(R.id.relative_layout_handles);
         }
     }
 
@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent listActivity = new Intent(getBaseContext(), ListActivity.class);
-                listActivity.putExtra("type", "metal");
+                listActivity.putExtra("type", "metallic");
                 startActivity(listActivity);
             }
         });
@@ -154,19 +154,21 @@ public class MainActivity extends AppCompatActivity {
 
     private void initPanelItems() {
         // TODO: 05/10/2021 Requires implementation of code to retrieve data from Firestore DB and helper functions to sort and etc, in order to populate panelItems list.
-        Item i = dataLoader.getItemByID(27, new DataCallback() {
+        dataLoader.getItemsByCriteria("metallic", new DataCallback() {
             @Override
-            public void dataListCallback(List<Item> itemList) {
-                //No implementation required
+            public void dataListCallback(List<Item> itemlist) {
+                for (Item i : itemlist) {
+                    Log.d("jchename", i.getName().toString());
+                    Log.d("jcheid", Integer.toString(i.getId()));
+                    Log.d("jcheprice", Float.toString(i.getPrice()));
+                    Log.d("jchedimensions", i.getDimensions().toString());
+                    Log.d("jchedescription", i.getDescription());
+                }
             }
 
             @Override
             public void itemCallback(Item i) {
-                Log.d("jchename", i.getName().toString());
-                Log.d("jcheid", Integer.toString(i.getId()));
-                Log.d("jcheprice", Float.toString(i.getPrice()));
-                Log.d("jchedimensions", i.getDimensions().toString());
-                Log.d("jchedescription", i.getDescription());
+
             }
         });
         Log.d("initialise", "initPanelItems running");
@@ -198,7 +200,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent woodenIntent = new Intent(getBaseContext(), ListActivity.class);
-                woodenIntent.putExtra("categoryName", "metal");
+                woodenIntent.putExtra("categoryName", "metallic");
                 startActivity(woodenIntent);
             }
         });

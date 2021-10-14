@@ -19,15 +19,15 @@ public class MetalDoor extends Door {
     public MetalDoor(int id, int weight, int viewCount, float price,
                      List<Long> dimensions, List<String> name, String description,
                      List<String> colour, List<String> image) {
-        super.id = id;
-        super.weight = weight;
-        super.viewCount = viewCount;
-        super.price = price;
-        super.dimensions = dimensions;
-        super.name = name;
-        super.description = description;
-        super.colour = colour;
-        super.image = image;
+        this.id = id;
+        this.weight = weight;
+        this.viewCount = viewCount;
+        this.price = price;
+        this.dimensions = dimensions;
+        this.name = name;
+        this.description = description;
+        this.colour = colour;
+        this.image = image;
     }
 
     /**

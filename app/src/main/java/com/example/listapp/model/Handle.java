@@ -8,7 +8,7 @@ public abstract class Handle implements Item {
     List<String> name;
     List<String> colors;
     List<String> images;
-    List<Integer> dimensions;
+    List<Long> dimensions;
     String description;
     Boolean lockable;
     String lockType;
@@ -121,7 +121,7 @@ public abstract class Handle implements Item {
     /**
      * Returns the dimensions array of a Door item.
      */
-    public List<Integer> getDimensions() {
+    public List<Long> getDimensions() {
         return dimensions;
     }
 }

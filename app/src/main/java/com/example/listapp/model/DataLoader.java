@@ -73,7 +73,7 @@ public class DataLoader implements IDataLoader {
     }
 
     @Override
-    public List<Item> getItemsByString(String matchString, DataCallback callback) {
+    public void getItemsByString(String matchString, DataCallback callback) {
         String[] matchList = matchString.split("\\s+");
         List<Item> resultList = new ArrayList<>();
 
@@ -98,22 +98,27 @@ public class DataLoader implements IDataLoader {
                 }
             }
         });
-        return resultList;
     }
 
 
     @Override
-    public List<Item> getItemsByCriteria(String categoryName, DataCallback callback) {
+    public void getItemsByCriteria(String categoryName, DataCallback callback) {
         List<String> categoryList = new ArrayList<>();
         categoryList.add(categoryName);
         List<Item> resultList = new ArrayList<>();
 
-        doorRef.whereArrayContainsAny("name", categoryList).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+        doorRef.whereArrayContainsAny("categories", categoryList).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 for (QueryDocumentSnapshot curr : queryDocumentSnapshots) {
                     // Get data of each document to check the category type before deciding which type of Door child object to map to.
                     Map<String, Object> currObj = curr.getData();
+                    StringBuilder mapAsString = new StringBuilder("{");
+                    for (String key : currObj.keySet()) {
+                        mapAsString.append(key + "=" + currObj.get(key) + ", ");
+                    }
+                    mapAsString.delete(mapAsString.length()-2, mapAsString.length()).append("}");
+                    Log.d("mapString", mapAsString.toString());
                     for (String objType : (List<String>) currObj.get("categories")) {
                         Item door = null;
                         if (objType.equals(DOOR_TYPES[0])) {
@@ -129,16 +134,14 @@ public class DataLoader implements IDataLoader {
                 }
             }
         });
-        return resultList;
     }
 
     @Override
-    public Item getItemByName(String itemName, DataCallback callback) {
+    public void getItemByName(String itemName, DataCallback callback) {
         //todo
-        return null;
     }
 
-    public Item getItemByID(int id, DataCallback callback) {
+    public void getItemByID(int id, DataCallback callback) {
         final Item[] item = new Item[1];
         doorRef.whereEqualTo("id", id).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @RequiresApi(api = Build.VERSION_CODES.N)
@@ -151,19 +154,15 @@ public class DataLoader implements IDataLoader {
                 }
                 mapAsString.delete(mapAsString.length()-2, mapAsString.length()).append("}");
                 Log.d("mapString", mapAsString.toString());
-//                MetalDoor door = new MetalDoor(Math.toIntExact((Long) currObj.get("id")), Math.toIntExact((Long) currObj.get("weight")), Math.toIntExact((Long) currObj.get("viewCount")), ((Long)currObj.get("price")).floatValue(),
-//                        (List<Long>) currObj.get("dimensions"), (List<String>) currObj.get("name"), (String) currObj.get("description"),
-//                        (List<String>) currObj.get("colour"), (List<String>) currObj.get("image"));
                 MetalDoor i = queryDocumentSnapshots.getDocuments().get(0).toObject(MetalDoor.class);
                 callback.itemCallback(i);
                 item[0] = i;
             }
         });
-        return item[0];
     }
 
     @Override
-    public List<Item> sortItemListByViewCount(DataCallback callback) {
+    public void sortItemListByViewCount(DataCallback callback) {
         //todo
         List<Item> resultList = new ArrayList<>();
 
@@ -188,13 +187,13 @@ public class DataLoader implements IDataLoader {
                 }
             }
         });
-        return resultList;
     }
 
     @Override
     public void persistData(Item itemChanged) {
         //todo
     }
+
 
     /**
      * Initialise the maps to store data.
@@ -216,3 +215,7 @@ public class DataLoader implements IDataLoader {
 //                        }
 //                        mapAsString.delete(mapAsString.length()-2, mapAsString.length()).append("}");
 //                        Log.d("mapString", mapAsString.toString());
+
+//                MetalDoor door = new MetalDoor(Math.toIntExact((Long) currObj.get("id")), Math.toIntExact((Long) currObj.get("weight")), Math.toIntExact((Long) currObj.get("viewCount")), ((Long)currObj.get("price")).floatValue(),
+//                        (List<Long>) currObj.get("dimensions"), (List<String>) currObj.get("name"), (String) currObj.get("description"),
+//                        (List<String>) currObj.get("colour"), (List<String>) currObj.get("image"));
