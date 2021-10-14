@@ -1,5 +1,7 @@
 package com.example.listapp.model;
 
+import android.util.Log;
+
 import com.google.firebase.firestore.PropertyName;
 
 import java.util.List;
@@ -100,6 +102,7 @@ public abstract class Door implements Item {
      * @return the full qualified name of the first image of this Item instance
      */
     public String getFirstImage() {
+        Log.d("doorImages", image.toString());
         return image.get(0);
     }
 

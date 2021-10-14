@@ -200,7 +200,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent woodenIntent = new Intent(getBaseContext(), ListActivity.class);
-                woodenIntent.putExtra("categoryName", "metal");
+                woodenIntent.putExtra("categoryName", "metallic");
                 startActivity(woodenIntent);
             }
         });
