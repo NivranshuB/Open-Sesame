@@ -3,11 +3,17 @@ package com.example.listapp;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.util.Pair;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.transition.Explode;
+import android.transition.Fade;
+import android.transition.TransitionManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
@@ -39,7 +45,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent detailIntent = new Intent(getBaseContext(), DetailsActivity.class);
-                startActivity(detailIntent);
+                ActivityOptionsCompat activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this,
+                        new Pair<>(view.findViewById(R.id.image_1), "topPicksImageTransition"));
+                ActivityCompat.startActivity(MainActivity.this, detailIntent, activityOptions.toBundle());
+//                startActivity(detailIntent);
             }
         });
     }

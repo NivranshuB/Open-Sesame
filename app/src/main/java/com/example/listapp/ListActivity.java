@@ -38,7 +38,7 @@ public class ListActivity extends AppCompatActivity {
         recyclerView.setAdapter(itemAdapter);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.custom_toolbar_list);
-        toolbar.setTitle(categoryName);
+        toolbar.setTitle(categoryName.toUpperCase());
 
     }
 }

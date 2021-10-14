@@ -97,6 +97,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> { 
         } else if (currentItem.getClass() == DoorHandle.class) {
             return HANDLE_TYPE;
         }
+        return 0;
     }
 
     @NonNull
