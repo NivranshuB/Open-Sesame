@@ -9,8 +9,12 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.example.listapp.adapters.ItemAdapter;
+import com.example.listapp.model.DataCallback;
 import com.example.listapp.model.DataLoader;
 import com.example.listapp.model.IDataLoader;
+import com.example.listapp.model.Item;
+
+import java.util.List;
 
 public class ListActivity extends AppCompatActivity {
 
@@ -28,14 +32,27 @@ public class ListActivity extends AppCompatActivity {
         dataLoader.initialiseData();
 
         Intent intent = getIntent();
-        String categoryName = intent.getStringExtra("categoryName");
+        String categoryName = intent.getStringExtra("type");
         if (categoryName.equals("doorHandle")) {
-            itemAdapter = new ItemAdapter(this, R.layout.door_handle_square, dataLoader.getItemsByCriteria(categoryName));
+//            itemAdapter = new ItemAdapter(this, R.layout.door_handle_square, dataLoader.getItemsByCriteria(categoryName));
         } else {
-            itemAdapter = new ItemAdapter(this, R.layout.item_square, dataLoader.getItemsByCriteria(categoryName));
+            DataLoader dataLoader = new DataLoader();
+            dataLoader.getItemsByCriteria(categoryName, new DataCallback() {
+                @Override
+                public void dataListCallback(List<Item> itemList) {
+                    itemAdapter = new ItemAdapter(ListActivity.this, R.layout.item_square, itemList);
+                    recyclerView.setAdapter(itemAdapter);
+                }
+
+                @Override
+                public void itemCallback(Item item) {
+                    // No implementation needed
+                }
+            });
+
         }
 
-        recyclerView.setAdapter(itemAdapter);
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.custom_toolbar_list);
         toolbar.setTitle(categoryName.toUpperCase());

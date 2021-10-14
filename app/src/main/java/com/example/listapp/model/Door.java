@@ -163,10 +163,4 @@ public abstract class Door implements Item {
         return "";
     }
 
-    /**
-     * Returns the dimensions array of a Door item.
-     */
-    public List<Integer> getDimensions() {
-        return dimensions;
-    }
 }
