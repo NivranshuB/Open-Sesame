@@ -22,7 +22,7 @@ public abstract class Door implements Item {
     @PropertyName("price")
     float price;
     @PropertyName("dimensions")
-    List<Integer> dimensions;
+    List<Long> dimensions;
     @PropertyName("description")
     String description;
     @PropertyName("colour")
@@ -33,6 +33,7 @@ public abstract class Door implements Item {
     List<String> name;
     @PropertyName("categories")
     List<String> categories;
+
     /**
      * @return the Id of this Item instance
      */
@@ -40,47 +41,37 @@ public abstract class Door implements Item {
         return id;
     }
 
-    public void setId(int newId) {
-        id = newId;
-    }
-
+    /**
+     * @return list of categories the Item instance belongs to.
+     */
     public List<String> getCategories() {
         return categories;
     }
 
-//    public void setCategories(List<String> categoriesList) {
-//        categories = categoriesList;
-//    }
-
+    /**
+     * @return weight of Item instance.
+     */
     public int getWeight() {
         return weight;
     }
 
-//    public void setWeight(int weightVal) {
-//        weight = weightVal;
-//    }
-
-
-    public List<Integer> getDimensions() {
+    /**
+     * @return list of dimensions (length, height, width) in long format.
+     */
+    public List<Long> getDimensions() {
         return dimensions;
     }
 
-//    public void setDimensions(List<Integer> dimensionsList) {
-//        dimensions = dimensionsList;
-//    }
-
+    /**
+     * @return list of colours the Item is available in.
+     */
     public List<String> getColour() {
         return colour;
     }
 
-//    public void setColour(List<String> colourList) {
-//        colour = colourList;
-//    }
-
-
 
     /**
-     * @return the price of this Item instance
+     * @return the price of this Item instance.
      */
     public float getPrice(){ return price;}
 

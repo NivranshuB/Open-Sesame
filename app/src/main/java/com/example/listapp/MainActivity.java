@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 import android.provider.Settings;
 
 import com.example.listapp.adapters.PanelViewAdapter;
+import com.example.listapp.model.DataCallback;
 import com.example.listapp.model.DataLoader;
 import com.example.listapp.model.Item;
 
@@ -70,13 +71,23 @@ public class MainActivity extends AppCompatActivity {
 
     private void initPanelItems() {
         // TODO: 05/10/2021 Requires implementation of code to retrieve data from Firestore DB and helper functions to sort and etc, in order to populate panelItems list.
-        panelItems = dataLoader.sortItemListByViewCount();
+        Item i = dataLoader.getItemByID(27, new DataCallback() {
+            @Override
+            public void dataListCallback(List<Item> itemList) {
+                //No implementation required
+            }
+
+            @Override
+            public void itemCallback(Item i) {
+                Log.d("jchename", i.getName().toString());
+                Log.d("jcheid", Integer.toString(i.getId()));
+                Log.d("jcheprice", Float.toString(i.getPrice()));
+                Log.d("jchedimensions", i.getDimensions().toString());
+                Log.d("jchedescription", i.getDescription());
+            }
+        });
         Log.d("initialise", "initPanelItems running");
-        for (Item i : panelItems) {
-            Log.d("name", i.getName().toString());
-            Log.d("id", Integer.toString(i.getId()));
-            Log.d("price", Float.toString(i.getPrice()));
-        }
+
     }
 
 

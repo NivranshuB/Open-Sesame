@@ -9,4 +9,9 @@ public class DoorHandle extends Handle {
     public List<String> getImage() {
         return null;
     }
+
+    @Override
+    public List<Long> getDimensions() {
+        return null;
+    }
 }

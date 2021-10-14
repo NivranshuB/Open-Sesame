@@ -26,7 +26,7 @@ public interface IDataLoader {
      * @return List of matching items
      *         If not matches return 'null'
      */
-    public List<Item> getItemsByString(String matchString);
+    public List<Item> getItemsByString(String matchString, DataCallback callback);
 
     /**
      * This method retrieves all the items from the database that belong to the same category as
@@ -36,7 +36,7 @@ public interface IDataLoader {
      * @return List of matching items from the specified category
      *         If no matches return 'null'
      */
-    public List<Item> getItemsByCriteria(String categoryName);
+    public List<Item> getItemsByCriteria(String categoryName, DataCallback callback);
 
     /**
      * This method retrieves a single item from the database which matches the name specified in the
@@ -46,7 +46,7 @@ public interface IDataLoader {
      * @return Single item that has the name specified
      *         If no matches return 'null'
      */
-    public Item getItemByName(String itemName);
+    public Item getItemByName(String itemName, DataCallback callback);
 
     /**
      * This method retrieves all items from the database, sorts the items in decreasing order of
@@ -54,7 +54,7 @@ public interface IDataLoader {
      *
      * @return Sorted list (by view count) of all items in the database
      */
-    public List<Item> sortItemListByViewCount();
+    public List<Item> sortItemListByViewCount(DataCallback callback);
 
     /**
      * When a change is made to any item that needs to be persisted calling this method will persist

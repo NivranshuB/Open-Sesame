@@ -19,7 +19,7 @@ public class WoodenDoor extends Door {
     }
 
     public WoodenDoor(int id, int weight, int viewCount, float price,
-                     List<Integer> dimensions, List<String> name, String description,
+                     List<Long> dimensions, List<String> name, String description,
                      List<String> colour, List<String> image) {
         this.id = id;
         this.weight = weight;
