@@ -31,19 +31,10 @@
             android:orientation="vertical">
 
             <androidx.viewpager.widget.ViewPager
+                android:id="@+id/imageViewPager"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <androidx.viewpager.widget.PagerTitleStrip
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                android:layout_height="360dp">
             </androidx.viewpager.widget.ViewPager>
-
-            <ImageView
-                android:id="@+id/details_image_view"
-                android:layout_width="match_parent"
-                android:layout_height="360dp"
-                android:src="@drawable/door3" />
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -54,32 +45,44 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/item_details_description_background"
+                    android:minHeight="400dp"
                     android:padding="16dp">
 
-                    <TextView
-                        android:id="@+id/item_name"
-                        style="@style/DetailsActivityItemNameStyle"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:id="@+id/title_box"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Door name" />
+                        android:orientation="horizontal">
 
-                    <TextView
-                        style="@style/MainActivityCategoryTitle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentRight="true"
-                        android:text="$230.98" />
+                        <TextView
+                            android:id="@+id/item_name"
+                            style="@style/DetailsActivityItemNameStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Door name" />
+
+                        <TextView
+                            android:id="@+id/item_price"
+                            style="@style/MainActivityCategoryTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0"
+                            android:layout_alignParentRight="true"
+                            android:text="$230.98" />
+                    </LinearLayout>
+
 
                     <TextView
                         android:id="@+id/item_description_title"
                         style="@style/DetailsActivityDescriptionHeadingStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/item_name"
+                        android:layout_below="@id/title_box"
                         android:text="Description" />
 
                     <TextView
-                        android:id="@+id/item_decription_text"
+                        android:id="@+id/item_description_text"
                         style="@style/DetailsActivityDescriptionTextStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -91,7 +94,8 @@
                         style="@style/DetailsActivityDescriptionHeadingStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/item_decription_text"
+                        android:layout_below="@id/item_description_text"
+                        android:layout_marginTop="15dp"
                         android:text="Specifications" />
 
                     <TextView

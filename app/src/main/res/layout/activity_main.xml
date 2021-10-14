@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.acard_view_1ndroid.com/tools"
     android:layout_width="match_parent"
     android:id="@+id/main_root_view"
     android:layout_height="match_parent"
@@ -168,6 +168,14 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="8dp">
 
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/card_view_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp">
+
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -175,7 +183,7 @@
                             android:padding="8dp">
 
                             <ImageView
-                                android:id="@+id/image_3"
+                                android:id="@+id/image_4"
                                 android:layout_width="80dp"
                                 android:layout_height="80dp"
                                 android:src="@drawable/door1" />
@@ -199,11 +207,10 @@
                                 android:maxLines="1"
                                 android:text="$250.99" />
                         </LinearLayout>
-
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
-                        android:id="@+id/card_view_4"
+                        android:id="@+id/card_view_5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="8dp">
@@ -215,7 +222,7 @@
                             android:padding="8dp">
 
                             <ImageView
-                                android:id="@+id/image_4"
+                                android:id="@+id/image_5"
                                 android:layout_width="80dp"
                                 android:layout_height="80dp"
                                 android:src="@drawable/door1" />
@@ -400,7 +407,7 @@
                     app:cardCornerRadius="4dp">
 
                     <ImageView
-                        android:id="@+id/artistic_image_background"
+                        android:id="@+id/handle_image_background"
                         android:layout_width="match_parent"
                         android:layout_height="96dp"
                         android:scaleType="centerCrop"

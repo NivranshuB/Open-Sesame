@@ -8,6 +8,7 @@ public abstract class Handle implements Item {
     List<String> name;
     List<String> colors;
     List<String> images;
+    List<Integer> dimensions;
     String description;
     Boolean lockable;
     String lockType;
@@ -76,7 +77,7 @@ public abstract class Handle implements Item {
      * @return the list of all full qualified names of the images of this item instance (ignore the
      * material image)
      */
-    public List<String> getImages() {
+    public List<String> getImage() {
         return images;
     }
 
@@ -115,5 +116,12 @@ public abstract class Handle implements Item {
      */
     public void resetViewCount() {
         viewCount = 0;
+    }
+
+    /**
+     * Returns the dimensions array of a Door item.
+     */
+    public List<Integer> getDimensions() {
+        return dimensions;
     }
 }
