@@ -28,12 +28,17 @@ public class ListActivity extends AppCompatActivity {
         dataLoader.initialiseData();
 
         Intent intent = getIntent();
-        itemAdapter = new ItemAdapter(this, R.layout.item_square, dataLoader.getItemsByCriteria(intent.getStringExtra("categoryName")));
+        String categoryName = intent.getStringExtra("categoryName");
+        if (categoryName.equals("doorHandle")) {
+            itemAdapter = new ItemAdapter(this, R.layout.door_handle_square, dataLoader.getItemsByCriteria(categoryName));
+        } else {
+            itemAdapter = new ItemAdapter(this, R.layout.item_square, dataLoader.getItemsByCriteria(categoryName));
+        }
 
         recyclerView.setAdapter(itemAdapter);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.custom_toolbar_list);
-        toolbar.setTitle(intent.getStringExtra("categoryName"));
+        toolbar.setTitle(categoryName);
 
     }
 }

@@ -74,32 +74,78 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> { 
         }
     }
 
+    Context mContext;
     int layoutID;
     List<Item> items;
-    Context mContext;
 
     public ItemAdapter(@NonNull Context context, int resource, List<Item> objects) {
 //        super(context, resource, objects);
-        layoutID = resource;
         mContext = context;
+        layoutID = resource;
         items = objects;
+    }
+
+    private static int DOOR_TYPE = 1;
+    private static int HANDLE_TYPE = 2;
+
+    @Override
+    public int getItemViewType(int position) {
+        Item currentItem = items.get(position);
+        if (currentItem.getClass() == WoodenDoor.class || currentItem.getClass() == GlassDoor.class
+                || currentItem.getClass() == MetalDoor.class) {
+            return DOOR_TYPE;
+        } else if (currentItem.getClass() == DoorHandle.class) {
+            return HANDLE_TYPE;
+        }
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_square, parent, false);
-        return new ViewHolder(view);
+        View view = LayoutInflater.from(parent.getContext()).inflate(layoutID, parent, false);
+//        if (layoutID == R.layout.item_square) {
+//            return new DoorViewHolder(view);
+//        } else if (layoutID == R.layout.door_handle_square) {
+//            return new HandleViewHolder(view);
+//        } else {
+//            return new ViewHolder(view);
+//        }
+        if (viewType == DOOR_TYPE) {
+            return new DoorViewHolder(view);
+        } else if (viewType == HANDLE_TYPE) {
+            return new HandleViewHolder(view);
+        } else {
+            return new ViewHolder(view);
+        }
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        //Get the Number object for the current position
+        Item currentItem = items.get(position);
 
-        int imageIndex = mContext.getResources().getIdentifier(items.get(position).getImage().get(0), "drawable", mContext.getPackageName());
+        if (holder.getItemViewType() == DOOR_TYPE) {
+            DoorViewHolder viewHolder = (DoorViewHolder) holder;
+            populateDoorItem(currentItem, viewHolder);
+        } else if (holder.getItemViewType() == HANDLE_TYPE) {
+            HandleViewHolder viewHolder = (HandleViewHolder) holder;
+            populateHandleItem(currentItem, viewHolder);
+        }
 
-        holder.panelName.setText(mergeStringList(items.get(position).getName()));
-        holder.panelPrice.setText("$" + items.get(position).getPrice());
-        holder.panelImage.setImageResource(imageIndex);
+        //Get the Number object for the current position
+//        Item currentItem = items.get(position);
+//        if (currentItem.getClass() == WoodenDoor.class || currentItem.getClass() == GlassDoor.class
+//                || currentItem.getClass() == MetalDoor.class) {
+//            populateDoorItem(currentItem, holder);
+//        } else if (currentItem.getClass() == DoorHandle.class) {
+//            populateHandleItem(currentItem, holder);
+//        }
+
+//        int imageIndex = mContext.getResources().getIdentifier(items.get(position).getImage().get(0), "drawable", mContext.getPackageName());
+//
+//        holder.panelName.setText(mergeStringList(items.get(position).getName()));
+//        holder.panelPrice.setText("$" + items.get(position).getPrice());
+//        holder.panelImage.setImageResource(imageIndex);
 //        holder.panelBar
     }
 
@@ -147,12 +193,9 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> { 
      * that door is (either wooden, metal or glass).
      *
      * @param currentItem
-     * @param currentListViewItem
-     * @return
+     * @param holder
      */
-    private View populateDoorItem(Item currentItem, View currentListViewItem) {
-
-        DoorViewHolder doorViewHolder = new DoorViewHolder(currentListViewItem);
+    private void populateDoorItem(Item currentItem, DoorViewHolder holder) {
 
         Drawable material = mContext.getResources().getDrawable(R.drawable.gold_gradient);
         String materialName = "";
@@ -165,39 +208,31 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> { 
             materialName = stringListToString(currentItem.getName());
         } else if (currentItem.getClass() == GlassDoor.class) {
             material = mContext.getResources().getDrawable(R.drawable.glass_edge);
-        } else {
-            return null;
         }
 
-        doorViewHolder.materialEdgeTop.setBackground(material);
-        doorViewHolder.materialEdgeBottom.setBackground(material);
-        doorViewHolder.materialName.setText(materialName);
+        holder.materialEdgeTop.setBackground(material);
+        holder.materialEdgeBottom.setBackground(material);
+        holder.materialName.setText(materialName);
 
         //Set the attributed of list_view_number_item views
         int imageId = mContext.getResources().getIdentifier(
                 currentItem.getFirstImage(), "drawable", mContext.getPackageName());
 
-        doorViewHolder.panelImage.setImageResource(imageId);
+        holder.panelImage.setImageResource(imageId);
 
-        doorViewHolder.panelName.setText(stringListToString(currentItem.getName()));
-        doorViewHolder.panelPrice.setText(String.valueOf(currentItem.getPrice()));
-
-        return currentListViewItem;
+        holder.panelName.setText(stringListToString(currentItem.getName()));
+        holder.panelPrice.setText(String.valueOf(currentItem.getPrice()));
     }
-
 
     /**
      * Special method that creates a unique view for an artistic door item
      *
      * @param currentItem
-     * @param currentListViewItem
-     * @return
+     * @param holder
      */
-    private View populateHandleItem(Item currentItem, View currentListViewItem) {
+    private void populateHandleItem(Item currentItem, HandleViewHolder holder) {
 
-        HandleViewHolder handleViewHolder = new HandleViewHolder(currentListViewItem);
-
-        handleViewHolder.panelName.setText(stringListToString(currentItem.getName()));
+        holder.panelName.setText(stringListToString(currentItem.getName()));
 
         //Set the attributed of list_view_number_item views
         int imageId = mContext.getResources().getIdentifier(
@@ -209,9 +244,9 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> { 
         int galleryImage2Id = mContext.getResources().getIdentifier(currentItem.getImage().get(2),
                 "drawable", mContext.getPackageName());
 
-        handleViewHolder.panelImage.setImageResource(imageId);
-        handleViewHolder.galleryImage1.setImageResource(galleryImage1Id);
-        handleViewHolder.galleryImage2.setImageResource(galleryImage2Id);
+        holder.panelImage.setImageResource(imageId);
+        holder.galleryImage1.setImageResource(galleryImage1Id);
+        holder.galleryImage2.setImageResource(galleryImage2Id);
 
         int lockComponentId = mContext.getResources().getIdentifier("unlock",
                 "drawable", mContext.getPackageName());
@@ -221,11 +256,9 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> { 
                     mContext.getPackageName());
         }
 
-        handleViewHolder.lockStatus.setImageResource(lockComponentId);
+        holder.lockStatus.setImageResource(lockComponentId);
 
-        handleViewHolder.panelPrice.setText(String.valueOf(currentItem.getPrice()));
-
-        return currentListViewItem;
+        holder.panelPrice.setText(String.valueOf(currentItem.getPrice()));
     }
 
     private String stringListToString(List<String> stringList) {
@@ -235,5 +268,99 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> { 
         }
         return name.trim();
     }
+
+//    /**
+//     * Special method that creates a unique view for a door item depending on what the category of
+//     * that door is (either wooden, metal or glass).
+//     *
+//     * @param currentItem
+//     * @param currentListViewItem
+//     * @return
+//     */
+//    private View populateDoorItem(Item currentItem, View currentListViewItem) {
+//
+//        DoorViewHolder doorViewHolder = new DoorViewHolder(currentListViewItem);
+//
+//        Drawable material = mContext.getResources().getDrawable(R.drawable.gold_gradient);
+//        String materialName = "";
+//
+//        if (currentItem.getClass() == WoodenDoor.class) {
+//            material = mContext.getResources().getDrawable(R.drawable.wood_edge);
+//            materialName = stringListToString(currentItem.getName());
+//        } else if (currentItem.getClass() == MetalDoor.class) {
+//            material = mContext.getResources().getDrawable(R.drawable.metal_edge);
+//            materialName = stringListToString(currentItem.getName());
+//        } else if (currentItem.getClass() == GlassDoor.class) {
+//            material = mContext.getResources().getDrawable(R.drawable.glass_edge);
+//        } else {
+//            return null;
+//        }
+//
+//        doorViewHolder.materialEdgeTop.setBackground(material);
+//        doorViewHolder.materialEdgeBottom.setBackground(material);
+//        doorViewHolder.materialName.setText(materialName);
+//
+//        //Set the attributed of list_view_number_item views
+//        int imageId = mContext.getResources().getIdentifier(
+//                currentItem.getFirstImage(), "drawable", mContext.getPackageName());
+//
+//        doorViewHolder.panelImage.setImageResource(imageId);
+//
+//        doorViewHolder.panelName.setText(stringListToString(currentItem.getName()));
+//        doorViewHolder.panelPrice.setText(String.valueOf(currentItem.getPrice()));
+//
+//        return currentListViewItem;
+//    }
+
+
+//    /**
+//     * Special method that creates a unique view for an artistic door item
+//     *
+//     * @param currentItem
+//     * @param currentListViewItem
+//     * @return
+//     */
+//    private View populateHandleItem(Item currentItem, View currentListViewItem) {
+//
+//        HandleViewHolder handleViewHolder = new HandleViewHolder(currentListViewItem);
+//
+//        handleViewHolder.panelName.setText(stringListToString(currentItem.getName()));
+//
+//        //Set the attributed of list_view_number_item views
+//        int imageId = mContext.getResources().getIdentifier(
+//                currentItem.getFirstImage(), "drawable", mContext.getPackageName());
+//
+//        int galleryImage1Id = mContext.getResources().getIdentifier(currentItem.getImage().get(1),
+//                "drawable", mContext.getPackageName());
+//
+//        int galleryImage2Id = mContext.getResources().getIdentifier(currentItem.getImage().get(2),
+//                "drawable", mContext.getPackageName());
+//
+//        handleViewHolder.panelImage.setImageResource(imageId);
+//        handleViewHolder.galleryImage1.setImageResource(galleryImage1Id);
+//        handleViewHolder.galleryImage2.setImageResource(galleryImage2Id);
+//
+//        int lockComponentId = mContext.getResources().getIdentifier("unlock",
+//                "drawable", mContext.getPackageName());
+//
+//        if (currentItem.getLockable()) {
+//            lockComponentId = mContext.getResources().getIdentifier("lock", "drawable",
+//                    mContext.getPackageName());
+//        }
+//
+//        handleViewHolder.lockStatus.setImageResource(lockComponentId);
+//
+//        handleViewHolder.panelPrice.setText(String.valueOf(currentItem.getPrice()));
+//
+//        return currentListViewItem;
+//    }
+
+//    private String stringListToString(List<String> stringList) {
+//        String name = "";
+//        for (String s : stringList) {
+//            name = name + s;
+//        }
+//        return name.trim();
+//    }
 
 }
