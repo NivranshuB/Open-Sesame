@@ -18,7 +18,16 @@ public class ListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list);
 
         Intent thisIntent = getIntent();
+
         String type = thisIntent.getStringExtra("type");
-        Toast.makeText(this, "Showing items of " + type, Toast.LENGTH_LONG).show();
+
+        if (type != null) {
+            Toast.makeText(this, "Showing items of " + type, Toast.LENGTH_LONG).show();
+        } else {
+            String searchString = thisIntent.getStringExtra("id");
+            Toast.makeText(this, "Search for item:  " + searchString, Toast.LENGTH_LONG)
+                    .show();
+        }
+
     }
 }
