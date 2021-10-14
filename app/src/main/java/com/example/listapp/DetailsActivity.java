@@ -83,7 +83,7 @@ public class DetailsActivity extends AppCompatActivity {
 
         detailsActivityVh.itemName.setText(nameString);
         detailsActivityVh.description.setText(itemSelected.getDescription());
-        detailsActivityVh.price.setText("$" + Double.valueOf(itemSelected.getPrice()));
+        detailsActivityVh.price.setText("$" + String.format("%.2f", itemSelected.getPrice()));
         detailsActivityVh.itemSpecification.setText(dimensionString);
 
         ViewPager viewPager = findViewById(R.id.imageViewPager);
