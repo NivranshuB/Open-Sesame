@@ -15,7 +15,7 @@
                 android:height="56dp" />
         </shape>
     </item>
-    <item android:drawable="@drawable/unlockImage"
+    <item android:drawable="@drawable/unlock_image"
         android:translationZ="100dp"
         android:width="40dp"
         android:height="45dp"/>

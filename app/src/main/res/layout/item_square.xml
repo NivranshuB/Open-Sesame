@@ -59,7 +59,7 @@
                 android:layout_height="100dp"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
-                android:src="@drawable/wooden_door"></ImageView>
+                android:src="@drawable/door1"></ImageView>
 
             <View
                 android:id="@+id/panelBar"

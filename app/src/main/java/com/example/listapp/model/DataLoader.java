@@ -3,6 +3,7 @@ package com.example.listapp.model;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -144,7 +145,29 @@ public class DataLoader implements IDataLoader {
     @Override
     public List<Item> sortItemListByViewCount() {
         //todo
-        return null;
+        List<Item> resultList = new ArrayList<>();
+
+        doorRef.orderBy("viewCount", Query.Direction.DESCENDING).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                for (QueryDocumentSnapshot curr : queryDocumentSnapshots) {
+                    // Get data of each document to check the category type before deciding which type of Door child object to map to.
+                    Map<String, Object> currObj = curr.getData();
+                    for (String objType : (List<String>) currObj.get("categories")) {
+                        Item door = null;
+                        if (objType.equals(DOOR_TYPES[0])) {
+                            door = curr.toObject(MetalDoor.class);
+                        } else if (objType.equals(DOOR_TYPES[1])) {
+                            door = curr.toObject(GlassDoor.class);
+                        } else if (objType.equals(DOOR_TYPES[2])) {
+                            door = curr.toObject(WoodenDoor.class);
+                        }
+                        resultList.add(door);
+                    }
+                }
+            }
+        });
+        return resultList;
     }
 
     @Override

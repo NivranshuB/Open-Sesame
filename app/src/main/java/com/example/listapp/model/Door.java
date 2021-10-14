@@ -1,5 +1,7 @@
 package com.example.listapp.model;
 
+import com.google.firebase.firestore.PropertyName;
+
 import java.util.List;
 
 /**
@@ -11,12 +13,26 @@ import java.util.List;
  */
 public abstract class Door implements Item {
 
-    int id, weight, viewCount;
+    @PropertyName("id")
+    int id;
+    @PropertyName("weight")
+    int weight;
+    @PropertyName("viewCount")
+    int viewCount;
+    @PropertyName("price")
     float price;
+    @PropertyName("dimensions")
     List<Integer> dimensions;
+    @PropertyName("description")
     String description;
-    List<String> colour, image, name;
-
+    @PropertyName("colour")
+    List<String> colour;
+    @PropertyName("image")
+    List<String> image;
+    @PropertyName("name")
+    List<String> name;
+    @PropertyName("categories")
+    List<String> categories;
     /**
      * @return the Id of this Item instance
      */
@@ -27,6 +43,41 @@ public abstract class Door implements Item {
     public void setId(int newId) {
         id = newId;
     }
+
+    public List<String> getCategories() {
+        return categories;
+    }
+
+//    public void setCategories(List<String> categoriesList) {
+//        categories = categoriesList;
+//    }
+
+    public int getWeight() {
+        return weight;
+    }
+
+//    public void setWeight(int weightVal) {
+//        weight = weightVal;
+//    }
+
+
+    public List<Integer> getDimensions() {
+        return dimensions;
+    }
+
+//    public void setDimensions(List<Integer> dimensionsList) {
+//        dimensions = dimensionsList;
+//    }
+
+    public List<String> getColour() {
+        return colour;
+    }
+
+//    public void setColour(List<String> colourList) {
+//        colour = colourList;
+//    }
+
+
 
     /**
      * @return the price of this Item instance

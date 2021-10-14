@@ -54,7 +54,7 @@
                 android:layout_below="@id/panelName"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
-                android:src="@drawable/Handle3_1"></ImageView>
+                android:src="@drawable/lock_image"></ImageView>
 
             <LinearLayout
                 android:id="@+id/imageGallery"
@@ -72,14 +72,14 @@
                     android:layout_height="50dp"
                     android:layout_centerHorizontal="false"
                     android:layout_marginRight="10dp"
-                    android:src="@drawable/Handle3_2"></ImageView>
+                    android:src="@drawable/lock_image"></ImageView>
 
                 <ImageView
                     android:id="@+id/galleryImage2"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_centerHorizontal="false"
-                    android:src="@drawable/Handle3_3"></ImageView>
+                    android:src="@drawable/lock_image"></ImageView>
 
             </LinearLayout>
 
