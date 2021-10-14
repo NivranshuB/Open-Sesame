@@ -56,6 +56,7 @@
                 android:layout_marginTop="10dp"
                 android:src="@drawable/handle9_1"></ImageView>
 
+
             <LinearLayout
                 android:id="@+id/imageGallery"
                 android:layout_width="match_parent"
