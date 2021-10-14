@@ -26,7 +26,7 @@
                 android:layout_height="25dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:src="@drawable/unlock"
+                android:src="@drawable/ic_baseline_lock_24"
                 android:translationZ="100dp"></ImageView>
 
             <TextView
@@ -54,7 +54,8 @@
                 android:layout_below="@id/panelName"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
-                android:src="@drawable/lock_image"></ImageView>
+                android:src="@drawable/handle9_1"></ImageView>
+
 
             <LinearLayout
                 android:id="@+id/imageGallery"
@@ -72,14 +73,14 @@
                     android:layout_height="50dp"
                     android:layout_centerHorizontal="false"
                     android:layout_marginRight="10dp"
-                    android:src="@drawable/lock_image"></ImageView>
+                    android:src="@drawable/handle9_2"></ImageView>
 
                 <ImageView
                     android:id="@+id/galleryImage2"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_centerHorizontal="false"
-                    android:src="@drawable/lock_image"></ImageView>
+                    android:src="@drawable/handle9_3"></ImageView>
 
             </LinearLayout>
 

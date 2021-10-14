@@ -65,10 +65,6 @@ public abstract class Handle implements Item {
         return name;
     }
 
-//    public void setName(String newName) {
-//        name = newName;
-//    }
-
     /**
      * @return the full qualified name of the first image of this Item instance
      */

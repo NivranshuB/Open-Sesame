@@ -3,12 +3,21 @@ package com.example.listapp;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.util.Pair;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+
+import android.transition.Explode;
+import android.transition.Fade;
+import android.transition.TransitionManager;
+
 import android.util.Log;
+
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
@@ -40,15 +49,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.custom_toolbar);
         setSupportActionBar(toolbar);
 
-        RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.relative_layout_wooden);
-        relativeLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                System.out.println("List activity clicked");
-                Intent woodenIntent = new Intent(getBaseContext(), ListActivity.class);
-                startActivity(woodenIntent);
-            }
-        });
+        createCategoryClickListeners();
 
         CardView cardView = (CardView) findViewById(R.id.card_view_1);
         cardView.setOnClickListener(new View.OnClickListener() {
@@ -56,7 +57,10 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 System.out.println("Details activity clicked");
                 Intent detailIntent = new Intent(getBaseContext(), DetailsActivity.class);
-                startActivity(detailIntent);
+                ActivityOptionsCompat activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this,
+                        new Pair<>(view.findViewById(R.id.image_1), "topPicksImageTransition"));
+                ActivityCompat.startActivity(MainActivity.this, detailIntent, activityOptions.toBundle());
+//                startActivity(detailIntent);
             }
         });
     }
@@ -97,6 +101,48 @@ public class MainActivity extends AppCompatActivity {
         panelRecyclerView.setLayoutManager(linearLayoutManager);
         PanelViewAdapter panelViewAdapter = new PanelViewAdapter(panelItems, this);
         panelRecyclerView.setAdapter(panelViewAdapter);
+    }
+
+    private void createCategoryClickListeners() {
+        RelativeLayout relativeLayoutWooden = (RelativeLayout) findViewById(R.id.relative_layout_wooden);
+        relativeLayoutWooden.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent woodenIntent = new Intent(getBaseContext(), ListActivity.class);
+                woodenIntent.putExtra("categoryName", "wooden");
+                startActivity(woodenIntent);
+            }
+        });
+
+        RelativeLayout relativeLayoutMetal = (RelativeLayout) findViewById(R.id.relative_layout_metal);
+        relativeLayoutMetal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent woodenIntent = new Intent(getBaseContext(), ListActivity.class);
+                woodenIntent.putExtra("categoryName", "metal");
+                startActivity(woodenIntent);
+            }
+        });
+
+        RelativeLayout relativeLayoutGlass = (RelativeLayout) findViewById(R.id.relative_layout_glass);
+        relativeLayoutGlass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent woodenIntent = new Intent(getBaseContext(), ListActivity.class);
+                woodenIntent.putExtra("categoryName", "glass");
+                startActivity(woodenIntent);
+            }
+        });
+
+        RelativeLayout relativeLayoutHandles = (RelativeLayout) findViewById(R.id.relative_layout_handles);
+        relativeLayoutHandles.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent woodenIntent = new Intent(getBaseContext(), ListActivity.class);
+                woodenIntent.putExtra("categoryName", "doorHandle");
+                startActivity(woodenIntent);
+            }
+        });
     }
 
 }

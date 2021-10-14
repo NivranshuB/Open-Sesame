@@ -26,6 +26,13 @@
         <item name="elevation">8dp</item>
     </style>
 
+    <style name="MainToolbarTitleStyle">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:paddingLeft">4dp</item>
+    </style>
+
 
     <style name="CategoryCardView" parent="CardView">
         <item name="cardBackgroundColor">@android:color/transparent</item>
