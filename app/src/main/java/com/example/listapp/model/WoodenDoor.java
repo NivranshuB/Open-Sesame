@@ -1,5 +1,7 @@
 package com.example.listapp.model;
 
+import com.google.firebase.firestore.PropertyName;
+
 import java.util.List;
 
 /**
@@ -17,7 +19,7 @@ public class WoodenDoor extends Door {
     }
 
     public WoodenDoor(int id, int weight, int viewCount, float price,
-                     List<Integer> dimensions, List<String> name, String description,
+                     List<Long> dimensions, List<String> name, String description,
                      List<String> colour, List<String> image) {
         this.id = id;
         this.weight = weight;
@@ -33,8 +35,14 @@ public class WoodenDoor extends Door {
      * @return the full qualified name of the material image of this Item instance
      */
     @Override
+    @PropertyName("type")
     public String getMaterialType() {
         return materialType;
+    }
+
+    @PropertyName("type")
+    public void setMaterialType(String type) {
+        materialType = type;
     }
 
     public void setMaterialImage(String newMaterialType) {

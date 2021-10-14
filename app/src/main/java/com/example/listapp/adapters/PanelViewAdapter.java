@@ -25,11 +25,11 @@ public class PanelViewAdapter extends RecyclerView.Adapter<PanelViewAdapter.Pane
 //    private ArrayList<String> itemImagePaths = new ArrayList<>();
 //    private ArrayList<String> itemNames = new ArrayList<>();
 //    private ArrayList<String> itemPrices = new ArrayList<>();
-    private ArrayList<Item> itemList = new ArrayList<>();
+    private List<Item> itemList = new ArrayList<>();
     private Context current_context;
 
 
-    public PanelViewAdapter(ArrayList<Item> itemList, Context context) {
+    public PanelViewAdapter(List<Item> itemList, Context context) {
         this.itemList = itemList;
         current_context = context;
     }

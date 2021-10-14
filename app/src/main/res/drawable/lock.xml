@@ -12,7 +12,7 @@
                 android:height="56dp" />
         </shape>
     </item>
-    <item android:drawable="@drawable/lockImage"
+    <item android:drawable="@drawable/lock_image"
         android:translationZ="100dp"
         android:width="40dp"
         android:height="50dp"/>
