@@ -37,7 +37,7 @@ public class PanelViewAdapter extends RecyclerView.Adapter<PanelViewAdapter.Pane
     @NonNull
     @Override
     public PanelViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_square, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.panel_view_item, parent, false); //item_square
         return new PanelViewHolder(view);
     }
 
@@ -46,6 +46,10 @@ public class PanelViewAdapter extends RecyclerView.Adapter<PanelViewAdapter.Pane
         //holder.panelImage.setImageResource(itemList.get(position).getFirstImage());
         holder.panelName.setText(combineNameArray(itemList.get(position).getName()));
         holder.panelPrice.setText("$" + Float.toString(itemList.get(position).getPrice()));
+
+        int imageId = current_context.getResources().getIdentifier(
+                itemList.get(position).getFirstImage(), "drawable", current_context.getPackageName());
+        holder.panelImage.setImageResource(imageId);
     }
 
     private String combineNameArray(List<String> input) {

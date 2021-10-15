@@ -30,6 +30,7 @@ import android.provider.Settings;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.listapp.adapters.ItemAdapter;
 import com.example.listapp.adapters.PanelViewAdapter;
 import com.example.listapp.model.DataCallback;
 import com.example.listapp.model.DataLoader;
@@ -69,6 +70,8 @@ public class MainActivity extends AppCompatActivity {
         System.out.println("On creation");
         initPanelItems();
         Log.d("afterInit", "On creation after initPanelItems()");
+
+        initPanelRecyclerView();
 
         mainActivityVH = new ViewHolder();
 
@@ -111,18 +114,18 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.custom_toolbar);
         setSupportActionBar(toolbar);
 
-        CardView cardView = (CardView) findViewById(R.id.card_view_1);
-        cardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                System.out.println("Details activity clicked");
-                Intent detailIntent = new Intent(getBaseContext(), DetailsActivity.class);
-                ActivityOptionsCompat activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this,
-                        new Pair<>(view.findViewById(R.id.image_1), "topPicksImageTransition"));
-                ActivityCompat.startActivity(MainActivity.this, detailIntent, activityOptions.toBundle());
-//                startActivity(detailIntent);
-            }
-        });
+//        CardView cardView = (CardView) findViewById(R.id.card_view_1);
+//        cardView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                System.out.println("Details activity clicked");
+//                Intent detailIntent = new Intent(getBaseContext(), DetailsActivity.class);
+//                ActivityOptionsCompat activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this,
+//                        new Pair<>(view.findViewById(R.id.image_1), "topPicksImageTransition"));
+//                ActivityCompat.startActivity(MainActivity.this, detailIntent, activityOptions.toBundle());
+////                startActivity(detailIntent);
+//            }
+//        });
      }
 
     @Override
@@ -180,8 +183,21 @@ public class MainActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         RecyclerView panelRecyclerView = findViewById(R.id.panelRecyclerView);
         panelRecyclerView.setLayoutManager(linearLayoutManager);
-        PanelViewAdapter panelViewAdapter = new PanelViewAdapter(panelItems, this);
-        panelRecyclerView.setAdapter(panelViewAdapter);
+
+
+        DataLoader dataLoader = new DataLoader();
+        dataLoader.sortItemListByViewCount(new DataCallback() {
+            @Override
+            public void dataListCallback(List<Item> itemList) {
+                PanelViewAdapter panelViewAdapter = new PanelViewAdapter(itemList, MainActivity.this);
+                panelRecyclerView.setAdapter(panelViewAdapter);
+            }
+
+            @Override
+            public void itemCallback(Item item) {
+                // No implementation needed
+            }
+        });
     }
 
     private void createCategoryClickListeners() {
