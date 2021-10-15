@@ -221,8 +221,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> { 
 
         holder.panelImage.setImageResource(imageId);
 
-        holder.panelName.setText(stringListToString(currentItem.getName()));
-        holder.panelPrice.setText(String.valueOf(currentItem.getPrice()));
+        holder.panelName.setText(mergeStringList(currentItem.getName()));
+        holder.panelPrice.setText("$" + String.valueOf(currentItem.getPrice()));
     }
 
     /**
