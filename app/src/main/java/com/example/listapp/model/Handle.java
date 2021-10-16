@@ -1,17 +1,40 @@
 package com.example.listapp.model;
 
+import com.google.firebase.firestore.Exclude;
+import com.google.firebase.firestore.PropertyName;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Handle implements Item {
 
-    int id, height, width, length, weight, price, viewCount;
-    List<String> name;
-    List<String> colors;
-    List<String> images;
+    @PropertyName("id")
+    int id;
+    @PropertyName("weight")
+    int weight;
+    @PropertyName("viewCount")
+    int viewCount;
+    @PropertyName("price")
+    float price;
+    @PropertyName("dimensions")
     List<Long> dimensions;
+    @PropertyName("description")
     String description;
+    @PropertyName("colour")
+    List<String> colour;
+    @PropertyName("image")
+    List<String> image;
+    @PropertyName("name")
+    List<String> name;
+    @Exclude
+    List<String> categories;
+    @Exclude
+    String firestoreID;
+    @PropertyName("lockable")
     Boolean lockable;
+    @PropertyName("lockType")
     String lockType;
+
 
     /**
      * @return the Id of this Item instance
@@ -20,8 +43,11 @@ public abstract class Handle implements Item {
         return id;
     }
 
-    public void setId(int newId) {
-        id = newId;
+    /**
+     * @return the Firestore ID of the Item instance
+     */
+    public String getFirestoreID() {
+        return firestoreID;
     }
 
     /**
@@ -70,7 +96,7 @@ public abstract class Handle implements Item {
      * @return the full qualified name of the first image of this Item instance
      */
     public String getFirstImage() {
-        return images.get(0);
+        return image.get(0);
     }
 
     /**
@@ -78,11 +104,11 @@ public abstract class Handle implements Item {
      * material image)
      */
     public List<String> getImage() {
-        return images;
+        return image;
     }
 
     public void setImages(List<String> newImageUrls) {
-        images = newImageUrls;
+        image = newImageUrls;
     }
 
     /**
@@ -119,9 +145,18 @@ public abstract class Handle implements Item {
     }
 
     /**
-     * Returns the dimensions array of a Door item.
+     * @return the dimensions array of a Door item.
      */
     public List<Long> getDimensions() {
         return dimensions;
+    }
+
+    /**
+     * @return the list of categories that the item is a member of
+     */
+    public List<String> getCategories(){
+        List<String> category = new ArrayList<>();
+        category.add("handle");
+        return category;
     }
 }

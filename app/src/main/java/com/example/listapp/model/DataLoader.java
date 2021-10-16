@@ -33,6 +33,7 @@ public class DataLoader implements IDataLoader {
 
     private HashMap<String, ArrayList<Item>> doorMap = new HashMap<>();
     private String[] DOOR_TYPES = {"metallic", "glass", "wooden"};
+    private String HANDLE_TYPE = "handle";
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference doorRef = db.collection("door");
     private CollectionReference handleRef = db.collection("handles");
@@ -180,7 +181,7 @@ public class DataLoader implements IDataLoader {
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 DocumentSnapshot docSnap = queryDocumentSnapshots.getDocuments().get(0);
                 Map<String, Object> currObj = queryDocumentSnapshots.getDocuments().get(0).getData();
-                String objType = (String)currObj.get("categories");
+                String objType = (String) currObj.get("categories");
 //                StringBuilder mapAsString = new StringBuilder("{");
 //                for (String key : currObj.keySet()) {
 //                    mapAsString.append(key + "=" + currObj.get(key) + ", ");
@@ -204,91 +205,93 @@ public class DataLoader implements IDataLoader {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 DocumentSnapshot docSnap = queryDocumentSnapshots.getDocuments().get(0);
-                Item i = null;
+                Item i;
                 i = docSnap.toObject(DoorHandle.class);
                 callback.itemCallback(i);
                 item[0] = i;
+            }
+        });
     }
 
-    @Override
-    public void sortItemListByViewCount(DataCallback callback) {
-        List<Door> doorList = new ArrayList<>();
-        List<Handle> handleList = new ArrayList<>();
-        List<Item> itemList = new ArrayList<>();
+        public void sortItemListByViewCount(DataCallback callback) {
+            List<Door> doorList = new ArrayList<>();
+            List<Handle> handleList = new ArrayList<>();
+            List<Item> itemList = new ArrayList<>();
 
-        doorRef.orderBy("viewCount", Query.Direction.DESCENDING).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-            @Override
-            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                for (QueryDocumentSnapshot curr : queryDocumentSnapshots) {
-                    // Get data of each document to check the category type before deciding which type of Door child object to map to.
-                    Map<String, Object> currObj = curr.getData();
-                    for (String objType : (List<String>) currObj.get("categories")) {
-                        Door door = null;
-                        if (objType.equals(DOOR_TYPES[0])) {
-                            door = curr.toObject(MetalDoor.class);
-                        } else if (objType.equals(DOOR_TYPES[1])) {
-                            door = curr.toObject(GlassDoor.class);
-                        } else if (objType.equals(DOOR_TYPES[2])) {
-                            door = curr.toObject(WoodenDoor.class);
+            doorRef.orderBy("viewCount", Query.Direction.DESCENDING).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                @Override
+                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                    for (QueryDocumentSnapshot curr : queryDocumentSnapshots) {
+                        // Get data of each document to check the category type before deciding which type of Door child object to map to.
+                        Map<String, Object> currObj = curr.getData();
+                        for (String objType : (List<String>) currObj.get("categories")) {
+                            Door door = null;
+                            if (objType.equals(DOOR_TYPES[0])) {
+                                door = curr.toObject(MetalDoor.class);
+                            } else if (objType.equals(DOOR_TYPES[1])) {
+                                door = curr.toObject(GlassDoor.class);
+                            } else if (objType.equals(DOOR_TYPES[2])) {
+                                door = curr.toObject(WoodenDoor.class);
+                            }
+                            doorList.add(door);
                         }
-                        doorList.add(door);
                     }
                 }
-            }
-        });
+            });
 
-        handleRef.orderBy("viewCount", Query.Direction.DESCENDING).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-            @Override
-            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                for (QueryDocumentSnapshot curr : queryDocumentSnapshots) {
-                    Handle handle = curr.toObject(DoorHandle.class);
-                    handleList.add(handle);
+            handleRef.orderBy("viewCount", Query.Direction.DESCENDING).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                @Override
+                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                    for (QueryDocumentSnapshot curr : queryDocumentSnapshots) {
+                        Handle handle = curr.toObject(DoorHandle.class);
+                        handleList.add(handle);
+                    }
+
                 }
-
+            });
+            int doorPointer = 0, handlePointer = 0, itemPointer = 0;
+            while (doorPointer < doorList.size() && handlePointer < handleList.size()) {
+                if (doorList.get(doorPointer).getViewCount() > handleList.get(handlePointer).getViewCount()) {
+                    itemList.add(doorList.get(doorPointer));
+                    doorPointer++;
+                    itemPointer++;
+                } else {
+                    itemList.add(handleList.get(handlePointer));
+                    handlePointer++;
+                    itemPointer++;
+                }
             }
-        });
-        int doorPointer=0, handlePointer=0, itemPointer=0;
-        while (doorPointer < doorList.size() && handlePointer < handleList.size()) {
-            if (doorList.get(doorPointer).getViewCount() > handleList.get(handlePointer).getViewCount()) {
+            while (doorPointer < doorList.size()) {
                 itemList.add(doorList.get(doorPointer));
-                doorPointer++;
-                itemPointer++;
-            } else {
+            }
+            while (handlePointer < handleList.size()) {
                 itemList.add(handleList.get(handlePointer));
-                handlePointer++;
-                itemPointer++;
+            }
+            callback.dataListCallback(itemList);
+        }
+
+
+        public void persistData(Item itemChanged) {
+            String category = itemChanged.getCategories().get(0);
+
+            if (Arrays.asList(DOOR_TYPES).contains(category)) {
+                doorRef.document(itemChanged.getFirestoreID()).update("viewCount", itemChanged.getViewCount());
+            } else if (category.equals(HANDLE_TYPE)) {
+                handleRef.document(itemChanged.getFirestoreID()).update("viewCount", itemChanged.getViewCount());
             }
         }
-        while (doorPointer < doorList.size()) {
-            itemList.add(doorList.get(doorPointer));
-        }
-        while (handlePointer < handleList.size()) {
-            itemList.add(handleList.get(handlePointer));
-        }
-        callback.dataListCallback(itemList);
-    }
 
-    @Override
-    public void persistData(Item itemChanged) {
-
-    }
-
-
-    }
-
-
-
-    /**
-     * Initialise the maps to store data.
-     */
-    private void initialiseMap() {
-
-        for (String doorType : DOOR_TYPES) {
-            doorMap.put(doorType, new ArrayList<Item>());
+       /**
+         * Initialise the maps to store data.
+         */
+        private void initialiseMap() {
+            for (String doorType : DOOR_TYPES) {
+                doorMap.put(doorType, new ArrayList<Item>());
+            }
         }
 
-    }
 }
+
 
 // Implementation to print entire map as string (for debugging purposes)
 //    Map<String, Object> currObj = queryDocumentSnapshots.getDocuments().get(0).getData();

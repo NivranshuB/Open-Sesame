@@ -2,6 +2,7 @@ package com.example.listapp.model;
 
 import android.util.Log;
 
+import com.google.firebase.firestore.Exclude;
 import com.google.firebase.firestore.PropertyName;
 
 import java.util.List;
@@ -35,12 +36,21 @@ public abstract class Door implements Item {
     List<String> name;
     @PropertyName("categories")
     List<String> categories;
+    @Exclude
+    String firestoreID;
 
     /**
      * @return the Id of this Item instance
      */
     public int getId() {
         return id;
+    }
+
+    /**
+     * @return the Firestore ID of this Item instance
+     */
+    public String getFirestoreID(){
+        return firestoreID;
     }
 
     /**

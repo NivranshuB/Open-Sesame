@@ -18,6 +18,11 @@ public interface Item {
     int getId();
 
     /**
+     * @return the Firestore ID of the Item instance
+     */
+    String getFirestoreID();
+
+    /**
      * @return the name of this Item instance
      */
     List<String> getName();
@@ -74,5 +79,13 @@ public interface Item {
      */
     String getLockType();
 
+    /**
+     * @return list of dimensions of the items (height, length, width)
+     */
     List<Long> getDimensions();
+
+    /**
+     * @return list of categories that the item is a member of
+     */
+    List<String> getCategories();
 }
