@@ -25,6 +25,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.provider.Settings;
@@ -74,12 +76,22 @@ public class MainActivity extends AppCompatActivity {
         initPanelItems();
         Log.d("afterInit", "On creation after initPanelItems()");
 
+        mainActivityVH = new ViewHolder();
+
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.panelRecyclerView);
         recyclerView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override
             public boolean onPreDraw() {
                 if (panelViewDone) {
                     recyclerView.getViewTreeObserver().removeOnPreDrawListener(this);
+
+                    Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_up);
+                    Animation panelViewAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_from_right);
+                    mainActivityVH.wooden_category_button.startAnimation(animation);
+                    mainActivityVH.metal_category_button.startAnimation(animation);
+                    mainActivityVH.glass_category_button.startAnimation(animation);
+                    mainActivityVH.handle_category_button.startAnimation(animation);
+                    findViewById(R.id.panelRecyclerView).startAnimation(panelViewAnimation);
                     return true;
                 } else {
                     return false;
@@ -89,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
 
         initPanelRecyclerView();
 
-        mainActivityVH = new ViewHolder();
+
 
         mainActivityVH.wooden_category_button.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -97,6 +97,12 @@ public class DetailsActivity extends AppCompatActivity {
         detailsActivityVh.price.setText("$" + String.format("%.2f", itemSelected.getPrice()));
         detailsActivityVh.itemSpecification.setText(dimensionString);
 
+        RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.description_relative_layout);
+        Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_up);
+        relativeLayout.startAnimation(animation);
+
+        ViewCompat.setTransitionName(findViewById(R.id.imageViewPager), "topPicksImageTransition");
+
         ViewPager viewPager = findViewById(R.id.imageViewPager);
         ImageAdapter adapter = new ImageAdapter(this, itemSelected.getImage());
         viewPager.setAdapter(adapter);
@@ -127,11 +133,6 @@ public class DetailsActivity extends AppCompatActivity {
 
         itemSelected = new WoodenDoor(1, 560, 43, 50.50f, dimensions, name,
                 "dsafk sadflkd dslfka dsa", colour, images);
-        RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.description_relative_layout);
-        Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_up);
-        relativeLayout.startAnimation(animation);
-
-        ViewCompat.setTransitionName(findViewById(R.id.imageViewPager), "topPicksImageTransition");
 
         itemSelected = new WoodenDoor(1, 560, 43, 50.50f, dimensions, name,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris et " +
                         "mattis elit, in fringilla tellus. Etiam aliquam efficitur urna, id " +
