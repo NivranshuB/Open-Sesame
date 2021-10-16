@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         RelativeLayout metal_category_button;
         RelativeLayout glass_category_button;
         RelativeLayout handle_category_button;
+        RecyclerView panel_recycler_view;
 
         public ViewHolder() {
             //The elements common among all items assigned here
@@ -57,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
             metal_category_button = findViewById(R.id.relative_layout_metal);
             glass_category_button = findViewById(R.id.relative_layout_glass);
             handle_category_button = findViewById(R.id.relative_layout_handles);
+            panel_recycler_view = findViewById(R.id.panelRecyclerView);
         }
     }
 
@@ -73,17 +75,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         System.out.println("On creation");
-        initPanelItems();
+//        initPanelItems();
         Log.d("afterInit", "On creation after initPanelItems()");
 
         mainActivityVH = new ViewHolder();
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.panelRecyclerView);
-        recyclerView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+        mainActivityVH.panel_recycler_view.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override
             public boolean onPreDraw() {
                 if (panelViewDone) {
-                    recyclerView.getViewTreeObserver().removeOnPreDrawListener(this);
+                    mainActivityVH.panel_recycler_view.getViewTreeObserver().removeOnPreDrawListener(this);
 
                     Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_up);
                     Animation panelViewAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_from_right);
@@ -100,8 +101,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         initPanelRecyclerView();
-
-
 
         mainActivityVH.wooden_category_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -169,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextSubmit(String s) {
                 Intent listActivity = new Intent(getBaseContext(), ListActivity.class);
-                listActivity.putExtra("id", s);
+                listActivity.putExtra("type", s);
                 startActivity(listActivity);
                 return false;
             }
@@ -209,16 +208,14 @@ public class MainActivity extends AppCompatActivity {
 
     private void initPanelRecyclerView() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        RecyclerView panelRecyclerView = findViewById(R.id.panelRecyclerView);
-        panelRecyclerView.setLayoutManager(linearLayoutManager);
-
+        mainActivityVH.panel_recycler_view.setLayoutManager(linearLayoutManager);
 
         DataLoader dataLoader = new DataLoader();
         dataLoader.sortItemListByViewCount(new DataCallback() {
             @Override
             public void dataListCallback(List<Item> itemList) {
                 PanelViewAdapter panelViewAdapter = new PanelViewAdapter(itemList, MainActivity.this);
-                panelRecyclerView.setAdapter(panelViewAdapter);
+                mainActivityVH.panel_recycler_view.setAdapter(panelViewAdapter);
                 panelViewDone = true;
             }
 
@@ -229,6 +226,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /**
     private void createCategoryClickListeners() {
         RelativeLayout relativeLayoutWooden = (RelativeLayout) findViewById(R.id.relative_layout_wooden);
         relativeLayoutWooden.setOnClickListener(new View.OnClickListener() {
@@ -269,6 +267,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(woodenIntent);
             }
         });
-    }
+    }**/
 
 }

@@ -6,6 +6,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Toast;
 
 import com.example.listapp.adapters.ItemAdapter;
@@ -16,7 +19,7 @@ import com.example.listapp.model.Item;
 
 import java.util.List;
 
-public class ListActivity extends AppCompatActivity {
+public class ListActivity extends AppCompatActivity implements ItemAdapter.OnItemClickListener {
 
     ItemAdapter itemAdapter;
     RecyclerView recyclerView;
@@ -28,19 +31,35 @@ public class ListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list);
 
         recyclerView = (RecyclerView) findViewById(R.id.grid_recycler_view);
-        dataLoader = new DataLoader();
-        dataLoader.initialiseData();
+        //dataLoader = new DataLoader();
+        //dataLoader.initialiseData();
 
         Intent intent = getIntent();
         String categoryName = intent.getStringExtra("type");
-        if (!(categoryName == null) && categoryName.equals("doorHandle")) {
+
+        if (!(categoryName == null) && categoryName.equals("handle")) {
 //            itemAdapter = new ItemAdapter(this, R.layout.door_handle_square, dataLoader.getItemsByCriteria(categoryName));
+            DataLoader dataLoader = new DataLoader();
+            dataLoader.getItemsByCriteria(categoryName, new DataCallback() {
+                @Override
+                public void dataListCallback(List<Item> itemList) {
+                    itemAdapter = new ItemAdapter(ListActivity.this, R.layout.door_handle_square,
+                            itemList, ListActivity.this);
+                    recyclerView.setAdapter(itemAdapter);
+                }
+
+                @Override
+                public void itemCallback(Item item) {
+                    // No implementation needed
+                }
+            });
         } else {
             DataLoader dataLoader = new DataLoader();
             dataLoader.getItemsByCriteria(categoryName, new DataCallback() {
                 @Override
                 public void dataListCallback(List<Item> itemList) {
-                    itemAdapter = new ItemAdapter(ListActivity.this, R.layout.item_square, itemList);
+                    itemAdapter = new ItemAdapter(ListActivity.this, R.layout.item_square,
+                            itemList, ListActivity.this);
                     recyclerView.setAdapter(itemAdapter);
                 }
 
@@ -59,5 +78,13 @@ public class ListActivity extends AppCompatActivity {
         }
 
 
+    }
+
+    @Override
+    public void onItemClick(int itemId) {
+        Log.d("CREATION", "onNoteClick: Clicked item id " + itemId);
+        Intent listActivity = new Intent(getBaseContext(), DetailsActivity.class);
+        listActivity.putExtra("id", "" + itemId);
+        startActivity(listActivity);
     }
 }

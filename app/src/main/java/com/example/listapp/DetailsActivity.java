@@ -49,6 +49,8 @@ public class DetailsActivity extends AppCompatActivity {
     Item itemSelected;
     IDataLoader dataLoader = new DataLoader();
 
+    String nameString = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,7 +68,7 @@ public class DetailsActivity extends AppCompatActivity {
         Toast.makeText(this, "Showing item with id " + itemId, Toast.LENGTH_LONG).show();
 
         if (itemId != null) {
-            int id = Integer.valueOf(itemId);
+            int id = Integer.parseInt(itemId);
             dataLoader.getItemByID(id, new DataCallback() {
                 @Override
                 public void dataListCallback(List<Item> itemList) {
@@ -76,36 +78,38 @@ public class DetailsActivity extends AppCompatActivity {
                 @Override
                 public void itemCallback(Item item) {
                     itemSelected = item;
+                    for (String s : itemSelected.getName()) {
+                        nameString += s + " ";
+                    }
+                    List<Long> dimensions = itemSelected.getDimensions();
+                    String dimensionString = dimensions.get(0) + " x " + dimensions.get(1) + " x " +
+                            dimensions.get(2) + " (mm)";
+
+                    detailsActivityVh.itemName.setText(nameString);
+                    detailsActivityVh.description.setText(itemSelected.getDescription());
+                    detailsActivityVh.price.setText("$" + String.format("%.2f", itemSelected.getPrice()));
+                    detailsActivityVh.itemSpecification.setText(dimensionString);
+
+                    RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.description_relative_layout);
+                    Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_up);
+                    relativeLayout.startAnimation(animation);
+
+                    ViewCompat.setTransitionName(findViewById(R.id.imageViewPager), "topPicksImageTransition");
+
+                    ViewPager viewPager = findViewById(R.id.imageViewPager);
+                    ImageAdapter adapter = new ImageAdapter(DetailsActivity.this, itemSelected.getImage());
+                    viewPager.setAdapter(adapter);
                 }
             });
         } else {
             createDefaultItem();
         }
 
-        String nameString = "";
 
-        for (String s : itemSelected.getName()) {
-            nameString += s + " ";
-        }
 
-        List<Long> dimensions = itemSelected.getDimensions();
-        String dimensionString = dimensions.get(0) + " x " + dimensions.get(1) + " x " +
-                dimensions.get(2) + " (mm)";
 
-        detailsActivityVh.itemName.setText(nameString);
-        detailsActivityVh.description.setText(itemSelected.getDescription());
-        detailsActivityVh.price.setText("$" + String.format("%.2f", itemSelected.getPrice()));
-        detailsActivityVh.itemSpecification.setText(dimensionString);
 
-        RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.description_relative_layout);
-        Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_up);
-        relativeLayout.startAnimation(animation);
 
-        ViewCompat.setTransitionName(findViewById(R.id.imageViewPager), "topPicksImageTransition");
-
-        ViewPager viewPager = findViewById(R.id.imageViewPager);
-        ImageAdapter adapter = new ImageAdapter(this, itemSelected.getImage());
-        viewPager.setAdapter(adapter);
     }
 
     private void createDefaultItem() {

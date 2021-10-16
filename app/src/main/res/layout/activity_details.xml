@@ -33,8 +33,7 @@
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/imageViewPager"
                 android:layout_width="match_parent"
-                android:layout_height="360dp">
-            </androidx.viewpager.widget.ViewPager>
+                android:layout_height="360dp"></androidx.viewpager.widget.ViewPager>
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -67,38 +66,37 @@
                             style="@style/MainActivityCategoryTitle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="0"
                             android:layout_alignParentRight="true"
+                            android:layout_weight="0"
                             android:text="$230.98" />
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/description_box"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/title_box"
-                        android:id="@+id/description_box"
                         android:layout_marginTop="16dp"
                         android:background="@drawable/border_bar"
                         android:orientation="vertical"
                         android:paddingLeft="16dp"
-
                         android:paddingRight="16dp"
                         android:paddingBottom="16dp">
 
-                    <TextView
-                        android:id="@+id/item_description_title"
-                        style="@style/DetailsActivityDescriptionHeadingStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Description" />
+                        <TextView
+                            android:id="@+id/item_description_title"
+                            style="@style/DetailsActivityDescriptionHeadingStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="8dp"
+                            android:text="Description" />
 
-                    <TextView
-                        android:id="@+id/item_description_text"
-                        style="@style/DetailsActivityDescriptionTextStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/item_description_title"
-                        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris et mattis elit, in fringilla tellus. Etiam aliquam efficitur urna, id facilisis ligula porta id. Curabitur libero ligula, pulvinar ac convallis nec, hendrerit a lacus." />
+                        <TextView
+                            android:id="@+id/item_description_text"
+                            style="@style/DetailsActivityDescriptionTextStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris et mattis elit, in fringilla tellus. Etiam aliquam efficitur urna, id facilisis ligula porta id. Curabitur libero ligula, pulvinar ac convallis nec, hendrerit a lacus." />
 
                     </LinearLayout>
 
