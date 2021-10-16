@@ -18,7 +18,7 @@ public class GlassDoor extends Door {
 
     public GlassDoor(int id, int weight, int viewCount, float price,
                      List<Long> dimensions, List<String> name, String description,
-                     List<String> colour, List<String> image) {
+                     List<String> colour, List<String> image, String firestoreID) {
         this.id = id;
         this.weight = weight;
         this.viewCount = viewCount;

@@ -24,12 +24,16 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewTreeObserver;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.provider.Settings;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.listapp.adapters.ItemAdapter;
 import com.example.listapp.adapters.PanelViewAdapter;
 import com.example.listapp.model.DataCallback;
 import com.example.listapp.model.DataLoader;
@@ -46,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         RelativeLayout metal_category_button;
         RelativeLayout glass_category_button;
         RelativeLayout handle_category_button;
+        RecyclerView panel_recycler_view;
 
         public ViewHolder() {
             //The elements common among all items assigned here
@@ -53,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
             metal_category_button = findViewById(R.id.relative_layout_metal);
             glass_category_button = findViewById(R.id.relative_layout_glass);
             handle_category_button = findViewById(R.id.relative_layout_handles);
+            panel_recycler_view = findViewById(R.id.panelRecyclerView);
         }
     }
 
@@ -62,15 +68,39 @@ public class MainActivity extends AppCompatActivity {
 
     ViewHolder mainActivityVH;
 
+    boolean panelViewDone = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         System.out.println("On creation");
-        initPanelItems();
+//        initPanelItems();
         Log.d("afterInit", "On creation after initPanelItems()");
 
         mainActivityVH = new ViewHolder();
+
+        mainActivityVH.panel_recycler_view.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+                if (panelViewDone) {
+                    mainActivityVH.panel_recycler_view.getViewTreeObserver().removeOnPreDrawListener(this);
+
+                    Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_up);
+                    Animation panelViewAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_from_right);
+                    mainActivityVH.wooden_category_button.startAnimation(animation);
+                    mainActivityVH.metal_category_button.startAnimation(animation);
+                    mainActivityVH.glass_category_button.startAnimation(animation);
+                    mainActivityVH.handle_category_button.startAnimation(animation);
+                    findViewById(R.id.panelRecyclerView).startAnimation(panelViewAnimation);
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        });
+
+        initPanelRecyclerView();
 
         mainActivityVH.wooden_category_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,19 +141,19 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.custom_toolbar);
         setSupportActionBar(toolbar);
 
-        CardView cardView = (CardView) findViewById(R.id.card_view_1);
-        cardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                System.out.println("Details activity clicked");
-                Intent detailIntent = new Intent(getBaseContext(), DetailsActivity.class);
-                ActivityOptionsCompat activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this,
-                        new Pair<>(view.findViewById(R.id.image_1), "topPicksImageTransition"));
-                ActivityCompat.startActivity(MainActivity.this, detailIntent, activityOptions.toBundle());
-//                startActivity(detailIntent);
-            }
-        });
-     }
+//        CardView cardView = (CardView) findViewById(R.id.card_view_1);
+//        cardView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                System.out.println("Details activity clicked");
+//                Intent detailIntent = new Intent(getBaseContext(), DetailsActivity.class);
+//                ActivityOptionsCompat activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this,
+//                        new Pair<>(view.findViewById(R.id.image_1), "topPicksImageTransition"));
+//                ActivityCompat.startActivity(MainActivity.this, detailIntent, activityOptions.toBundle());
+////                startActivity(detailIntent);
+//            }
+//        });
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -138,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextSubmit(String s) {
                 Intent listActivity = new Intent(getBaseContext(), ListActivity.class);
-                listActivity.putExtra("id", s);
+                listActivity.putExtra("type", s);
                 startActivity(listActivity);
                 return false;
             }
@@ -178,12 +208,25 @@ public class MainActivity extends AppCompatActivity {
 
     private void initPanelRecyclerView() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        RecyclerView panelRecyclerView = findViewById(R.id.panelRecyclerView);
-        panelRecyclerView.setLayoutManager(linearLayoutManager);
-        PanelViewAdapter panelViewAdapter = new PanelViewAdapter(panelItems, this);
-        panelRecyclerView.setAdapter(panelViewAdapter);
+        mainActivityVH.panel_recycler_view.setLayoutManager(linearLayoutManager);
+
+        DataLoader dataLoader = new DataLoader();
+        dataLoader.sortItemListByViewCount(new DataCallback() {
+            @Override
+            public void dataListCallback(List<Item> itemList) {
+                PanelViewAdapter panelViewAdapter = new PanelViewAdapter(itemList, MainActivity.this);
+                mainActivityVH.panel_recycler_view.setAdapter(panelViewAdapter);
+                panelViewDone = true;
+            }
+
+            @Override
+            public void itemCallback(Item item) {
+                // No implementation needed
+            }
+        });
     }
 
+    /**
     private void createCategoryClickListeners() {
         RelativeLayout relativeLayoutWooden = (RelativeLayout) findViewById(R.id.relative_layout_wooden);
         relativeLayoutWooden.setOnClickListener(new View.OnClickListener() {
@@ -224,6 +267,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(woodenIntent);
             }
         });
-    }
+    }**/
 
 }

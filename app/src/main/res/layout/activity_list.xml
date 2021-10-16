@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#f2f2f2"
     android:orientation="vertical"
     tools:context=".ListActivity">
 
@@ -11,7 +12,7 @@
         android:id="@+id/custom_toolbar_list"
         style="@style/CustomToolBarStyle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="?attr/actionBarSize" />
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -25,9 +26,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/custom_toolbar_list"
-        android:background="@drawable/rounded_corners_background"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:numColumns="2"
-        android:padding="16dp"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:spanCount="2"></androidx.recyclerview.widget.RecyclerView>
 </RelativeLayout>

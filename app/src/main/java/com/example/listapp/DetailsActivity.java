@@ -49,6 +49,8 @@ public class DetailsActivity extends AppCompatActivity {
     Item itemSelected;
     IDataLoader dataLoader = new DataLoader();
 
+    String nameString = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,7 +68,7 @@ public class DetailsActivity extends AppCompatActivity {
         Toast.makeText(this, "Showing item with id " + itemId, Toast.LENGTH_LONG).show();
 
         if (itemId != null) {
-            int id = Integer.valueOf(itemId);
+            int id = Integer.parseInt(itemId);
             dataLoader.getItemByID(id, new DataCallback() {
                 @Override
                 public void dataListCallback(List<Item> itemList) {
@@ -76,30 +78,38 @@ public class DetailsActivity extends AppCompatActivity {
                 @Override
                 public void itemCallback(Item item) {
                     itemSelected = item;
+                    for (String s : itemSelected.getName()) {
+                        nameString += s + " ";
+                    }
+                    List<Long> dimensions = itemSelected.getDimensions();
+                    String dimensionString = dimensions.get(0) + " x " + dimensions.get(1) + " x " +
+                            dimensions.get(2) + " (mm)";
+
+                    detailsActivityVh.itemName.setText(nameString);
+                    detailsActivityVh.description.setText(itemSelected.getDescription());
+                    detailsActivityVh.price.setText("$" + String.format("%.2f", itemSelected.getPrice()));
+                    detailsActivityVh.itemSpecification.setText(dimensionString);
+
+                    RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.description_relative_layout);
+                    Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_up);
+                    relativeLayout.startAnimation(animation);
+
+                    ViewCompat.setTransitionName(findViewById(R.id.imageViewPager), "topPicksImageTransition");
+
+                    ViewPager viewPager = findViewById(R.id.imageViewPager);
+                    ImageAdapter adapter = new ImageAdapter(DetailsActivity.this, itemSelected.getImage());
+                    viewPager.setAdapter(adapter);
                 }
             });
         } else {
             createDefaultItem();
         }
 
-        String nameString = "";
 
-        for (String s : itemSelected.getName()) {
-            nameString += s + " ";
-        }
 
-        List<Long> dimensions = itemSelected.getDimensions();
-        String dimensionString = dimensions.get(0) + " x " + dimensions.get(1) + " x " +
-                dimensions.get(2) + " (mm)";
 
-        detailsActivityVh.itemName.setText(nameString);
-        detailsActivityVh.description.setText(itemSelected.getDescription());
-        detailsActivityVh.price.setText("$" + String.format("%.2f", itemSelected.getPrice()));
-        detailsActivityVh.itemSpecification.setText(dimensionString);
 
-        ViewPager viewPager = findViewById(R.id.imageViewPager);
-        ImageAdapter adapter = new ImageAdapter(this, itemSelected.getImage());
-        viewPager.setAdapter(adapter);
+
     }
 
     private void createDefaultItem() {
@@ -127,22 +137,17 @@ public class DetailsActivity extends AppCompatActivity {
 
         itemSelected = new WoodenDoor(1, 560, 43, 50.50f, dimensions, name,
                 "dsafk sadflkd dslfka dsa", colour, images);
-        RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.description_relative_layout);
-        Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_up);
-        relativeLayout.startAnimation(animation);
-
-        ViewCompat.setTransitionName(findViewById(R.id.imageViewPager), "topPicksImageTransition");
 
         itemSelected = new WoodenDoor(1, 560, 43, 50.50f, dimensions, name,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris et " +
                         "mattis elit, in fringilla tellus. Etiam aliquam efficitur urna, id " +
                         "ligula porta id. Curabitur libero ligula, pulvinar ac convallis nec, " +
                         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris et " +
                         "mattis elit, in fringilla tellus. Etiam aliquam efficitur urna, id " +
-                        "ligula porta id. Curabitur libero ligula, pulvinar ac convallis nec, " +
+                        "ligula porta id. Curabitur libero\n\n ligula, pulvinar ac convallis nec, " +
                         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris et " +
                         "mattis elit, in fringilla tellus. Etiam aliquam efficitur urna, id " +
                         "ligula porta id. Curabitur libero ligula, pulvinar ac convallis nec, " +
-                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris et " +
+                        "Lorem ipsum dolor sit amet, consectetur adipisc\n\ning elit. Mauris et " +
                         "mattis elit, in fringilla tellus. Etiam aliquam efficitur urna, id " +
                         "ligula porta id. Curabitur libero ligula, pulvinar ac convallis nec, " +
                         "hendrerit a lacus.", colour, images);

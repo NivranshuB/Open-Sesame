@@ -26,7 +26,7 @@ public interface IDataLoader {
      * @return List of matching items
      *         If not matches return 'null'
      */
-    public void getItemsByString(String matchString, DataCallback callback);
+    public void getItemsByName(String matchString, DataCallback callback);
 
     /**
      * This method retrieves all the items from the database that belong to the same category as
@@ -38,15 +38,6 @@ public interface IDataLoader {
      */
     public void getItemsByCriteria(String categoryName, DataCallback callback);
 
-    /**
-     * This method retrieves a single item from the database which matches the name specified in the
-     * input, ignoring the casing of the input string.
-     *
-     * @param itemName: Name of item to retrieve
-     * @return Single item that has the name specified
-     *         If no matches return 'null'
-     */
-    public void getItemByName(String itemName, DataCallback callback);
 
     /**
      * This method retrieves all items from the database, sorts the items in decreasing order of
