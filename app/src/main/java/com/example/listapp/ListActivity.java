@@ -31,8 +31,8 @@ public class ListActivity extends AppCompatActivity implements ItemAdapter.OnIte
         setContentView(R.layout.activity_list);
 
         recyclerView = (RecyclerView) findViewById(R.id.grid_recycler_view);
-        dataLoader = new DataLoader();
-        dataLoader.initialiseData();
+        //dataLoader = new DataLoader();
+        //dataLoader.initialiseData();
 
         Intent intent = getIntent();
         String categoryName = intent.getStringExtra("type");
