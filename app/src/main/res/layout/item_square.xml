@@ -76,11 +76,12 @@
             <TextView
                 android:id="@+id/panelName"
                 android:layout_width="wrap_content"
+                style="@style/CardItemTextStyle"
                 android:layout_height="28dp"
                 android:layout_below="@+id/panelBar"
                 android:layout_centerHorizontal="true"
                 android:text="Door"
-                android:textSize="20sp"></TextView>
+                android:textSize="16sp"></TextView>
 
             <TextView
                 android:id="@+id/panelPrice"

@@ -72,13 +72,24 @@
                             android:text="$230.98" />
                     </LinearLayout>
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/title_box"
+                        android:id="@+id/description_box"
+                        android:layout_marginTop="16dp"
+                        android:background="@drawable/border_bar"
+                        android:orientation="vertical"
+                        android:paddingLeft="16dp"
+
+                        android:paddingRight="16dp"
+                        android:paddingBottom="16dp">
 
                     <TextView
                         android:id="@+id/item_description_title"
                         style="@style/DetailsActivityDescriptionHeadingStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/title_box"
                         android:text="Description" />
 
                     <TextView
@@ -89,33 +100,42 @@
                         android:layout_below="@id/item_description_title"
                         android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris et mattis elit, in fringilla tellus. Etiam aliquam efficitur urna, id facilisis ligula porta id. Curabitur libero ligula, pulvinar ac convallis nec, hendrerit a lacus." />
 
-                    <TextView
-                        android:id="@+id/item_specifications_title"
-                        style="@style/DetailsActivityDescriptionHeadingStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/item_description_text"
-                        android:layout_marginTop="15dp"
-                        android:text="Specifications" />
+                    </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/item_specification_text"
-                        style="@style/DetailsActivityDescriptionTextStyle"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/item_specifications_title"
-                        android:text="1560 x 651 x 42mm" />
+                        android:layout_below="@id/description_box"
+                        android:layout_marginTop="16dp"
+                        android:background="@drawable/border_bar"
+                        android:orientation="vertical"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp"
+                        android:paddingBottom="16dp">
 
-                    <TextView
-                        android:id="@+id/extra_text"
-                        style="@style/DetailsActivityDescriptionTextStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/item_specification_text"
-                        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris et mattis elit, in fringilla tellus. Etiam aliquam efficitur urna, id facilisis ligula porta id. Curabitur libero ligula, pulvinar ac convallis nec, hendrerit a lacus.
-\n\n
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris et mattis elit, in fringilla tellus. Etiam aliquam efficitur urna, id facilisis ligula porta id. Curabitur libero ligula, pulvinar ac convallis nec, hendrerit a lacus.\n
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris et mattis elit, in fringilla tellus. Etiam aliquam efficitur urna, id facilisis ligula porta id. Curabitur libero ligula, pulvinar ac convallis nec, hendrerit a lacus." />
+                        <TextView
+                            android:id="@+id/item_specifications_title"
+                            style="@style/DetailsActivityDescriptionHeadingStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/item_description_text"
+                            android:text="Specifications" />
+
+                        <TextView
+                            android:id="@+id/item_specification_text"
+                            style="@style/DetailsActivityDescriptionTextStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="1560 x 651 x 42mm" />
+
+                        <TextView
+                            android:id="@+id/extra_text"
+                            style="@style/DetailsActivityDescriptionTextStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Lorem ipsum dolor a teu" />
+                    </LinearLayout>
+
                 </RelativeLayout>
 
             </androidx.cardview.widget.CardView>
