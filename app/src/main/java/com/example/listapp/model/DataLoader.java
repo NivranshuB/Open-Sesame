@@ -44,7 +44,6 @@ public class DataLoader implements IDataLoader {
      */
     @Override
     public void initialiseData() {
-        initialiseMap();
 
         // Store doors if the query was successful.
         doorRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -72,8 +71,13 @@ public class DataLoader implements IDataLoader {
         });
     }
 
+    /**
+     * Method to retrieve Item objects from the Firestore database by matching the user specified search string to the stored names of Item documents on Firestore.
+     * @param matchString: string that we are looking for.
+     * @param callback callback instance to send notification and data to once the search is complete.
+     */
     @Override
-    public void getItemsByString(String matchString, DataCallback callback) {
+    public void getItemsByName(String matchString, DataCallback callback) {
         String[] matchList = matchString.split("\\s+");
         List<Item> resultList = new ArrayList<>();
 
@@ -94,13 +98,28 @@ public class DataLoader implements IDataLoader {
                         }
                         resultList.add(door);
                     }
-                    callback.dataListCallback(resultList);
                 }
             }
         });
+        handleRef.whereArrayContainsAny("name", Arrays.asList(matchList)).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                for (QueryDocumentSnapshot curr : queryDocumentSnapshots) {
+                    // Get data of each document to check the category type before deciding which type of Door child object to map to.
+                    Item handle = curr.toObject(DoorHandle.class);
+                    resultList.add(handle);
+                }
+            }
+        });
+        callback.dataListCallback(resultList);
     }
 
 
+    /**
+     * Method that retrieves all Items that are from the category selected by the user from the Firestore database.
+     * @param categoryName: name of selected category.
+     * @param callback callback instance to send notification and data once the search is complete.
+     */
     @Override
     public void getItemsByCriteria(String categoryName, DataCallback callback) {
         List<String> categoryList = new ArrayList<>();
@@ -113,12 +132,12 @@ public class DataLoader implements IDataLoader {
                 for (QueryDocumentSnapshot curr : queryDocumentSnapshots) {
                     // Get data of each document to check the category type before deciding which type of Door child object to map to.
                     Map<String, Object> currObj = curr.getData();
-                    StringBuilder mapAsString = new StringBuilder("{");
-                    for (String key : currObj.keySet()) {
-                        mapAsString.append(key + "=" + currObj.get(key) + ", ");
-                    }
-                    mapAsString.delete(mapAsString.length()-2, mapAsString.length()).append("}");
-                    Log.d("mapString", mapAsString.toString());
+//                    StringBuilder mapAsString = new StringBuilder("{");
+//                    for (String key : currObj.keySet()) {
+//                        mapAsString.append(key + "=" + currObj.get(key) + ", ");
+//                    }
+//                    mapAsString.delete(mapAsString.length()-2, mapAsString.length()).append("}");
+//                    Log.d("mapString", mapAsString.toString());
                     for (String objType : (List<String>) currObj.get("categories")) {
                         Item door = null;
                         if (objType.equals(DOOR_TYPES[0])) {
@@ -134,42 +153,25 @@ public class DataLoader implements IDataLoader {
                 }
             }
         });
-    }
-
-    @Override
-    public void getItemByName(String itemName, DataCallback callback) {
-        List<String> nameList = Arrays.asList(itemName.split(" "));
-        List<Item> resultList = new ArrayList<>();
-
-        doorRef.whereArrayContainsAny("name", nameList).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+        handleRef.whereArrayContainsAny("categories", categoryList).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 for (QueryDocumentSnapshot curr : queryDocumentSnapshots) {
                     // Get data of each document to check the category type before deciding which type of Door child object to map to.
-                    Map<String, Object> currObj = curr.getData();
-                    StringBuilder mapAsString = new StringBuilder("{");
-                    for (String key : currObj.keySet()) {
-                        mapAsString.append(key + "=" + currObj.get(key) + ", ");
-                    }
-                    mapAsString.delete(mapAsString.length() - 2, mapAsString.length()).append("}");
-                    Log.d("mapString", mapAsString.toString());
-                    for (String objType : (List<String>) currObj.get("categories")) {
-                        Item door = null;
-                        if (objType.equals(DOOR_TYPES[0])) {
-                            door = curr.toObject(MetalDoor.class);
-                        } else if (objType.equals(DOOR_TYPES[1])) {
-                            door = curr.toObject(GlassDoor.class);
-                        } else if (objType.equals(DOOR_TYPES[2])) {
-                            door = curr.toObject(WoodenDoor.class);
-                        }
-                        resultList.add(door);
-                    }
-                    callback.dataListCallback(resultList);
+                    Item handle = curr.toObject(DoorHandle.class);
+                    resultList.add(handle);
                 }
+                callback.dataListCallback(resultList);
             }
         });
     }
 
+
+    /**
+     * Method that retrieves the Item that the user selects (based on the Item id) from the Firestore database.
+     * @param id: Id of item to retrieve from database
+     * @param callback callback instance to send notification and data once the search is complete.
+     */
     public void getItemByID(int id, DataCallback callback) {
         final Item[] item = new Item[1];
         doorRef.whereEqualTo("id", id).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -197,12 +199,22 @@ public class DataLoader implements IDataLoader {
                 item[0] = i;
             }
         });
+        handleRef.whereEqualTo("id", id).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                DocumentSnapshot docSnap = queryDocumentSnapshots.getDocuments().get(0);
+                Item i = null;
+                i = docSnap.toObject(DoorHandle.class);
+                callback.itemCallback(i);
+                item[0] = i;
     }
 
     @Override
     public void sortItemListByViewCount(DataCallback callback) {
-        //todo
-        List<Item> resultList = new ArrayList<>();
+        List<Door> doorList = new ArrayList<>();
+        List<Handle> handleList = new ArrayList<>();
+        List<Item> itemList = new ArrayList<>();
 
         doorRef.orderBy("viewCount", Query.Direction.DESCENDING).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
@@ -211,7 +223,7 @@ public class DataLoader implements IDataLoader {
                     // Get data of each document to check the category type before deciding which type of Door child object to map to.
                     Map<String, Object> currObj = curr.getData();
                     for (String objType : (List<String>) currObj.get("categories")) {
-                        Item door = null;
+                        Door door = null;
                         if (objType.equals(DOOR_TYPES[0])) {
                             door = curr.toObject(MetalDoor.class);
                         } else if (objType.equals(DOOR_TYPES[1])) {
@@ -219,18 +231,51 @@ public class DataLoader implements IDataLoader {
                         } else if (objType.equals(DOOR_TYPES[2])) {
                             door = curr.toObject(WoodenDoor.class);
                         }
-                        resultList.add(door);
+                        doorList.add(door);
                     }
-                    callback.dataListCallback(resultList);
                 }
             }
         });
+
+        handleRef.orderBy("viewCount", Query.Direction.DESCENDING).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                for (QueryDocumentSnapshot curr : queryDocumentSnapshots) {
+                    Handle handle = curr.toObject(DoorHandle.class);
+                    handleList.add(handle);
+                }
+
+            }
+        });
+        int doorPointer=0, handlePointer=0, itemPointer=0;
+        while (doorPointer < doorList.size() && handlePointer < handleList.size()) {
+            if (doorList.get(doorPointer).getViewCount() > handleList.get(handlePointer).getViewCount()) {
+                itemList.add(doorList.get(doorPointer));
+                doorPointer++;
+                itemPointer++;
+            } else {
+                itemList.add(handleList.get(handlePointer));
+                handlePointer++;
+                itemPointer++;
+            }
+        }
+        while (doorPointer < doorList.size()) {
+            itemList.add(doorList.get(doorPointer));
+        }
+        while (handlePointer < handleList.size()) {
+            itemList.add(handleList.get(handlePointer));
+        }
+        callback.dataListCallback(itemList);
     }
 
     @Override
     public void persistData(Item itemChanged) {
-        //todo
+
     }
+
+
+    }
+
 
 
     /**
