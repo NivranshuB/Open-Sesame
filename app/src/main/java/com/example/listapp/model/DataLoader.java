@@ -138,7 +138,36 @@ public class DataLoader implements IDataLoader {
 
     @Override
     public void getItemByName(String itemName, DataCallback callback) {
-        //todo
+        List<String> nameList = Arrays.asList(itemName.split(" "));
+        List<Item> resultList = new ArrayList<>();
+
+        doorRef.whereArrayContainsAny("name", nameList).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                for (QueryDocumentSnapshot curr : queryDocumentSnapshots) {
+                    // Get data of each document to check the category type before deciding which type of Door child object to map to.
+                    Map<String, Object> currObj = curr.getData();
+                    StringBuilder mapAsString = new StringBuilder("{");
+                    for (String key : currObj.keySet()) {
+                        mapAsString.append(key + "=" + currObj.get(key) + ", ");
+                    }
+                    mapAsString.delete(mapAsString.length() - 2, mapAsString.length()).append("}");
+                    Log.d("mapString", mapAsString.toString());
+                    for (String objType : (List<String>) currObj.get("categories")) {
+                        Item door = null;
+                        if (objType.equals(DOOR_TYPES[0])) {
+                            door = curr.toObject(MetalDoor.class);
+                        } else if (objType.equals(DOOR_TYPES[1])) {
+                            door = curr.toObject(GlassDoor.class);
+                        } else if (objType.equals(DOOR_TYPES[2])) {
+                            door = curr.toObject(WoodenDoor.class);
+                        }
+                        resultList.add(door);
+                    }
+                    callback.dataListCallback(resultList);
+                }
+            }
+        });
     }
 
     public void getItemByID(int id, DataCallback callback) {
