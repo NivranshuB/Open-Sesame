@@ -21,7 +21,6 @@
     </style>
 
     <style name="CustomToolBarStyle" parent="CustomMainToolBarStyle">
-        <item name="buttonGravity">center_vertical</item>
         <item name="titleTextAppearance">@style/ToolbarTitleStyle</item>
         <item name="navigationIcon">@drawable/ic_baseline_arrow_back_24</item>
     </style>
@@ -30,6 +29,7 @@
         <item name="titleTextColor">@color/white</item>
         <item name="android:background">@color/colorPrimary</item>
         <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
+        <item name="buttonGravity">center_vertical</item>
         <item name="elevation">8dp</item>
     </style>
 

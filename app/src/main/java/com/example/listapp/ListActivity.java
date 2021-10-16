@@ -33,7 +33,7 @@ public class ListActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String categoryName = intent.getStringExtra("type");
-        if (categoryName.equals("doorHandle")) {
+        if (!(categoryName == null) && categoryName.equals("doorHandle")) {
 //            itemAdapter = new ItemAdapter(this, R.layout.door_handle_square, dataLoader.getItemsByCriteria(categoryName));
         } else {
             DataLoader dataLoader = new DataLoader();
@@ -53,9 +53,11 @@ public class ListActivity extends AppCompatActivity {
         }
 
 
+        if (!(categoryName == null)) {
+            Toolbar toolbar = (Toolbar) findViewById(R.id.custom_toolbar_list);
+            toolbar.setTitle(categoryName.toUpperCase());
+        }
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.custom_toolbar_list);
-        toolbar.setTitle(categoryName.toUpperCase());
 
     }
 }
