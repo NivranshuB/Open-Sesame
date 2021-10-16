@@ -147,14 +147,23 @@ public class DataLoader implements IDataLoader {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                DocumentSnapshot docSnap = queryDocumentSnapshots.getDocuments().get(0);
                 Map<String, Object> currObj = queryDocumentSnapshots.getDocuments().get(0).getData();
-                StringBuilder mapAsString = new StringBuilder("{");
-                for (String key : currObj.keySet()) {
-                    mapAsString.append(key + "=" + currObj.get(key) + ", ");
+                String objType = (String)currObj.get("categories");
+//                StringBuilder mapAsString = new StringBuilder("{");
+//                for (String key : currObj.keySet()) {
+//                    mapAsString.append(key + "=" + currObj.get(key) + ", ");
+//                }
+//                mapAsString.delete(mapAsString.length()-2, mapAsString.length()).append("}");
+//                Log.d("mapString", mapAsString.toString());
+                Item i = null;
+                if (objType.equals(DOOR_TYPES[0])) {
+                    i = docSnap.toObject(MetalDoor.class);
+                } else if (objType.equals(DOOR_TYPES[1])) {
+                    i = docSnap.toObject(GlassDoor.class);
+                } else if (objType.equals(DOOR_TYPES[2])) {
+                    i = docSnap.toObject(WoodenDoor.class);
                 }
-                mapAsString.delete(mapAsString.length()-2, mapAsString.length()).append("}");
-                Log.d("mapString", mapAsString.toString());
-                MetalDoor i = queryDocumentSnapshots.getDocuments().get(0).toObject(MetalDoor.class);
                 callback.itemCallback(i);
                 item[0] = i;
             }
