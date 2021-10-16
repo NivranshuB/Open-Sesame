@@ -24,6 +24,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.provider.Settings;
@@ -63,6 +64,8 @@ public class MainActivity extends AppCompatActivity {
 
     ViewHolder mainActivityVH;
 
+    boolean panelViewDone = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,10 +74,18 @@ public class MainActivity extends AppCompatActivity {
         initPanelItems();
         Log.d("afterInit", "On creation after initPanelItems()");
 
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-            getSupportActionBar().setHomeButtonEnabled(false);
-        }
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.panelRecyclerView);
+        recyclerView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+                if (panelViewDone) {
+                    recyclerView.getViewTreeObserver().removeOnPreDrawListener(this);
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        });
 
         initPanelRecyclerView();
 
@@ -131,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
 ////                startActivity(detailIntent);
 //            }
 //        });
-     }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -196,6 +207,7 @@ public class MainActivity extends AppCompatActivity {
             public void dataListCallback(List<Item> itemList) {
                 PanelViewAdapter panelViewAdapter = new PanelViewAdapter(itemList, MainActivity.this);
                 panelRecyclerView.setAdapter(panelViewAdapter);
+                panelViewDone = true;
             }
 
             @Override

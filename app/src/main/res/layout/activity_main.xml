@@ -18,7 +18,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingLeft="8dp">
+            android:paddingLeft="16dp">
 
             <TextView
                 android:id="@+id/main_activity_title"
@@ -26,6 +26,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/toolbar_logo"
+                android:paddingLeft="8dp"
                 android:text="@string/app_name" />
 
             <ImageView
