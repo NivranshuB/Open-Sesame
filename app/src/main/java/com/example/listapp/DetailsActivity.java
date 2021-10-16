@@ -66,7 +66,7 @@ public class DetailsActivity extends AppCompatActivity {
         Toast.makeText(this, "Showing item with id " + itemId, Toast.LENGTH_LONG).show();
 
         if (itemId != null) {
-            int id = Integer.valueOf(itemId);
+            int id = Integer.parseInt(itemId);
             dataLoader.getItemByID(id, new DataCallback() {
                 @Override
                 public void dataListCallback(List<Item> itemList) {

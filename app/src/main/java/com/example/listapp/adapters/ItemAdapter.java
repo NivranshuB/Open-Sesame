@@ -29,20 +29,36 @@ import java.util.List;
  */
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> { //ArrayAdapter,
 
-    protected class ViewHolder extends RecyclerView.ViewHolder {
+    public interface OnItemClickListener {
+        void onItemClick(int id);
+    }
+
+    protected class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         //The common views of an item card go here
         ImageView panelImage;
         View panelBar;
         TextView panelName;
         TextView panelPrice;
+        OnItemClickListener onItemClickListener;
 
-        public ViewHolder(View currentListViewItem) {
+        int id;
+
+        public ViewHolder(View currentListViewItem, OnItemClickListener listener) {
             super(currentListViewItem);
             //The elements common among all items assigned here
             panelImage = currentListViewItem.findViewById(R.id.panelImage);
             panelBar = currentListViewItem.findViewById(R.id.panelBar);
             panelName = currentListViewItem.findViewById(R.id.panelName);
             panelPrice = currentListViewItem.findViewById(R.id.panelPrice);
+
+            this.onItemClickListener = listener;
+
+            currentListViewItem.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            onItemClickListener.onItemClick(id);
         }
     }
 
@@ -50,14 +66,12 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> { 
         //The special views of a door card go here
         View materialEdgeTop;
         View materialEdgeBottom;
-        TextView materialName;
 
-        public DoorViewHolder(View currentListViewItem) {
-            super(currentListViewItem);
+        public DoorViewHolder(View currentListViewItem, OnItemClickListener oicl) {
+            super(currentListViewItem, oicl);
             //The special items of door items (wood door, metal door, glass door) assigned here
             materialEdgeTop = currentListViewItem.findViewById(R.id.materialEdgeTop);
-            materialEdgeBottom = currentListViewItem.findViewById(R.id.materialEdgeBottom);
-            materialName = currentListViewItem.findViewById(R.id.materialName);
+            //materialEdgeBottom = currentListViewItem.findViewById(R.id.materialEdgeBottom);
         }
     }
 
@@ -65,8 +79,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> { 
         //The special views of an doorknob card go here
         ImageView lockStatus, galleryImage1, galleryImage2;
 
-        public HandleViewHolder(View currentListViewItem) {
-            super(currentListViewItem);
+        public HandleViewHolder(View currentListViewItem, OnItemClickListener oicl) {
+            super(currentListViewItem, oicl);
             //The elements special to doorknobs assigned here
             lockStatus = currentListViewItem.findViewById(R.id.lockStatus);
             galleryImage1 = currentListViewItem.findViewById(R.id.galleryImage1);
@@ -77,12 +91,15 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> { 
     Context mContext;
     int layoutID;
     List<Item> items;
+    private OnItemClickListener mOnItemClickListener;
 
-    public ItemAdapter(@NonNull Context context, int resource, List<Item> objects) {
+    public ItemAdapter(@NonNull Context context, int resource, List<Item> objects,
+                       OnItemClickListener onItemClickListener) {
 //        super(context, resource, objects);
         mContext = context;
         layoutID = resource;
         items = objects;
+        mOnItemClickListener = onItemClickListener;
     }
 
     private static int DOOR_TYPE = 1;
@@ -112,11 +129,11 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> { 
 //            return new ViewHolder(view);
 //        }
         if (viewType == DOOR_TYPE) {
-            return new DoorViewHolder(view);
+            return new DoorViewHolder(view, mOnItemClickListener);
         } else if (viewType == HANDLE_TYPE) {
-            return new HandleViewHolder(view);
+            return new HandleViewHolder(view, mOnItemClickListener);
         } else {
-            return new ViewHolder(view);
+            return new ViewHolder(view, mOnItemClickListener);
         }
     }
 
@@ -124,6 +141,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> { 
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         //Get the Number object for the current position
         Item currentItem = items.get(position);
+        holder.id = currentItem.getId();
 
         if (holder.getItemViewType() == DOOR_TYPE) {
             DoorViewHolder viewHolder = (DoorViewHolder) holder;
@@ -212,8 +230,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> { 
         }
 
         holder.materialEdgeTop.setBackground(material);
-        holder.materialEdgeBottom.setBackground(material);
-        holder.materialName.setText(materialName);
+        //holder.materialEdgeBottom.setBackground(material);
 
         //Set the attributed of list_view_number_item views
         int imageId = mContext.getResources().getIdentifier(
@@ -221,8 +238,14 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> { 
 
         holder.panelImage.setImageResource(imageId);
 
-        holder.panelName.setText(stringListToString(currentItem.getName()));
-        holder.panelPrice.setText(String.valueOf(currentItem.getPrice()));
+        String name = "";
+
+        for (String s : currentItem.getName()) {
+            name += s + " ";
+        }
+
+        holder.panelName.setText(name);
+        holder.panelPrice.setText("NZ$" + String.format("%.2f", currentItem.getPrice()));
     }
 
     /**

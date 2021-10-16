@@ -138,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextSubmit(String s) {
                 Intent listActivity = new Intent(getBaseContext(), ListActivity.class);
-                listActivity.putExtra("id", s);
+                listActivity.putExtra("type", s);
                 startActivity(listActivity);
                 return false;
             }
@@ -184,6 +184,7 @@ public class MainActivity extends AppCompatActivity {
         panelRecyclerView.setAdapter(panelViewAdapter);
     }
 
+    /**
     private void createCategoryClickListeners() {
         RelativeLayout relativeLayoutWooden = (RelativeLayout) findViewById(R.id.relative_layout_wooden);
         relativeLayoutWooden.setOnClickListener(new View.OnClickListener() {
@@ -224,6 +225,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(woodenIntent);
             }
         });
-    }
+    }**/
 
 }
