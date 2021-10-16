@@ -12,7 +12,7 @@
         android:id="@+id/custom_toolbar_list"
         style="@style/CustomToolBarStyle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="?attr/actionBarSize" />
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -25,9 +25,9 @@
         android:id="@+id/grid_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/custom_toolbar_list"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_below="@id/custom_toolbar_list"
         android:numColumns="2"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:spanCount="2"></androidx.recyclerview.widget.RecyclerView>

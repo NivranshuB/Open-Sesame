@@ -71,6 +71,11 @@ public class MainActivity extends AppCompatActivity {
         initPanelItems();
         Log.d("afterInit", "On creation after initPanelItems()");
 
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            getSupportActionBar().setHomeButtonEnabled(false);
+        }
+
         initPanelRecyclerView();
 
         mainActivityVH = new ViewHolder();

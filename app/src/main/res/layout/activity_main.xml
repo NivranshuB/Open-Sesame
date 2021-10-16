@@ -13,15 +13,16 @@
         android:id="@+id/custom_toolbar"
         style="@style/CustomMainToolBarStyle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="?attr/actionBarSize">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:paddingLeft="8dp">
 
             <TextView
                 android:id="@+id/main_activity_title"
-                style="@style/MainToolbarTitleStyle"
+                style="@style/ToolbarTitleStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/toolbar_logo"
@@ -31,6 +32,7 @@
                 android:id="@+id/toolbar_logo"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
+                android:layout_centerVertical="true"
                 android:layout_gravity="center"
                 android:src="@drawable/logo" />
         </RelativeLayout>
