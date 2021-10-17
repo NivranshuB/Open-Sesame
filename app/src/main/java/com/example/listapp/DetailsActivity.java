@@ -6,6 +6,7 @@ import androidx.viewpager.widget.ViewPager;
 import androidx.core.view.ViewCompat;
 
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -16,6 +17,7 @@ import com.example.listapp.adapters.ImageAdapter;
 import com.example.listapp.model.DataCallback;
 import com.example.listapp.model.DataLoader;
 import com.example.listapp.model.Door;
+import com.example.listapp.model.DoorHandle;
 import com.example.listapp.model.IDataLoader;
 import com.example.listapp.model.Item;
 import com.example.listapp.model.WoodenDoor;
@@ -78,17 +80,33 @@ public class DetailsActivity extends AppCompatActivity {
                 @Override
                 public void itemCallback(Item item) {
                     itemSelected = item;
+                    Log.d("Update", "Item's view count being updated has id: " + item.getName() + ":" + item.getId());
+                    itemSelected.incrementViewCount();
+                    dataLoader.persistData(itemSelected);
+
                     for (String s : itemSelected.getName()) {
                         nameString += s + " ";
                     }
-                    List<Long> dimensions = itemSelected.getDimensions();
-                    String dimensionString = dimensions.get(0) + " x " + dimensions.get(1) + " x " +
-                            dimensions.get(2) + " (mm)";
+
+                    if (itemSelected.getClass() != DoorHandle.class) {
+                        List<Long> dimensions = itemSelected.getDimensions();
+                        String dimensionString = dimensions.get(0) + " x " + dimensions.get(1) + " x " +
+                                dimensions.get(2) + " (mm)";
+                        detailsActivityVh.itemSpecification.setText(dimensionString);
+                    } else {
+                        if (itemSelected.getLockable()) {
+                            detailsActivityVh.itemSpecification.setText("Handle has a completely " +
+                                    "functioning locking mechanism");
+                        } else {
+                            detailsActivityVh.itemSpecification.setText("Handle does not contain a " +
+                                    "locking mechanism");
+                        }
+                    }
 
                     detailsActivityVh.itemName.setText(nameString);
                     detailsActivityVh.description.setText(itemSelected.getDescription());
                     detailsActivityVh.price.setText("$" + String.format("%.2f", itemSelected.getPrice()));
-                    detailsActivityVh.itemSpecification.setText(dimensionString);
+
 
                     RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.description_relative_layout);
                     Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_up);
@@ -104,11 +122,6 @@ public class DetailsActivity extends AppCompatActivity {
         } else {
             createDefaultItem();
         }
-
-
-
-
-
 
     }
 
