@@ -13,6 +13,9 @@
         <item name="colorSecondaryVariant">@color/teal_700</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Customize your theme here. -->
+        <item name="android:windowActivityTransitions">true</item>
+
+
     </style>
 
     <style name="Theme.ListApp.SplashScreenTheme">

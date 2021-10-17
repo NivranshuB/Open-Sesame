@@ -16,6 +16,7 @@ import android.os.Bundle;
 
 import android.transition.Explode;
 import android.transition.Fade;
+import android.transition.Transition;
 import android.transition.TransitionManager;
 
 import android.util.Log;
@@ -108,6 +109,11 @@ public class MainActivity extends AppCompatActivity implements PanelViewAdapter.
                 Intent listActivity = new Intent(getBaseContext(), ListActivity.class);
                 listActivity.putExtra("type", "wooden");
                 startActivity(listActivity);
+//                ActivityOptionsCompat activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this,
+//                        view, "listActivityTransition"); //new Pair<>(view, "topPicksImageTransition")
+//
+//                ActivityCompat.startActivity(MainActivity.this, listActivity, activityOptions.toBundle());
+                overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
             }
         });
 
@@ -117,6 +123,7 @@ public class MainActivity extends AppCompatActivity implements PanelViewAdapter.
                 Intent listActivity = new Intent(getBaseContext(), ListActivity.class);
                 listActivity.putExtra("type", "metallic");
                 startActivity(listActivity);
+                overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
             }
         });
 
@@ -126,6 +133,7 @@ public class MainActivity extends AppCompatActivity implements PanelViewAdapter.
                 Intent listActivity = new Intent(getBaseContext(), ListActivity.class);
                 listActivity.putExtra("type", "glass");
                 startActivity(listActivity);
+                overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
             }
         });
 
@@ -135,6 +143,7 @@ public class MainActivity extends AppCompatActivity implements PanelViewAdapter.
                 Intent listActivity = new Intent(getBaseContext(), ListActivity.class);
                 listActivity.putExtra("type", "handle");
                 startActivity(listActivity);
+                overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
             }
         });
 
@@ -237,6 +246,7 @@ public class MainActivity extends AppCompatActivity implements PanelViewAdapter.
                 view, "topPicksImageTransition"); //new Pair<>(view, "topPicksImageTransition")
 
         ActivityCompat.startActivity(this, listActivity, activityOptions.toBundle());
+
     }
 
     /**

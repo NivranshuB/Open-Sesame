@@ -2,12 +2,16 @@ package com.example.listapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+
 import androidx.viewpager.widget.ViewPager;
 import androidx.core.view.ViewCompat;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.transition.Fade;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,12 +41,16 @@ public class DetailsActivity extends AppCompatActivity {
         TextView itemSpecification;
         TextView price;
 
+        ViewPager viewPager;
+
         public ViewHolder() {
             //The elements common among all items assigned here
             itemName = findViewById(R.id.item_name);
             description = findViewById(R.id.item_description_text);
             itemSpecification = findViewById(R.id.item_specification_text);
             price = findViewById(R.id.item_price);
+
+            viewPager = findViewById(R.id.imageViewPager);
         }
     }
 
@@ -50,6 +58,8 @@ public class DetailsActivity extends AppCompatActivity {
     IDataLoader dataLoader = new DataLoader();
 
     String nameString = "";
+
+    boolean done = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +74,13 @@ public class DetailsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         ViewHolder detailsActivityVh = new ViewHolder();
+
+        Fade fade = new Fade();
+        fade.excludeTarget(R.id.custom_toolbar_details, true);
+        fade.excludeTarget(android.R.id.statusBarBackground, true);
+        fade.excludeTarget(android.R.id.navigationBarBackground, true);
+        getWindow().setEnterTransition(fade);
+        getWindow().setExitTransition(fade);
 
         Intent thisIntent = getIntent();
         String itemId = thisIntent.getStringExtra("id");
@@ -102,14 +119,35 @@ public class DetailsActivity extends AppCompatActivity {
                     ImageAdapter adapter = new ImageAdapter(DetailsActivity.this, itemSelected.getImage());
                     viewPager.setAdapter(adapter);
 
-                    startPostponedEnterTransition();
+                    done = true;
+
+
                 }
             });
         } else {
             createDefaultItem();
         }
 
+        detailsActivityVh.viewPager.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+                if (done) {
+                    detailsActivityVh.viewPager.getViewTreeObserver().removeOnPreDrawListener(this);
 
+//                    Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_up);
+//                    Animation panelViewAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_from_right);
+//                    mainActivityVH.wooden_category_button.startAnimation(animation);
+//                    mainActivityVH.metal_category_button.startAnimation(animation);
+//                    mainActivityVH.glass_category_button.startAnimation(animation);
+//                    mainActivityVH.handle_category_button.startAnimation(animation);
+//                    findViewById(R.id.panelRecyclerView).startAnimation(panelViewAnimation);
+                    startPostponedEnterTransition();
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        });
 
 
 

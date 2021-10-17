@@ -5,6 +5,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.util.Pair;
+import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.transition.Transition;
 
@@ -32,6 +33,7 @@ public class ListActivity extends AppCompatActivity implements ItemAdapter.OnIte
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        postponeEnterTransition();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
@@ -48,9 +50,13 @@ public class ListActivity extends AppCompatActivity implements ItemAdapter.OnIte
             dataLoader.getItemsByCriteria(categoryName, new DataCallback() {
                 @Override
                 public void dataListCallback(List<Item> itemList) {
+
+
                     itemAdapter = new ItemAdapter(ListActivity.this, R.layout.door_handle_square,
                             itemList, ListActivity.this);
                     recyclerView.setAdapter(itemAdapter);
+                    startPostponedEnterTransition();
+                    ViewCompat.setTransitionName(findViewById(R.id.custom_toolbar_list), "listActivityTransition");
                 }
 
                 @Override
@@ -65,6 +71,7 @@ public class ListActivity extends AppCompatActivity implements ItemAdapter.OnIte
                     itemAdapter = new ItemAdapter(ListActivity.this, R.layout.item_square,
                             itemList, ListActivity.this);
                     recyclerView.setAdapter(itemAdapter);
+                    startPostponedEnterTransition();
                 }
 
                 @Override
@@ -82,6 +89,12 @@ public class ListActivity extends AppCompatActivity implements ItemAdapter.OnIte
         }
 
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
     }
 
     @Override
