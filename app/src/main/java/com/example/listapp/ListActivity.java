@@ -1,5 +1,6 @@
 package com.example.listapp;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
@@ -8,9 +9,11 @@ import androidx.core.util.Pair;
 import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Notification;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.example.listapp.adapters.ItemAdapter;
@@ -65,7 +68,7 @@ public class ListActivity extends AppCompatActivity implements ItemAdapter.OnIte
                     // No implementation needed
                 }
             });
-        } else if(!(categoryName == null) && (categoryName.equals("wooden") ||
+        } else if (!(categoryName == null) && (categoryName.equals("wooden") ||
                 categoryName.equals("glass") || categoryName.equals("metallic"))) {
 
             int colorId = 0;
@@ -121,6 +124,9 @@ public class ListActivity extends AppCompatActivity implements ItemAdapter.OnIte
         if (!(categoryName == null)) {
             Toolbar toolbar = (Toolbar) findViewById(R.id.custom_toolbar_list);
             toolbar.setTitle(categoryName.toUpperCase());
+            setSupportActionBar(toolbar);
+            ActionBar ab = getSupportActionBar();
+            ab.setDisplayHomeAsUpEnabled(true);
         }
 
 
@@ -159,5 +165,17 @@ public class ListActivity extends AppCompatActivity implements ItemAdapter.OnIte
             capitalizeWord+=first.toUpperCase()+afterfirst+" ";
         }
         return capitalizeWord.trim();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle presses on the action bar items
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

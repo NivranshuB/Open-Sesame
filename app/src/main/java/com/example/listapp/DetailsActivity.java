@@ -1,5 +1,6 @@
 package com.example.listapp;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -12,6 +13,7 @@ import android.media.Image;
 import android.os.Bundle;
 import android.transition.Fade;
 import android.transition.Transition;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.Window;
@@ -84,6 +86,8 @@ public class DetailsActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.custom_toolbar_details);
         setSupportActionBar(toolbar);
+        ActionBar ab = getSupportActionBar();
+        ab.setDisplayHomeAsUpEnabled(true);
 
         ViewHolder detailsActivityVh = new ViewHolder();
 
