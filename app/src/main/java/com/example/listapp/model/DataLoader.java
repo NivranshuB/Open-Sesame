@@ -85,9 +85,11 @@ public class DataLoader implements IDataLoader {
         String[] matchList = matchString.split("\\s+");
         List<Item> resultList = new ArrayList<>();
 
+        Log.d("SEARCH", "Searching for string " + matchString);
         doorRef.whereArrayContainsAny("name", Arrays.asList(matchList)).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                Log.d("FOUND", "Found item matching string");
                 for (QueryDocumentSnapshot curr : queryDocumentSnapshots) {
                     // Get data of each document to check the category type before deciding which type of Door child object to map to.
                     Map<String, Object> currObj = curr.getData();
@@ -102,17 +104,20 @@ public class DataLoader implements IDataLoader {
                         }
                         resultList.add(door);
                     }
+                    callback.dataListCallback(resultList);
                 }
             }
         });
         handleRef.whereArrayContainsAny("name", Arrays.asList(matchList)).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                Log.d("FOUND", "Found item matching string");
                 for (QueryDocumentSnapshot curr : queryDocumentSnapshots) {
                     // Get data of each document to check the category type before deciding which type of Door child object to map to.
                     Item handle = curr.toObject(DoorHandle.class);
                     resultList.add(handle);
                 }
+                callback.dataListCallback(resultList);
             }
         });
         callback.dataListCallback(resultList);
@@ -288,11 +293,11 @@ public class DataLoader implements IDataLoader {
 
     public void persistData(Item itemChanged) {
         String category = itemChanged.getCategories().get(0);
-
+        Log.d("UPDATE", "Item's view count being updated has id " + itemChanged.getFirestoreID());
         if (Arrays.asList(DOOR_TYPES).contains(category)) {
-            doorRef.document(itemChanged.getFirestoreID()).update("viewCount", itemChanged.getViewCount());
+            doorRef.document(String.valueOf(itemChanged.getId())).update("viewCount", itemChanged.getViewCount());
         } else if (category.equals(HANDLE_TYPE)) {
-            handleRef.document(itemChanged.getFirestoreID()).update("viewCount", itemChanged.getViewCount());
+            handleRef.document(String.valueOf(itemChanged.getId())).update("viewCount", itemChanged.getViewCount());
         }
     }
 
