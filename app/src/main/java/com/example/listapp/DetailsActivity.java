@@ -91,7 +91,7 @@ public class DetailsActivity extends AppCompatActivity {
                     detailsActivityVh.itemSpecification.setText(dimensionString);
 
                     RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.description_relative_layout);
-                    Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_up);
+                    Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_up_details_view);
                     relativeLayout.startAnimation(animation);
 
                     ViewCompat.setTransitionName(findViewById(R.id.imageViewPager), "topPicksImageTransition");

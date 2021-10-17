@@ -30,7 +30,7 @@ import java.util.List;
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> { //ArrayAdapter,
 
     public interface OnItemClickListener {
-        void onItemClick(int id);
+        void onItemClick(int id, View view);
     }
 
     protected class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -58,7 +58,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> { 
 
         @Override
         public void onClick(View view) {
-            onItemClickListener.onItemClick(id);
+            onItemClickListener.onItemClick(id, panelImage);
         }
     }
 
@@ -190,13 +190,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> { 
 
         holder.panelImage.setImageResource(imageId);
 
-        String name = "";
-
-        for (String s : currentItem.getName()) {
-            name += s + " ";
-        }
-
-        holder.panelName.setText(name);
+        holder.panelName.setText(mergeStringList(currentItem.getName()));
         holder.panelPrice.setText("NZ$" + String.format("%.2f", currentItem.getPrice()));
     }
 
@@ -208,7 +202,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> { 
      */
     private void populateHandleItem(Item currentItem, HandleViewHolder holder) {
 
-        holder.panelName.setText(stringListToString(currentItem.getName()));
+        holder.panelName.setText(mergeStringList(currentItem.getName()));
 
         //Set the attributed of list_view_number_item views
         int imageId = mContext.getResources().getIdentifier(
@@ -234,7 +228,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> { 
 //
 //        holder.lockStatus.setImageResource(lockComponentId);
 
-        holder.panelPrice.setText(String.valueOf(currentItem.getPrice()));
+        holder.panelPrice.setText("NZ$" + String.format("%.2f", currentItem.getPrice()));
     }
 
     private String stringListToString(List<String> stringList) {

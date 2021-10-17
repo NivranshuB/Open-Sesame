@@ -2,12 +2,17 @@ package com.example.listapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.util.Pair;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.transition.Transition;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.Toast;
 
@@ -37,9 +42,9 @@ public class ListActivity extends AppCompatActivity implements ItemAdapter.OnIte
         Intent intent = getIntent();
         String categoryName = intent.getStringExtra("type");
 
+        DataLoader dataLoader = new DataLoader();
         if (!(categoryName == null) && categoryName.equals("handle")) {
 //            itemAdapter = new ItemAdapter(this, R.layout.door_handle_square, dataLoader.getItemsByCriteria(categoryName));
-            DataLoader dataLoader = new DataLoader();
             dataLoader.getItemsByCriteria(categoryName, new DataCallback() {
                 @Override
                 public void dataListCallback(List<Item> itemList) {
@@ -54,7 +59,6 @@ public class ListActivity extends AppCompatActivity implements ItemAdapter.OnIte
                 }
             });
         } else {
-            DataLoader dataLoader = new DataLoader();
             dataLoader.getItemsByCriteria(categoryName, new DataCallback() {
                 @Override
                 public void dataListCallback(List<Item> itemList) {
@@ -81,10 +85,19 @@ public class ListActivity extends AppCompatActivity implements ItemAdapter.OnIte
     }
 
     @Override
-    public void onItemClick(int itemId) {
+    public void onItemClick(int itemId, View view) {
         Log.d("CREATION", "onNoteClick: Clicked item id " + itemId);
         Intent listActivity = new Intent(getBaseContext(), DetailsActivity.class);
         listActivity.putExtra("id", "" + itemId);
         startActivity(listActivity);
+
+
+
+//        ActivityOptionsCompat activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(this,
+//                new Pair<>(view, "topPicksImageTransition"));
+//
+//        ActivityCompat.startActivity(this, listActivity, activityOptions.toBundle());
+//        startActivity(listActivity);
+//                startActivity(detailIntent);
     }
 }
