@@ -59,14 +59,9 @@ public class ListActivity extends AppCompatActivity implements ItemAdapter.OnIte
             dataLoader.getItemsByCriteria(categoryName, new DataCallback() {
                 @Override
                 public void dataListCallback(List<Item> itemList) {
-                    if (itemList.size() < 1) {
-                        Toast.makeText(ListActivity.this, "No results found for search"
-                                , Toast.LENGTH_LONG).show();
-                    } else {
-                        itemAdapter = new ItemAdapter(ListActivity.this, R.layout.item_square,
-                                itemList, ListActivity.this);
-                        recyclerView.setAdapter(itemAdapter);
-                    }
+                    itemAdapter = new ItemAdapter(ListActivity.this, R.layout.item_square,
+                            itemList, ListActivity.this);
+                    recyclerView.setAdapter(itemAdapter);
                 }
 
                 @Override
