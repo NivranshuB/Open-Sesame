@@ -42,7 +42,7 @@ import com.example.listapp.model.Item;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements PanelViewAdapter.OnItemClickListener{
 
     private class ViewHolder {
         //The views in main activity go here
@@ -214,7 +214,7 @@ public class MainActivity extends AppCompatActivity {
         dataLoader.sortItemListByViewCount(new DataCallback() {
             @Override
             public void dataListCallback(List<Item> itemList) {
-                PanelViewAdapter panelViewAdapter = new PanelViewAdapter(itemList, MainActivity.this);
+                PanelViewAdapter panelViewAdapter = new PanelViewAdapter(itemList, MainActivity.this, MainActivity.this);
                 mainActivityVH.panel_recycler_view.setAdapter(panelViewAdapter);
                 panelViewDone = true;
             }
@@ -224,6 +224,19 @@ public class MainActivity extends AppCompatActivity {
                 // No implementation needed
             }
         });
+    }
+
+    @Override
+    public void onItemClick(int itemId, View view) {
+        Log.d("CREATION", "onNoteClick: Clicked item id " + itemId);
+        Intent listActivity = new Intent(getBaseContext(), DetailsActivity.class);
+        listActivity.putExtra("id", "" + itemId);
+//        startActivity(listActivity);
+
+                ActivityOptionsCompat activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(this,
+                view, "topPicksImageTransition"); //new Pair<>(view, "topPicksImageTransition")
+
+        ActivityCompat.startActivity(this, listActivity, activityOptions.toBundle());
     }
 
     /**

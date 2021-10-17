@@ -53,7 +53,9 @@ public class DetailsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        postponeEnterTransition();
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_details);
         Log.d("detailsActivity", "Details activity launched");
         System.out.println("Details activity launched");
@@ -99,6 +101,8 @@ public class DetailsActivity extends AppCompatActivity {
                     ViewPager viewPager = findViewById(R.id.imageViewPager);
                     ImageAdapter adapter = new ImageAdapter(DetailsActivity.this, itemSelected.getImage());
                     viewPager.setAdapter(adapter);
+
+                    startPostponedEnterTransition();
                 }
             });
         } else {

@@ -89,14 +89,14 @@ public class ListActivity extends AppCompatActivity implements ItemAdapter.OnIte
         Log.d("CREATION", "onNoteClick: Clicked item id " + itemId);
         Intent listActivity = new Intent(getBaseContext(), DetailsActivity.class);
         listActivity.putExtra("id", "" + itemId);
-        startActivity(listActivity);
+//        startActivity(listActivity);
 
 
 
-//        ActivityOptionsCompat activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(this,
-//                new Pair<>(view, "topPicksImageTransition"));
-//
-//        ActivityCompat.startActivity(this, listActivity, activityOptions.toBundle());
+        ActivityOptionsCompat activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(this,
+                new Pair<>(view, "topPicksImageTransition"));
+
+        ActivityCompat.startActivity(this, listActivity, activityOptions.toBundle());
 //        startActivity(listActivity);
 //                startActivity(detailIntent);
     }

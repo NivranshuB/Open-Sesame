@@ -28,17 +28,20 @@ public class PanelViewAdapter extends RecyclerView.Adapter<PanelViewAdapter.Pane
     private List<Item> itemList = new ArrayList<>();
     private Context current_context;
 
+    private OnItemClickListener mOnItemClickListener;
 
-    public PanelViewAdapter(List<Item> itemList, Context context) {
+
+    public PanelViewAdapter(List<Item> itemList, Context context, OnItemClickListener onItemClickListener) {
         this.itemList = itemList;
         current_context = context;
+        mOnItemClickListener = onItemClickListener;
     }
 
     @NonNull
     @Override
     public PanelViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.panel_view_item, parent, false); //item_square
-        return new PanelViewHolder(view);
+        return new PanelViewHolder(view, mOnItemClickListener);
     }
 
     @Override
@@ -46,6 +49,7 @@ public class PanelViewAdapter extends RecyclerView.Adapter<PanelViewAdapter.Pane
         //holder.panelImage.setImageResource(itemList.get(position).getFirstImage());
         holder.panelName.setText(combineNameArray(itemList.get(position).getName()));
         holder.panelPrice.setText("$" + Float.toString(itemList.get(position).getPrice()));
+        holder.id = itemList.get(position).getId();
 
         int imageId = current_context.getResources().getIdentifier(
                 itemList.get(position).getFirstImage(), "drawable", current_context.getPackageName());
@@ -65,16 +69,32 @@ public class PanelViewAdapter extends RecyclerView.Adapter<PanelViewAdapter.Pane
         return itemList.size();
     }
 
-    public class PanelViewHolder extends RecyclerView.ViewHolder {
+    public interface OnItemClickListener {
+        void onItemClick(int id, View view);
+    }
+
+    public class PanelViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         ImageView panelImage;
         TextView panelName;
         TextView panelPrice;
+        OnItemClickListener onItemClickListener;
 
-        public PanelViewHolder(@NonNull View itemView) {
+        int id;
+
+        public PanelViewHolder(@NonNull View itemView , OnItemClickListener listener) {
             super(itemView);
             panelImage = itemView.findViewById(R.id.panelImage);
             panelName = itemView.findViewById(R.id.panelName);
             panelPrice = itemView.findViewById(R.id.panelPrice);
+
+            this.onItemClickListener = listener;
+
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            onItemClickListener.onItemClick(id, panelImage);
         }
     }
 
