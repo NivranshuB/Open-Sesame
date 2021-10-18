@@ -175,4 +175,16 @@ public class ListActivity extends AppCompatActivity implements ItemAdapter.OnIte
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle presses on the action bar items
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 }
