@@ -61,9 +61,6 @@ public class DetailsActivity extends AppCompatActivity {
             viewCount = findViewById(R.id.view_count_text);
             category = findViewById(R.id.category_text);
             price = findViewById(R.id.item_price);
-
-
-
             viewPager = findViewById(R.id.imageViewPager);
         }
     }
@@ -175,6 +172,20 @@ public class DetailsActivity extends AppCompatActivity {
             //createDefaultItem();
         }
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle presses on the action bar items
+        switch (item.getItemId()) {
+            case android.R.id.home:
+
+                finish();
+                overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 //    private void createDefaultItem() {

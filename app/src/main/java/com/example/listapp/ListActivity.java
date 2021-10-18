@@ -172,7 +172,9 @@ public class ListActivity extends AppCompatActivity implements ItemAdapter.OnIte
         // Handle presses on the action bar items
         switch (item.getItemId()) {
             case android.R.id.home:
+
                 finish();
+                overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
