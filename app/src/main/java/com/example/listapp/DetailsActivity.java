@@ -82,6 +82,7 @@ public class DetailsActivity extends AppCompatActivity {
         System.out.println("Details activity launched");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.custom_toolbar_details);
+        toolbar.setTitle("");
         setSupportActionBar(toolbar);
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);

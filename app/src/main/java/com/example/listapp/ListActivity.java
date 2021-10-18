@@ -32,13 +32,10 @@ public class ListActivity extends AppCompatActivity implements ItemAdapter.OnIte
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-//        postponeEnterTransition();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
         recyclerView = (RecyclerView) findViewById(R.id.grid_recycler_view);
-        //dataLoader = new DataLoader();
-        //dataLoader.initialiseData();
 
         Intent intent = getIntent();
         String categoryName = intent.getStringExtra("type");
@@ -50,7 +47,6 @@ public class ListActivity extends AppCompatActivity implements ItemAdapter.OnIte
             View view = findViewById(R.id.rounded_corners);
             view.setBackgroundResource(R.drawable.light_green_rounded_corners_background);
             getWindow().setStatusBarColor(getResources().getColor(R.color.light_green));
-//            itemAdapter = new ItemAdapter(this, R.layout.door_handle_square, dataLoader.getItemsByCriteria(categoryName));
             dataLoader.getItemsByCriteria(categoryName, new DataCallback() {
                 @Override
                 public void dataListCallback(List<Item> itemList) {
@@ -59,7 +55,6 @@ public class ListActivity extends AppCompatActivity implements ItemAdapter.OnIte
                     itemAdapter = new ItemAdapter(ListActivity.this, R.layout.door_handle_square,
                             itemList, ListActivity.this);
                     recyclerView.setAdapter(itemAdapter);
-//                    startPostponedEnterTransition();
                     ViewCompat.setTransitionName(findViewById(R.id.custom_toolbar_list), "listActivityTransition");
                 }
 
