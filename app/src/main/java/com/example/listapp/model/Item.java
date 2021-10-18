@@ -23,6 +23,11 @@ public interface Item {
     String getFirestoreID();
 
     /**
+     * @param fstoreID Firestore ID of the Item
+     */
+    void setFirestoreID(String fstoreID);
+
+    /**
      * @return the name of this Item instance
      */
     List<String> getName();

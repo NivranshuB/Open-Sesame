@@ -65,7 +65,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> { 
     private class DoorViewHolder extends ViewHolder {
         //The special views of a door card go here
         View materialEdgeTop;
-        View materialEdgeBottom;
 
         public DoorViewHolder(View currentListViewItem, OnItemClickListener oicl) {
             super(currentListViewItem, oicl);
@@ -181,8 +180,9 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> { 
             material = mContext.getResources().getDrawable(R.drawable.glass_edge);
         }
 
-        holder.materialEdgeTop.setBackground(material);
-        //holder.materialEdgeBottom.setBackground(material);
+        if (holder.materialEdgeTop != null) {
+            holder.materialEdgeTop.setBackground(material);
+        }
 
         //Set the attributed of list_view_number_item views
         int imageId = mContext.getResources().getIdentifier(
@@ -202,7 +202,13 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> { 
      */
     private void populateHandleItem(Item currentItem, HandleViewHolder holder) {
 
-        holder.panelName.setText(mergeStringList(currentItem.getName()));
+        String name = "";
+
+        for (String s : currentItem.getName()) {
+            name += s + " ";
+        }
+
+        holder.panelName.setText(name);
 
         //Set the attributed of list_view_number_item views
         int imageId = mContext.getResources().getIdentifier(
@@ -215,8 +221,14 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> { 
                 "drawable", mContext.getPackageName());
 
         holder.panelImage.setImageResource(imageId);
-        holder.galleryImage1.setImageResource(galleryImage1Id);
-        holder.galleryImage2.setImageResource(galleryImage2Id);
+
+        if (holder.galleryImage1 != null) {
+            holder.galleryImage1.setImageResource(galleryImage1Id);
+        }
+
+        if (holder.galleryImage2 != null) {
+            holder.galleryImage2.setImageResource(galleryImage2Id);
+        }
 
 //        int lockComponentId = mContext.getResources().getIdentifier("unlock",
 //                "drawable", mContext.getPackageName());

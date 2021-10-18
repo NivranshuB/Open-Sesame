@@ -164,6 +164,13 @@ public class MainActivity extends AppCompatActivity implements PanelViewAdapter.
 //            }
 //        });
     }
+    @Override
+    public void onResume()
+    {  // After a pause OR at startup
+        super.onResume();
+        //Refresh your stuff here
+        initPanelRecyclerView();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -200,9 +207,9 @@ public class MainActivity extends AppCompatActivity implements PanelViewAdapter.
                 for (Item i : itemlist) {
                     Log.d("jchename", i.getName().toString());
                     Log.d("jcheid", Integer.toString(i.getId()));
-                    Log.d("jcheprice", Float.toString(i.getPrice()));
-                    Log.d("jchedimensions", i.getDimensions().toString());
-                    Log.d("jchedescription", i.getDescription());
+                    Log.d("jcheViewCount", Integer.toString(i.getViewCount()));
+                    Log.d("jcheFirestoreID", i.getFirestoreID());
+                    dataLoader.persistData(i);
                 }
             }
 

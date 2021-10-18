@@ -8,6 +8,7 @@ import androidx.viewpager.widget.ViewPager;
 import androidx.core.view.ViewCompat;
 
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.transition.Fade;
 import android.transition.Transition;
@@ -22,6 +23,7 @@ import com.example.listapp.adapters.ImageAdapter;
 import com.example.listapp.model.DataCallback;
 import com.example.listapp.model.DataLoader;
 import com.example.listapp.model.Door;
+import com.example.listapp.model.DoorHandle;
 import com.example.listapp.model.IDataLoader;
 import com.example.listapp.model.Item;
 import com.example.listapp.model.WoodenDoor;
@@ -113,17 +115,33 @@ public class DetailsActivity extends AppCompatActivity {
                 @Override
                 public void itemCallback(Item item) {
                     itemSelected = item;
+                    Log.d("Update", "Item's view count being updated has id: " + item.getName() + ":" + item.getId());
+                    itemSelected.incrementViewCount();
+                    dataLoader.persistData(itemSelected);
+
                     for (String s : itemSelected.getName()) {
                         nameString += s + " ";
                     }
-                    List<Long> dimensions = itemSelected.getDimensions();
-                    String dimensionString = dimensions.get(0) + " x " + dimensions.get(1) + " x " +
-                            dimensions.get(2) + " (mm)";
+
+                    if (itemSelected.getClass() != DoorHandle.class) {
+                        List<Long> dimensions = itemSelected.getDimensions();
+                        String dimensionString = dimensions.get(0) + " x " + dimensions.get(1) + " x " +
+                                dimensions.get(2) + " (mm)";
+                        detailsActivityVh.itemSpecification.setText(dimensionString);
+                    } else {
+                        if (itemSelected.getLockable()) {
+                            detailsActivityVh.itemSpecification.setText("Handle has a completely " +
+                                    "functioning locking mechanism");
+                        } else {
+                            detailsActivityVh.itemSpecification.setText("Handle does not contain a " +
+                                    "locking mechanism");
+                        }
+                    }
 
                     detailsActivityVh.itemName.setText(nameString);
                     detailsActivityVh.description.setText(itemSelected.getDescription());
                     detailsActivityVh.price.setText("$" + String.format("%.2f", itemSelected.getPrice()));
-                    detailsActivityVh.itemSpecification.setText(dimensionString);
+
 
                     RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.description_relative_layout);
                     Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_up_details_view);
@@ -139,54 +157,49 @@ public class DetailsActivity extends AppCompatActivity {
                 }
             });
         } else {
-            createDefaultItem();
+            //createDefaultItem();
         }
 
-
-
-
-
-
     }
 
-    private void createDefaultItem() {
-        List<Long> dimensions = new ArrayList<>();
-        dimensions.add(new Long(2355));
-        dimensions.add(new Long (566));
-        dimensions.add(new Long(36));
-
-        List<String> name = new ArrayList<>();
-        name.add("Authentic");
-        name.add("Gloss");
-        name.add("Finished");
-        name.add("Gold");
-        name.add("Doorknob");
-
-        List<String> colour = new ArrayList<>();
-        colour.add("#000000");
-        colour.add("#000000");
-        colour.add("#000000");
-
-        List<String> images = new ArrayList<>();
-        images.add("handle3_1");
-        images.add("handle3_2");
-        images.add("handle3_3");
-
-        itemSelected = new WoodenDoor(1, 560, 43, 50.50f, dimensions, name,
-                "dsafk sadflkd dslfka dsa", colour, images);
-
-        itemSelected = new WoodenDoor(1, 560, 43, 50.50f, dimensions, name,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris et " +
-                        "mattis elit, in fringilla tellus. Etiam aliquam efficitur urna, id " +
-                        "ligula porta id. Curabitur libero ligula, pulvinar ac convallis nec, " +
-                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris et " +
-                        "mattis elit, in fringilla tellus. Etiam aliquam efficitur urna, id " +
-                        "ligula porta id. Curabitur libero\n\n ligula, pulvinar ac convallis nec, " +
-                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris et " +
-                        "mattis elit, in fringilla tellus. Etiam aliquam efficitur urna, id " +
-                        "ligula porta id. Curabitur libero ligula, pulvinar ac convallis nec, " +
-                        "Lorem ipsum dolor sit amet, consectetur adipisc\n\ning elit. Mauris et " +
-                        "mattis elit, in fringilla tellus. Etiam aliquam efficitur urna, id " +
-                        "ligula porta id. Curabitur libero ligula, pulvinar ac convallis nec, " +
-                        "hendrerit a lacus.", colour, images);
-    }
+//    private void createDefaultItem() {
+//        List<Long> dimensions = new ArrayList<>();
+//        dimensions.add(new Long(2355));
+//        dimensions.add(new Long (566));
+//        dimensions.add(new Long(36));
+//
+//        List<String> name = new ArrayList<>();
+//        name.add("Authentic");
+//        name.add("Gloss");
+//        name.add("Finished");
+//        name.add("Gold");
+//        name.add("Doorknob");
+//
+//        List<String> colour = new ArrayList<>();
+//        colour.add("#000000");
+//        colour.add("#000000");
+//        colour.add("#000000");
+//
+//        List<String> images = new ArrayList<>();
+//        images.add("handle3_1");
+//        images.add("handle3_2");
+//        images.add("handle3_3");
+//
+//        itemSelected = new WoodenDoor(1, 560, 43, 50.50f, dimensions, name,
+//                "dsafk sadflkd dslfka dsa", colour, images);
+//
+//        itemSelected = new WoodenDoor(1, 560, 43, 50.50f, dimensions, name,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris et " +
+//                        "mattis elit, in fringilla tellus. Etiam aliquam efficitur urna, id " +
+//                        "ligula porta id. Curabitur libero ligula, pulvinar ac convallis nec, " +
+//                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris et " +
+//                        "mattis elit, in fringilla tellus. Etiam aliquam efficitur urna, id " +
+//                        "ligula porta id. Curabitur libero\n\n ligula, pulvinar ac convallis nec, " +
+//                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris et " +
+//                        "mattis elit, in fringilla tellus. Etiam aliquam efficitur urna, id " +
+//                        "ligula porta id. Curabitur libero ligula, pulvinar ac convallis nec, " +
+//                        "Lorem ipsum dolor sit amet, consectetur adipisc\n\ning elit. Mauris et " +
+//                        "mattis elit, in fringilla tellus. Etiam aliquam efficitur urna, id " +
+//                        "ligula porta id. Curabitur libero ligula, pulvinar ac convallis nec, " +
+//                        "hendrerit a lacus.", colour, images);
+//    }
 }

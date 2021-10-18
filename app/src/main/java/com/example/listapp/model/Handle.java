@@ -50,6 +50,8 @@ public abstract class Handle implements Item {
         return firestoreID;
     }
 
+    public void setFirestoreID(String fstoreID) { firestoreID = fstoreID; }
+
     /**
      * @return the price of the item
      */
