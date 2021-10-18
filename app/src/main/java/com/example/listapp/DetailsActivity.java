@@ -184,18 +184,4 @@ public class DetailsActivity extends AppCompatActivity {
         }
     }
 
-        itemSelected = new WoodenDoor(1, 560, 43, 50.50f, dimensions, name,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris et " +
-                        "mattis elit, in fringilla tellus. Etiam aliquam efficitur urna, id " +
-                        "ligula porta id. Curabitur libero ligula, pulvinar ac convallis nec, " +
-                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris et " +
-                        "mattis elit, in fringilla tellus. Etiam aliquam efficitur urna, id " +
-                        "ligula porta id. Curabitur libero\n\n ligula, pulvinar ac convallis nec, " +
-                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris et " +
-                        "mattis elit, in fringilla tellus. Etiam aliquam efficitur urna, id " +
-                        "ligula porta id. Curabitur libero ligula, pulvinar ac convallis nec, " +
-                        "Lorem ipsum dolor sit amet, consectetur adipisc\n\ning elit. Mauris et " +
-                        "mattis elit, in fringilla tellus. Etiam aliquam efficitur urna, id " +
-                        "ligula porta id. Curabitur libero ligula, pulvinar ac convallis nec, " +
-                        "hendrerit a lacus.", colour, images);
     }
-}
