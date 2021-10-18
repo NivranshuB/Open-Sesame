@@ -30,12 +30,14 @@ public class ListActivity extends AppCompatActivity implements ItemAdapter.OnIte
     RecyclerView recyclerView;
     IDataLoader dataLoader;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
         recyclerView = (RecyclerView) findViewById(R.id.grid_recycler_view);
+        findViewById(R.id.no_results_found).setVisibility(View.INVISIBLE);
 
         Intent intent = getIntent();
         String categoryName = intent.getStringExtra("type");
@@ -103,9 +105,13 @@ public class ListActivity extends AppCompatActivity implements ItemAdapter.OnIte
             dataLoader.getItemsByName(formattedString, new DataCallback() {
                 @Override
                 public void dataListCallback(List<Item> itemList) {
+                    Log.d("Check", "ItemList size is " + itemList.size());
                     itemAdapter = new ItemAdapter(ListActivity.this, R.layout.item_square,
                             itemList, ListActivity.this);
                     recyclerView.setAdapter(itemAdapter);
+                    if (itemList.size() < 1 || itemList == null) {
+                        findViewById(R.id.no_results_found).setVisibility(View.VISIBLE);
+                    }
                 }
 
                 @Override
@@ -113,6 +119,7 @@ public class ListActivity extends AppCompatActivity implements ItemAdapter.OnIte
                     // No implementation needed
                 }
             });
+
         }
 
 
@@ -176,15 +183,4 @@ public class ListActivity extends AppCompatActivity implements ItemAdapter.OnIte
         }
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle presses on the action bar items
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
 }

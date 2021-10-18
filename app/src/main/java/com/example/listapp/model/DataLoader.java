@@ -105,24 +105,24 @@ public class DataLoader implements IDataLoader {
                         door.setFirestoreID(curr.getId());
                         resultList.add(door);
                     }
-                    callback.dataListCallback(resultList);
                 }
+                //callback.dataListCallback(resultList);
+                handleRef.whereArrayContainsAny("name", Arrays.asList(matchList)).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        Log.d("FOUND", "Found item matching string");
+                        for (QueryDocumentSnapshot curr : queryDocumentSnapshots) {
+                            // Get data of each document to check the category type before deciding which type of Door child object to map to.
+                            Item handle = curr.toObject(DoorHandle.class);
+                            handle.setFirestoreID(curr.getId());
+                            resultList.add(handle);
+                        }
+                        callback.dataListCallback(resultList);
+                    }
+                });
             }
         });
-        handleRef.whereArrayContainsAny("name", Arrays.asList(matchList)).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-            @Override
-            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                Log.d("FOUND", "Found item matching string");
-                for (QueryDocumentSnapshot curr : queryDocumentSnapshots) {
-                    // Get data of each document to check the category type before deciding which type of Door child object to map to.
-                    Item handle = curr.toObject(DoorHandle.class);
-                    handle.setFirestoreID(curr.getId());
-                    resultList.add(handle);
-                }
-                callback.dataListCallback(resultList);
-            }
-        });
-        callback.dataListCallback(resultList);
+        //callback.dataListCallback(resultList);
     }
 
 
@@ -162,8 +162,8 @@ public class DataLoader implements IDataLoader {
                         door.setFirestoreID(curr.getId());
                         resultList.add(door);
                     }
-                    callback.dataListCallback(resultList);
                 }
+                callback.dataListCallback(resultList);
             }
         });
         handleRef.whereArrayContainsAny("categories", categoryList).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
