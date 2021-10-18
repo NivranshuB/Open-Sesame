@@ -120,49 +120,49 @@ public class DetailsActivity extends AppCompatActivity {
                 }
             });
         } else {
-            createDefaultItem();
+            //createDefaultItem();
         }
 
     }
 
-    private void createDefaultItem() {
-        List<Long> dimensions = new ArrayList<>();
-        dimensions.add(new Long(2355));
-        dimensions.add(new Long (566));
-        dimensions.add(new Long(36));
-
-        List<String> name = new ArrayList<>();
-        name.add("Authentic");
-        name.add("Gloss");
-        name.add("Finished");
-        name.add("Gold");
-        name.add("Doorknob");
-
-        List<String> colour = new ArrayList<>();
-        colour.add("#000000");
-        colour.add("#000000");
-        colour.add("#000000");
-
-        List<String> images = new ArrayList<>();
-        images.add("handle3_1");
-        images.add("handle3_2");
-        images.add("handle3_3");
-
-        itemSelected = new WoodenDoor(1, 560, 43, 50.50f, dimensions, name,
-                "dsafk sadflkd dslfka dsa", colour, images);
-
-        itemSelected = new WoodenDoor(1, 560, 43, 50.50f, dimensions, name,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris et " +
-                        "mattis elit, in fringilla tellus. Etiam aliquam efficitur urna, id " +
-                        "ligula porta id. Curabitur libero ligula, pulvinar ac convallis nec, " +
-                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris et " +
-                        "mattis elit, in fringilla tellus. Etiam aliquam efficitur urna, id " +
-                        "ligula porta id. Curabitur libero\n\n ligula, pulvinar ac convallis nec, " +
-                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris et " +
-                        "mattis elit, in fringilla tellus. Etiam aliquam efficitur urna, id " +
-                        "ligula porta id. Curabitur libero ligula, pulvinar ac convallis nec, " +
-                        "Lorem ipsum dolor sit amet, consectetur adipisc\n\ning elit. Mauris et " +
-                        "mattis elit, in fringilla tellus. Etiam aliquam efficitur urna, id " +
-                        "ligula porta id. Curabitur libero ligula, pulvinar ac convallis nec, " +
-                        "hendrerit a lacus.", colour, images);
-    }
+//    private void createDefaultItem() {
+//        List<Long> dimensions = new ArrayList<>();
+//        dimensions.add(new Long(2355));
+//        dimensions.add(new Long (566));
+//        dimensions.add(new Long(36));
+//
+//        List<String> name = new ArrayList<>();
+//        name.add("Authentic");
+//        name.add("Gloss");
+//        name.add("Finished");
+//        name.add("Gold");
+//        name.add("Doorknob");
+//
+//        List<String> colour = new ArrayList<>();
+//        colour.add("#000000");
+//        colour.add("#000000");
+//        colour.add("#000000");
+//
+//        List<String> images = new ArrayList<>();
+//        images.add("handle3_1");
+//        images.add("handle3_2");
+//        images.add("handle3_3");
+//
+//        itemSelected = new WoodenDoor(1, 560, 43, 50.50f, dimensions, name,
+//                "dsafk sadflkd dslfka dsa", colour, images);
+//
+//        itemSelected = new WoodenDoor(1, 560, 43, 50.50f, dimensions, name,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris et " +
+//                        "mattis elit, in fringilla tellus. Etiam aliquam efficitur urna, id " +
+//                        "ligula porta id. Curabitur libero ligula, pulvinar ac convallis nec, " +
+//                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris et " +
+//                        "mattis elit, in fringilla tellus. Etiam aliquam efficitur urna, id " +
+//                        "ligula porta id. Curabitur libero\n\n ligula, pulvinar ac convallis nec, " +
+//                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris et " +
+//                        "mattis elit, in fringilla tellus. Etiam aliquam efficitur urna, id " +
+//                        "ligula porta id. Curabitur libero ligula, pulvinar ac convallis nec, " +
+//                        "Lorem ipsum dolor sit amet, consectetur adipisc\n\ning elit. Mauris et " +
+//                        "mattis elit, in fringilla tellus. Etiam aliquam efficitur urna, id " +
+//                        "ligula porta id. Curabitur libero ligula, pulvinar ac convallis nec, " +
+//                        "hendrerit a lacus.", colour, images);
+//    }
 }

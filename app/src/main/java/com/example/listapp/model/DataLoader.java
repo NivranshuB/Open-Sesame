@@ -44,7 +44,6 @@ public class DataLoader implements IDataLoader {
     /**
      * Initialise the client's copy of the database's documents. Currently a naive solution
      * that basically retrieves every document from the database.
-     * TODO: This method should be removed!
      */
     @Override
     public void initialiseData() {
@@ -313,9 +312,9 @@ public class DataLoader implements IDataLoader {
         String category = itemChanged.getCategories().get(0);
         Log.d("UPDATE", "Item's view count being updated has id " + itemChanged.getFirestoreID());
         if (Arrays.asList(DOOR_TYPES).contains(category)) {
-            doorRef.document(itemChanged.getFirestoreID()).update("viewCount", itemChanged.getViewCount()+1);
+            doorRef.document(itemChanged.getFirestoreID()).update("viewCount", itemChanged.getViewCount());
         } else if (category.equals(HANDLE_TYPE)) {
-            handleRef.document(itemChanged.getFirestoreID()).update("viewCount", itemChanged.getViewCount()+1);
+            handleRef.document(itemChanged.getFirestoreID()).update("viewCount", itemChanged.getViewCount());
         }
     }
 
