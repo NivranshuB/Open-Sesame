@@ -70,8 +70,9 @@ public class ListActivity extends AppCompatActivity implements ItemAdapter.OnIte
                 }
             });
         } else {
+            String formattedString = capitaliseWord(categoryName);
             DataLoader dataLoader = new DataLoader();
-            dataLoader.getItemsByName(categoryName, new DataCallback() {
+            dataLoader.getItemsByName(formattedString, new DataCallback() {
                 @Override
                 public void dataListCallback(List<Item> itemList) {
                     itemAdapter = new ItemAdapter(ListActivity.this, R.layout.item_square,
@@ -101,5 +102,17 @@ public class ListActivity extends AppCompatActivity implements ItemAdapter.OnIte
         Intent listActivity = new Intent(getBaseContext(), DetailsActivity.class);
         listActivity.putExtra("id", "" + itemId);
         startActivity(listActivity);
+    }
+
+    public static String capitaliseWord(String str){
+        str = str.toLowerCase();
+        String words[]=str.split("\\s");
+        String capitalizeWord="";
+        for(String w:words){
+            String first=w.substring(0,1);
+            String afterfirst=w.substring(1);
+            capitalizeWord+=first.toUpperCase()+afterfirst+" ";
+        }
+        return capitalizeWord.trim();
     }
 }
