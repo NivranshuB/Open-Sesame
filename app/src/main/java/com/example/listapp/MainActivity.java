@@ -231,7 +231,7 @@ public class MainActivity extends AppCompatActivity implements PanelViewAdapter.
         dataLoader.sortItemListByViewCount(new DataCallback() {
             @Override
             public void dataListCallback(List<Item> itemList) {
-//                ItemAdapter itemAdapter = new ItemAdapter(MainActivity.this, R.layout.door_handle_square,
+//                ItemAdapter itemAdapter = new ItemAdapter(MainActivity.this, R.layout.item_square,
 //                        itemList, MainActivity.this);
 //                mainActivityVH.panel_recycler_view.setAdapter(itemAdapter);
                 PanelViewAdapter panelViewAdapter = new PanelViewAdapter(itemList, MainActivity.this, MainActivity.this);

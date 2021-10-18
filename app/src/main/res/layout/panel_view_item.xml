@@ -10,32 +10,49 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="8dp">
+        android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/panelImage"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:src="@drawable/door3" />
+        <View
+            android:id="@+id/materialEdgeTop"
+            android:layout_width="136dp"
+            android:layout_height="15dp"
+            android:background="@drawable/wood_edge"
+            android:rotation="0"
+            android:translationZ="90dp" />
 
-        <TextView
-            android:id="@+id/panelName"
-            style="@style/CardItemTextStyle"
-            android:layout_width="match_parent"
-            android:textAlignment="center"
-            android:layout_height="24dp"
-            android:layout_gravity="center"
-            android:text="Testing" />
-
-        <TextView
-            android:id="@+id/panelPrice"
-            style="@style/CardItemTextStyle"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="$654.98"
-            android:textColor="#484848" />
+            android:orientation="vertical"
+            android:padding="8dp">
+            
+            <ImageView
+                android:id="@+id/panelImage"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:src="@drawable/door3" />
+
+            <TextView
+                android:id="@+id/panelName"
+                style="@style/CardItemTextStyle"
+                android:layout_width="match_parent"
+                android:textAlignment="center"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:text="Testing" />
+
+            <TextView
+                android:id="@+id/panelPrice"
+                style="@style/CardItemTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="$654.98"
+                android:textColor="#484848" />
+        </LinearLayout>
+
     </LinearLayout>
+
+
 
 </androidx.cardview.widget.CardView>

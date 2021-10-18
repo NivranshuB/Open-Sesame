@@ -1,6 +1,7 @@
 package com.example.listapp.adapters;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +13,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.listapp.R;
+import com.example.listapp.model.GlassDoor;
 import com.example.listapp.model.Item;
+import com.example.listapp.model.MetalDoor;
+import com.example.listapp.model.WoodenDoor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +50,9 @@ public class PanelViewAdapter extends RecyclerView.Adapter<PanelViewAdapter.Pane
 
     @Override
     public void onBindViewHolder(@NonNull PanelViewHolder holder, int position) {
+
+        Item currentItem = itemList.get(position);
+        Drawable material = current_context.getResources().getDrawable(R.drawable.gold_gradient);
         //holder.panelImage.setImageResource(itemList.get(position).getFirstImage());
         holder.panelName.setText(combineNameArray(itemList.get(position).getName()));
         holder.panelPrice.setText("$" + Float.toString(itemList.get(position).getPrice()));
@@ -54,6 +61,18 @@ public class PanelViewAdapter extends RecyclerView.Adapter<PanelViewAdapter.Pane
         int imageId = current_context.getResources().getIdentifier(
                 itemList.get(position).getFirstImage(), "drawable", current_context.getPackageName());
         holder.panelImage.setImageResource(imageId);
+
+        if (currentItem.getClass() == WoodenDoor.class) {
+            material = current_context.getResources().getDrawable(R.drawable.wood_edge);
+        } else if (currentItem.getClass() == MetalDoor.class) {
+            material = current_context.getResources().getDrawable(R.drawable.metal_edge);
+        } else if (currentItem.getClass() == GlassDoor.class) {
+            material = current_context.getResources().getDrawable(R.drawable.glass_edge);
+        }
+
+        if (holder.materialEdgeTop != null) {
+            holder.materialEdgeTop.setBackground(material);
+        }
     }
 
     private String combineNameArray(List<String> input) {
@@ -77,6 +96,7 @@ public class PanelViewAdapter extends RecyclerView.Adapter<PanelViewAdapter.Pane
         ImageView panelImage;
         TextView panelName;
         TextView panelPrice;
+        View materialEdgeTop;
         OnItemClickListener onItemClickListener;
 
         int id;
@@ -86,6 +106,7 @@ public class PanelViewAdapter extends RecyclerView.Adapter<PanelViewAdapter.Pane
             panelImage = itemView.findViewById(R.id.panelImage);
             panelName = itemView.findViewById(R.id.panelName);
             panelPrice = itemView.findViewById(R.id.panelPrice);
+            materialEdgeTop = itemView.findViewById(R.id.materialEdgeTop);
 
             this.onItemClickListener = listener;
 
