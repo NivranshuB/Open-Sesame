@@ -10,8 +10,10 @@ import androidx.core.view.ViewCompat;
 import android.content.Intent;
 import android.os.Bundle;
 import android.transition.Fade;
+import android.transition.Transition;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.view.Window;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -75,13 +77,6 @@ public class DetailsActivity extends AppCompatActivity {
 
         ViewHolder detailsActivityVh = new ViewHolder();
 
-        Fade fade = new Fade();
-        fade.excludeTarget(R.id.custom_toolbar_details, true);
-        fade.excludeTarget(android.R.id.statusBarBackground, true);
-        fade.excludeTarget(android.R.id.navigationBarBackground, true);
-        getWindow().setEnterTransition(fade);
-        getWindow().setExitTransition(fade);
-
         Intent thisIntent = getIntent();
         String itemId = thisIntent.getStringExtra("id");
         Toast.makeText(this, "Showing item with id " + itemId, Toast.LENGTH_LONG).show();
@@ -118,36 +113,34 @@ public class DetailsActivity extends AppCompatActivity {
                     ViewPager viewPager = findViewById(R.id.imageViewPager);
                     ImageAdapter adapter = new ImageAdapter(DetailsActivity.this, itemSelected.getImage());
                     viewPager.setAdapter(adapter);
-
+                    startPostponedEnterTransition();
                     done = true;
-
-
                 }
             });
         } else {
             createDefaultItem();
         }
 
-        detailsActivityVh.viewPager.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-            @Override
-            public boolean onPreDraw() {
-                if (done) {
-                    detailsActivityVh.viewPager.getViewTreeObserver().removeOnPreDrawListener(this);
-
-//                    Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_up);
-//                    Animation panelViewAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_from_right);
-//                    mainActivityVH.wooden_category_button.startAnimation(animation);
-//                    mainActivityVH.metal_category_button.startAnimation(animation);
-//                    mainActivityVH.glass_category_button.startAnimation(animation);
-//                    mainActivityVH.handle_category_button.startAnimation(animation);
-//                    findViewById(R.id.panelRecyclerView).startAnimation(panelViewAnimation);
-                    startPostponedEnterTransition();
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-        });
+//        detailsActivityVh.viewPager.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+//            @Override
+//            public boolean onPreDraw() {
+//                if (done) {
+//                    detailsActivityVh.viewPager.getViewTreeObserver().removeOnPreDrawListener(this);
+//
+////                    Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_up);
+////                    Animation panelViewAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_from_right);
+////                    mainActivityVH.wooden_category_button.startAnimation(animation);
+////                    mainActivityVH.metal_category_button.startAnimation(animation);
+////                    mainActivityVH.glass_category_button.startAnimation(animation);
+////                    mainActivityVH.handle_category_button.startAnimation(animation);
+////                    findViewById(R.id.panelRecyclerView).startAnimation(panelViewAnimation);
+//                    startPostponedEnterTransition();
+//                    return true;
+//                } else {
+//                    return false;
+//                }
+//            }
+//        });
 
 
 

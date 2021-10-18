@@ -26,6 +26,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
@@ -110,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements PanelViewAdapter.
                 listActivity.putExtra("type", "wooden");
                 startActivity(listActivity);
 //                ActivityOptionsCompat activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this,
-//                        view, "listActivityTransition"); //new Pair<>(view, "topPicksImageTransition")
+//                        findViewById(R.id.custom_toolbar), "listActivityTransition"); //new Pair<>(view, "topPicksImageTransition")
 //
 //                ActivityCompat.startActivity(MainActivity.this, listActivity, activityOptions.toBundle());
                 overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
@@ -246,7 +247,6 @@ public class MainActivity extends AppCompatActivity implements PanelViewAdapter.
                 view, "topPicksImageTransition"); //new Pair<>(view, "topPicksImageTransition")
 
         ActivityCompat.startActivity(this, listActivity, activityOptions.toBundle());
-
     }
 
     /**
