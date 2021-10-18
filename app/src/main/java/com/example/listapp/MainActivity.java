@@ -12,10 +12,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.ClipData;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import android.transition.Explode;
 import android.transition.Fade;
+import android.transition.Transition;
 import android.transition.TransitionManager;
 
 import android.util.Log;
@@ -25,8 +27,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.provider.Settings;
@@ -42,7 +46,7 @@ import com.example.listapp.model.Item;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements PanelViewAdapter.OnItemClickListener, ItemAdapter.OnItemClickListener{
 
     private class ViewHolder {
         //The views in main activity go here
@@ -108,6 +112,11 @@ public class MainActivity extends AppCompatActivity {
                 Intent listActivity = new Intent(getBaseContext(), ListActivity.class);
                 listActivity.putExtra("type", "wooden");
                 startActivity(listActivity);
+//                ActivityOptionsCompat activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this,
+//                        findViewById(R.id.custom_toolbar), "listActivityTransition"); //new Pair<>(view, "topPicksImageTransition")
+//
+//                ActivityCompat.startActivity(MainActivity.this, listActivity, activityOptions.toBundle());
+                overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
             }
         });
 
@@ -117,6 +126,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent listActivity = new Intent(getBaseContext(), ListActivity.class);
                 listActivity.putExtra("type", "metallic");
                 startActivity(listActivity);
+                overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
             }
         });
 
@@ -126,6 +136,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent listActivity = new Intent(getBaseContext(), ListActivity.class);
                 listActivity.putExtra("type", "glass");
                 startActivity(listActivity);
+                overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
             }
         });
 
@@ -135,6 +146,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent listActivity = new Intent(getBaseContext(), ListActivity.class);
                 listActivity.putExtra("type", "handle");
                 startActivity(listActivity);
+                overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
             }
         });
 
@@ -177,6 +189,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent listActivity = new Intent(getBaseContext(), ListActivity.class);
                 listActivity.putExtra("type", s);
                 startActivity(listActivity);
+                overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
                 return false;
             }
 
@@ -221,7 +234,10 @@ public class MainActivity extends AppCompatActivity {
         dataLoader.sortItemListByViewCount(new DataCallback() {
             @Override
             public void dataListCallback(List<Item> itemList) {
-                PanelViewAdapter panelViewAdapter = new PanelViewAdapter(itemList, MainActivity.this);
+//                ItemAdapter itemAdapter = new ItemAdapter(MainActivity.this, R.layout.item_square,
+//                        itemList, MainActivity.this);
+//                mainActivityVH.panel_recycler_view.setAdapter(itemAdapter);
+                PanelViewAdapter panelViewAdapter = new PanelViewAdapter(itemList, MainActivity.this, MainActivity.this);
                 mainActivityVH.panel_recycler_view.setAdapter(panelViewAdapter);
                 panelViewDone = true;
             }
@@ -231,6 +247,19 @@ public class MainActivity extends AppCompatActivity {
                 // No implementation needed
             }
         });
+    }
+
+    @Override
+    public void onItemClick(int itemId, View view) {
+        Log.d("CREATION", "onNoteClick: Clicked item id " + itemId);
+        Intent listActivity = new Intent(getBaseContext(), DetailsActivity.class);
+        listActivity.putExtra("id", "" + itemId);
+//        startActivity(listActivity);
+
+                ActivityOptionsCompat activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(this,
+                view, "topPicksImageTransition"); //new Pair<>(view, "topPicksImageTransition")
+
+        ActivityCompat.startActivity(this, listActivity, activityOptions.toBundle());
     }
 
     /**

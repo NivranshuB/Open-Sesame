@@ -147,11 +147,16 @@ public abstract class Handle implements Item {
     }
 
     /**
-     * @return the dimensions array of a Door item.
+     * @return the dimensions array of a Handle item.
      */
     public List<Long> getDimensions() {
         return dimensions;
     }
+
+    /**
+     * @return the weight of this handle
+     */
+    public  int getWeight() { return weight; }
 
     /**
      * @return the list of categories that the item is a member of

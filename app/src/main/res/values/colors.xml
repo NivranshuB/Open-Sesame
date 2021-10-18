@@ -9,4 +9,16 @@
     <color name="white">#FFFFFFFF</color>
     <color name="colorPrimary">#00838f</color>
     <color name="colorPrimaryVariant">#ff9e80</color>
+
+    <color name="backgroundColor">#f2f2f2</color>
+
+    <color name="brown">#5d4037</color>
+    <color name="dark_brown">#321911</color>
+    <color name="grey">#616161</color>
+    <color name="dark_grey">#373737</color>
+    <color name="light_blue">#0277bd</color>
+    <color name="blue">#004c8b</color>
+    <color name="light_green">#00695c</color>
+    <color name="green">#004d40</color>
+    <color name="dark_turquoise">#005662</color>
 </resources>

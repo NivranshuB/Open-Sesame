@@ -90,6 +90,11 @@ public interface Item {
     List<Long> getDimensions();
 
     /**
+     * @return weight of Item instance.
+     */
+    int getWeight();
+
+    /**
      * @return list of categories that the item is a member of
      */
     List<String> getCategories();

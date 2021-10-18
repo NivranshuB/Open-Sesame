@@ -105,24 +105,24 @@ public class DataLoader implements IDataLoader {
                         door.setFirestoreID(curr.getId());
                         resultList.add(door);
                     }
-                    callback.dataListCallback(resultList);
                 }
+
+                handleRef.whereArrayContainsAny("name", Arrays.asList(matchList)).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        Log.d("FOUND", "Found item matching string");
+                        for (QueryDocumentSnapshot curr : queryDocumentSnapshots) {
+                            // Get data of each document to check the category type before deciding which type of Door child object to map to.
+                            Item handle = curr.toObject(DoorHandle.class);
+                            handle.setFirestoreID(curr.getId());
+                            resultList.add(handle);
+                        }
+                        callback.dataListCallback(resultList);
+                    }
+                });
             }
         });
-        handleRef.whereArrayContainsAny("name", Arrays.asList(matchList)).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-            @Override
-            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                Log.d("FOUND", "Found item matching string");
-                for (QueryDocumentSnapshot curr : queryDocumentSnapshots) {
-                    // Get data of each document to check the category type before deciding which type of Door child object to map to.
-                    Item handle = curr.toObject(DoorHandle.class);
-                    handle.setFirestoreID(curr.getId());
-                    resultList.add(handle);
-                }
-                callback.dataListCallback(resultList);
-            }
-        });
-        callback.dataListCallback(resultList);
+
     }
 
 
@@ -144,12 +144,6 @@ public class DataLoader implements IDataLoader {
                 for (QueryDocumentSnapshot curr : queryDocumentSnapshots) {
                     // Get data of each document to check the category type before deciding which type of Door child object to map to.
                     Map<String, Object> currObj = curr.getData();
-//                    StringBuilder mapAsString = new StringBuilder("{");
-//                    for (String key : currObj.keySet()) {
-//                        mapAsString.append(key + "=" + currObj.get(key) + ", ");
-//                    }
-//                    mapAsString.delete(mapAsString.length()-2, mapAsString.length()).append("}");
-//                    Log.d("mapString", mapAsString.toString());
                     for (String objType : (List<String>) currObj.get("categories")) {
                         Item door = null;
                         if (objType.equals(DOOR_TYPES[0])) {
@@ -162,8 +156,8 @@ public class DataLoader implements IDataLoader {
                         door.setFirestoreID(curr.getId());
                         resultList.add(door);
                     }
-                    callback.dataListCallback(resultList);
                 }
+                callback.dataListCallback(resultList);
             }
         });
         handleRef.whereArrayContainsAny("categories", categoryList).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -197,12 +191,6 @@ public class DataLoader implements IDataLoader {
                     DocumentSnapshot docSnap = queryDocumentSnapshots.getDocuments().get(0);
                     Map<String, Object> currObj = queryDocumentSnapshots.getDocuments().get(0).getData();
                     String objType = ((List<String>) currObj.get("categories")).get(0);
-//                StringBuilder mapAsString = new StringBuilder("{");
-//                for (String key : currObj.keySet()) {
-//                    mapAsString.append(key + "=" + currObj.get(key) + ", ");
-//                }
-//                mapAsString.delete(mapAsString.length()-2, mapAsString.length()).append("}");
-//                Log.d("mapString", mapAsString.toString());
                     Item i = null;
                     if (objType.equals(DOOR_TYPES[0])) {
                         i = docSnap.toObject(MetalDoor.class);

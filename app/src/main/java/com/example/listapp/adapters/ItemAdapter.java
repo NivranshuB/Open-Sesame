@@ -5,12 +5,10 @@ import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.listapp.R;
@@ -30,7 +28,7 @@ import java.util.List;
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> { //ArrayAdapter,
 
     public interface OnItemClickListener {
-        void onItemClick(int id);
+        void onItemClick(int id, View view);
     }
 
     protected class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -58,7 +56,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> { 
 
         @Override
         public void onClick(View view) {
-            onItemClickListener.onItemClick(id);
+            onItemClickListener.onItemClick(id, panelImage);
         }
     }
 
@@ -167,11 +165,12 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> { 
      */
     private void populateDoorItem(Item currentItem, DoorViewHolder holder) {
 
-        Drawable material = mContext.getResources().getDrawable(R.drawable.gold_gradient);
+        Drawable material = mContext.getResources().getDrawable(R.drawable.handle_edge);
         String materialName = "";
 
         if (currentItem.getClass() == WoodenDoor.class) {
             material = mContext.getResources().getDrawable(R.drawable.wood_edge);
+//            holder.panelPrice.setBackgroundResource(R.);
             materialName = stringListToString(currentItem.getName());
         } else if (currentItem.getClass() == MetalDoor.class) {
             material = mContext.getResources().getDrawable(R.drawable.metal_edge);
@@ -190,13 +189,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> { 
 
         holder.panelImage.setImageResource(imageId);
 
-        String name = "";
-
-        for (String s : currentItem.getName()) {
-            name += s + " ";
-        }
-
-        holder.panelName.setText(name);
+        holder.panelName.setText(mergeStringList(currentItem.getName()));
         holder.panelPrice.setText("NZ$" + String.format("%.2f", currentItem.getPrice()));
     }
 
@@ -236,15 +229,14 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> { 
             holder.galleryImage2.setImageResource(galleryImage2Id);
         }
 
-//        int lockComponentId = mContext.getResources().getIdentifier("unlock",
-//                "drawable", mContext.getPackageName());
-//
-//        if (currentItem.getLockable()) {
-//            lockComponentId = mContext.getResources().getIdentifier("lock", "drawable",
-//                    mContext.getPackageName());
-//        }
-//
-//        holder.lockStatus.setImageResource(lockComponentId);
+        if (holder.lockStatus != null) {
+            if (!currentItem.getLockable()) {
+                holder.lockStatus.setVisibility(View.INVISIBLE);
+            } else {
+                holder.lockStatus.setVisibility(View.VISIBLE);
+            }
+        }
+
 
         holder.panelPrice.setText("NZ$" + String.format("%.2f", currentItem.getPrice()));
     }
