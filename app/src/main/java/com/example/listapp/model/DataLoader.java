@@ -85,9 +85,11 @@ public class DataLoader implements IDataLoader {
         String[] matchList = matchString.split("\\s+");
         List<Item> resultList = new ArrayList<>();
 
+        Log.d("SEARCH", "Searching for string " + matchString);
         doorRef.whereArrayContainsAny("name", Arrays.asList(matchList)).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                Log.d("FOUND", "Found item matching string");
                 for (QueryDocumentSnapshot curr : queryDocumentSnapshots) {
                     // Get data of each document to check the category type before deciding which type of Door child object to map to.
                     Map<String, Object> currObj = curr.getData();
@@ -100,19 +102,24 @@ public class DataLoader implements IDataLoader {
                         } else if (objType.equals(DOOR_TYPES[2])) {
                             door = curr.toObject(WoodenDoor.class);
                         }
+                        door.setFirestoreID(curr.getId());
                         resultList.add(door);
                     }
+                    callback.dataListCallback(resultList);
                 }
             }
         });
         handleRef.whereArrayContainsAny("name", Arrays.asList(matchList)).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                Log.d("FOUND", "Found item matching string");
                 for (QueryDocumentSnapshot curr : queryDocumentSnapshots) {
                     // Get data of each document to check the category type before deciding which type of Door child object to map to.
                     Item handle = curr.toObject(DoorHandle.class);
+                    handle.setFirestoreID(curr.getId());
                     resultList.add(handle);
                 }
+                callback.dataListCallback(resultList);
             }
         });
         callback.dataListCallback(resultList);
@@ -152,6 +159,7 @@ public class DataLoader implements IDataLoader {
                         } else if (objType.equals(DOOR_TYPES[2])) {
                             door = curr.toObject(WoodenDoor.class);
                         }
+                        door.setFirestoreID(curr.getId());
                         resultList.add(door);
                     }
                     callback.dataListCallback(resultList);
@@ -164,6 +172,7 @@ public class DataLoader implements IDataLoader {
                 for (QueryDocumentSnapshot curr : queryDocumentSnapshots) {
                     // Get data of each document to check the category type before deciding which type of Door child object to map to.
                     Item handle = curr.toObject(DoorHandle.class);
+                    handle.setFirestoreID(curr.getId());
                     resultList.add(handle);
                 }
                 callback.dataListCallback(resultList);
@@ -202,6 +211,7 @@ public class DataLoader implements IDataLoader {
                     } else if (objType.equals(DOOR_TYPES[2])) {
                         i = docSnap.toObject(WoodenDoor.class);
                     }
+                    i.setFirestoreID(docSnap.getId());
                     callback.itemCallback(i);
                     item[0] = i;
                 }
@@ -215,6 +225,7 @@ public class DataLoader implements IDataLoader {
                     DocumentSnapshot docSnap = queryDocumentSnapshots.getDocuments().get(0);
                     Item i;
                     i = docSnap.toObject(DoorHandle.class);
+                    i.setFirestoreID(docSnap.getId());
                     callback.itemCallback(i);
                     item[0] = i;
                 }
@@ -223,6 +234,10 @@ public class DataLoader implements IDataLoader {
         });
     }
 
+    /**
+     * Method to retrieve a list of items sorted by view count. Calls a callback function to return the result when transaction is completed.
+     * @param callback callback instance to send notification and data once the search is complete.
+     */
     public void sortItemListByViewCount(DataCallback callback) {
         List<Door> doorList = new ArrayList<>();
         List<Handle> handleList = new ArrayList<>();
@@ -243,6 +258,7 @@ public class DataLoader implements IDataLoader {
                         } else if (objType.equals(DOOR_TYPES[2])) {
                             door = curr.toObject(WoodenDoor.class);
                         }
+                        door.setFirestoreID(curr.getId());
                         doorList.add(door);
                     }
                 }
@@ -251,6 +267,7 @@ public class DataLoader implements IDataLoader {
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                         for (QueryDocumentSnapshot curr : queryDocumentSnapshots) {
                             Handle handle = curr.toObject(DoorHandle.class);
+                            handle.setFirestoreID(curr.getId());
                             handleList.add(handle);
                         }
 
@@ -286,9 +303,14 @@ public class DataLoader implements IDataLoader {
     }
 
 
+    /**
+     * Method to update attribute values of the selected Item (e.g. viewCount when users click on them)
+     * TODO: Remove "+1" as the incrementation should be done upon viewer entering detailed view of an item, not here. This is just for testing purposes
+     * @param itemChanged The item whose attributes should be updated.
+     */
     public void persistData(Item itemChanged) {
         String category = itemChanged.getCategories().get(0);
-
+        Log.d("UPDATE", "Item's view count being updated has id " + itemChanged.getFirestoreID());
         if (Arrays.asList(DOOR_TYPES).contains(category)) {
             doorRef.document(itemChanged.getFirestoreID()).update("viewCount", itemChanged.getViewCount());
         } else if (category.equals(HANDLE_TYPE)) {
