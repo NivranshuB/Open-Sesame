@@ -10,7 +10,7 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="240dp"
+        android:layout_height="270dp"
         app:cardCornerRadius="8dp"
         app:cardElevation="4dp"
         android:layout_alignParentTop="true"
@@ -32,10 +32,12 @@
             <TextView
                 android:id="@+id/panelName"
                 android:layout_width="wrap_content"
-                android:layout_height="25dp"
+                android:layout_height="48dp"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="2dp"
+                android:gravity="center"
                 android:text="Door Handle"
+                android:textAlignment="center"
                 android:textSize="16sp"></TextView>
 
             <View
@@ -93,8 +95,8 @@
                 android:layout_height="30dp"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="5dp"
                 android:background="#004D40"
+                android:paddingTop="4dp"
                 android:text="$100.00"
                 android:textAlignment="center"
                 android:textColor="@color/white"></TextView>

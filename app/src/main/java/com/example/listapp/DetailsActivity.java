@@ -81,6 +81,27 @@ public class DetailsActivity extends AppCompatActivity {
         String itemId = thisIntent.getStringExtra("id");
         Toast.makeText(this, "Showing item with id " + itemId, Toast.LENGTH_LONG).show();
 
+        detailsActivityVh.viewPager.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+                if (done) {
+                    detailsActivityVh.viewPager.getViewTreeObserver().removeOnPreDrawListener(this);
+
+//                    Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_up);
+//                    Animation panelViewAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_from_right);
+//                    mainActivityVH.wooden_category_button.startAnimation(animation);
+//                    mainActivityVH.metal_category_button.startAnimation(animation);
+//                    mainActivityVH.glass_category_button.startAnimation(animation);
+//                    mainActivityVH.handle_category_button.startAnimation(animation);
+//                    findViewById(R.id.panelRecyclerView).startAnimation(panelViewAnimation);
+                    startPostponedEnterTransition();
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        });
+
         if (itemId != null) {
             int id = Integer.parseInt(itemId);
             dataLoader.getItemByID(id, new DataCallback() {
@@ -121,26 +142,7 @@ public class DetailsActivity extends AppCompatActivity {
             createDefaultItem();
         }
 
-//        detailsActivityVh.viewPager.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-//            @Override
-//            public boolean onPreDraw() {
-//                if (done) {
-//                    detailsActivityVh.viewPager.getViewTreeObserver().removeOnPreDrawListener(this);
-//
-////                    Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_up);
-////                    Animation panelViewAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_from_right);
-////                    mainActivityVH.wooden_category_button.startAnimation(animation);
-////                    mainActivityVH.metal_category_button.startAnimation(animation);
-////                    mainActivityVH.glass_category_button.startAnimation(animation);
-////                    mainActivityVH.handle_category_button.startAnimation(animation);
-////                    findViewById(R.id.panelRecyclerView).startAnimation(panelViewAnimation);
-//                    startPostponedEnterTransition();
-//                    return true;
-//                } else {
-//                    return false;
-//                }
-//            }
-//        });
+
 
 
 

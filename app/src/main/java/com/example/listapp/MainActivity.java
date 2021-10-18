@@ -44,7 +44,7 @@ import com.example.listapp.model.Item;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements PanelViewAdapter.OnItemClickListener{
+public class MainActivity extends AppCompatActivity implements PanelViewAdapter.OnItemClickListener, ItemAdapter.OnItemClickListener{
 
     private class ViewHolder {
         //The views in main activity go here
@@ -224,6 +224,9 @@ public class MainActivity extends AppCompatActivity implements PanelViewAdapter.
         dataLoader.sortItemListByViewCount(new DataCallback() {
             @Override
             public void dataListCallback(List<Item> itemList) {
+//                ItemAdapter itemAdapter = new ItemAdapter(MainActivity.this, R.layout.door_handle_square,
+//                        itemList, MainActivity.this);
+//                mainActivityVH.panel_recycler_view.setAdapter(itemAdapter);
                 PanelViewAdapter panelViewAdapter = new PanelViewAdapter(itemList, MainActivity.this, MainActivity.this);
                 mainActivityVH.panel_recycler_view.setAdapter(panelViewAdapter);
                 panelViewDone = true;
