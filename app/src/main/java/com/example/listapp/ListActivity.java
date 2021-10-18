@@ -7,15 +7,11 @@ import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.util.Pair;
 import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.transition.Transition;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
-import android.widget.AdapterView;
-import android.widget.Toast;
 
 import com.example.listapp.adapters.ItemAdapter;
 import com.example.listapp.model.DataCallback;
@@ -33,7 +29,7 @@ public class ListActivity extends AppCompatActivity implements ItemAdapter.OnIte
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        postponeEnterTransition();
+//        postponeEnterTransition();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
@@ -46,6 +42,11 @@ public class ListActivity extends AppCompatActivity implements ItemAdapter.OnIte
 
         DataLoader dataLoader = new DataLoader();
         if (!(categoryName == null) && categoryName.equals("handle")) {
+            Toolbar toolbar = findViewById(R.id.custom_toolbar_list);
+            toolbar.setBackgroundColor(getResources().getColor(R.color.light_green));
+            View view = findViewById(R.id.rounded_corners);
+            view.setBackgroundResource(R.drawable.light_green_rounded_corners_background);
+            getWindow().setStatusBarColor(getResources().getColor(R.color.light_green));
 //            itemAdapter = new ItemAdapter(this, R.layout.door_handle_square, dataLoader.getItemsByCriteria(categoryName));
             dataLoader.getItemsByCriteria(categoryName, new DataCallback() {
                 @Override
@@ -55,7 +56,7 @@ public class ListActivity extends AppCompatActivity implements ItemAdapter.OnIte
                     itemAdapter = new ItemAdapter(ListActivity.this, R.layout.door_handle_square,
                             itemList, ListActivity.this);
                     recyclerView.setAdapter(itemAdapter);
-                    startPostponedEnterTransition();
+//                    startPostponedEnterTransition();
                     ViewCompat.setTransitionName(findViewById(R.id.custom_toolbar_list), "listActivityTransition");
                 }
 
@@ -66,6 +67,25 @@ public class ListActivity extends AppCompatActivity implements ItemAdapter.OnIte
             });
         } else if(!(categoryName == null) && (categoryName.equals("wooden") ||
                 categoryName.equals("glass") || categoryName.equals("metallic"))) {
+
+            int colorId = 0;
+            int cornersId = 0;
+            if (categoryName.equals("wooden")) {
+                colorId = R.color.brown;
+                cornersId = R.drawable.brown_rounded_corners_background;
+            } else if (categoryName.equals("metallic")) {
+                colorId = R.color.grey;
+                cornersId = R.drawable.grey_rounded_corners_background;
+            } else if (categoryName.equals("glass")) {
+                colorId = R.color.light_blue;
+                cornersId = R.drawable.light_blue_rounded_corners_background;
+            }
+            Toolbar toolbar = findViewById(R.id.custom_toolbar_list);
+            toolbar.setBackgroundColor(getResources().getColor(colorId));
+            View view = findViewById(R.id.rounded_corners);
+            view.setBackgroundResource(cornersId);
+            getWindow().setStatusBarColor(getResources().getColor(colorId));
+
             dataLoader.getItemsByCriteria(categoryName, new DataCallback() {
                 @Override
                 public void dataListCallback(List<Item> itemList) {

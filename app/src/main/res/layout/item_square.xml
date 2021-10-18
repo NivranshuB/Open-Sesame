@@ -21,7 +21,7 @@
             android:id="@+id/materialEdgeTop"
             android:layout_width="match_parent"
             android:layout_height="15dp"
-            android:background="@drawable/wood_edge"
+            android:background="@color/green"
             android:rotation="0"
             android:translationZ="90dp" />
 
@@ -46,10 +46,10 @@
                 android:layout_height="48dp"
                 android:layout_below="@+id/panelImage"
                 android:layout_centerHorizontal="true"
-                android:gravity="center"
-                android:ellipsize="end"
-                android:maxLines="2"
                 android:layout_marginTop="4dp"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:maxLines="2"
                 android:text="Door"
                 android:textAlignment="center"
                 android:textSize="16sp"></TextView>
@@ -63,10 +63,10 @@
                 android:layout_gravity="center|bottom"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                android:background="@drawable/rounded_price_tag"
+
                 android:padding="4dp"
                 android:text="$100.00"
-                android:textColor="@color/white"
+                android:textColor="@color/dark_grey"
                 android:textSize="16sp"></TextView>
         </RelativeLayout>
 

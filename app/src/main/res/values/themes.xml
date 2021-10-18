@@ -13,6 +13,8 @@
         <item name="colorSecondaryVariant">@color/teal_700</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Customize your theme here. -->
+        <item name="android:textColorHint">@color/white</item>
+        <item name="android:editTextColor">@color/white</item>
     </style>
 
     <style name="Theme.ListApp.SplashScreenTheme">
@@ -22,6 +24,7 @@
     <style name="CustomToolBarStyle" parent="CustomMainToolBarStyle">
         <item name="titleTextAppearance">@style/ToolbarTitleStyle</item>
         <item name="navigationIcon">@drawable/ic_baseline_arrow_back_24</item>
+
     </style>
 
     <style name="CustomMainToolBarStyle">
@@ -30,6 +33,7 @@
         <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
         <item name="buttonGravity">center_vertical</item>
         <item name="elevation">8dp</item>
+
     </style>
 
     <style name="ToolbarTitleStyle">
@@ -86,6 +90,7 @@
 
     <style name="DetailsActivityDescriptionTextStyle">
         <item name="android:textColor">@color/white</item>
+        <item name="android:paddingTop">4dp</item>
     </style>
 
     <style name="CardItemTextStyle">

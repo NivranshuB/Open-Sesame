@@ -2,7 +2,6 @@ package com.example.listapp.adapters;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,10 +51,10 @@ public class PanelViewAdapter extends RecyclerView.Adapter<PanelViewAdapter.Pane
     public void onBindViewHolder(@NonNull PanelViewHolder holder, int position) {
 
         Item currentItem = itemList.get(position);
-        Drawable material = current_context.getResources().getDrawable(R.drawable.gold_gradient);
+        Drawable material = current_context.getResources().getDrawable(R.drawable.handle_edge);
         //holder.panelImage.setImageResource(itemList.get(position).getFirstImage());
         holder.panelName.setText(combineNameArray(itemList.get(position).getName()));
-        holder.panelPrice.setText("$" + Float.toString(itemList.get(position).getPrice()));
+        holder.panelPrice.setText("NZ$" + String.format("%.2f", currentItem.getPrice()));
         holder.id = itemList.get(position).getId();
 
         int imageId = current_context.getResources().getIdentifier(

@@ -5,12 +5,10 @@ import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.listapp.R;
@@ -167,11 +165,12 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> { 
      */
     private void populateDoorItem(Item currentItem, DoorViewHolder holder) {
 
-        Drawable material = mContext.getResources().getDrawable(R.drawable.gold_gradient);
+        Drawable material = mContext.getResources().getDrawable(R.drawable.handle_edge);
         String materialName = "";
 
         if (currentItem.getClass() == WoodenDoor.class) {
             material = mContext.getResources().getDrawable(R.drawable.wood_edge);
+//            holder.panelPrice.setBackgroundResource(R.);
             materialName = stringListToString(currentItem.getName());
         } else if (currentItem.getClass() == MetalDoor.class) {
             material = mContext.getResources().getDrawable(R.drawable.metal_edge);
@@ -230,15 +229,14 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> { 
             holder.galleryImage2.setImageResource(galleryImage2Id);
         }
 
-//        int lockComponentId = mContext.getResources().getIdentifier("unlock",
-//                "drawable", mContext.getPackageName());
-//
-//        if (currentItem.getLockable()) {
-//            lockComponentId = mContext.getResources().getIdentifier("lock", "drawable",
-//                    mContext.getPackageName());
-//        }
-//
-//        holder.lockStatus.setImageResource(lockComponentId);
+        if (holder.lockStatus != null) {
+            if (!currentItem.getLockable()) {
+                holder.lockStatus.setVisibility(View.INVISIBLE);
+            } else {
+                holder.lockStatus.setVisibility(View.VISIBLE);
+            }
+        }
+
 
         holder.panelPrice.setText("NZ$" + String.format("%.2f", currentItem.getPrice()));
     }

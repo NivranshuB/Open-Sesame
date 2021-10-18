@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.ClipData;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import android.transition.Explode;
@@ -29,6 +30,7 @@ import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.provider.Settings;
@@ -187,6 +189,7 @@ public class MainActivity extends AppCompatActivity implements PanelViewAdapter.
                 Intent listActivity = new Intent(getBaseContext(), ListActivity.class);
                 listActivity.putExtra("type", s);
                 startActivity(listActivity);
+                overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
                 return false;
             }
 

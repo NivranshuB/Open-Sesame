@@ -43,7 +43,10 @@ public class DetailsActivity extends AppCompatActivity {
         TextView itemName;
         TextView description;
         TextView itemSpecification;
+        TextView weight;
+        TextView viewCount;
         TextView price;
+        TextView category;
 
         ViewPager viewPager;
 
@@ -52,7 +55,12 @@ public class DetailsActivity extends AppCompatActivity {
             itemName = findViewById(R.id.item_name);
             description = findViewById(R.id.item_description_text);
             itemSpecification = findViewById(R.id.item_specification_text);
+            weight = findViewById(R.id.weight_text);
+            viewCount = findViewById(R.id.view_count_text);
+            category = findViewById(R.id.category_text);
             price = findViewById(R.id.item_price);
+
+
 
             viewPager = findViewById(R.id.imageViewPager);
         }
@@ -81,7 +89,6 @@ public class DetailsActivity extends AppCompatActivity {
 
         Intent thisIntent = getIntent();
         String itemId = thisIntent.getStringExtra("id");
-        Toast.makeText(this, "Showing item with id " + itemId, Toast.LENGTH_LONG).show();
 
         detailsActivityVh.viewPager.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override
@@ -138,9 +145,13 @@ public class DetailsActivity extends AppCompatActivity {
                         }
                     }
 
+                    detailsActivityVh.weight.setText("Weight: " + itemSelected.getWeight() + "kg");
+                    detailsActivityVh.viewCount.setText(String.valueOf(itemSelected.getViewCount()));
+
                     detailsActivityVh.itemName.setText(nameString);
                     detailsActivityVh.description.setText(itemSelected.getDescription());
                     detailsActivityVh.price.setText("$" + String.format("%.2f", itemSelected.getPrice()));
+                    detailsActivityVh.category.setText("Category: " + itemSelected.getCategories().get(0));
 
 
                     RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.description_relative_layout);
