@@ -190,9 +190,9 @@ public class MainActivity extends AppCompatActivity {
                 for (Item i : itemlist) {
                     Log.d("jchename", i.getName().toString());
                     Log.d("jcheid", Integer.toString(i.getId()));
-                    Log.d("jcheprice", Float.toString(i.getPrice()));
-                    Log.d("jchedimensions", i.getDimensions().toString());
-                    Log.d("jchedescription", i.getDescription());
+                    Log.d("jcheViewCount", Integer.toString(i.getViewCount()));
+                    Log.d("jcheFirestoreID", i.getFirestoreID());
+                    dataLoader.persistData(i);
                 }
             }
 

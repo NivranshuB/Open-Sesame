@@ -54,6 +54,11 @@ public abstract class Door implements Item {
     }
 
     /**
+     * @param fstoreID Firestore ID of this Item
+     */
+    public void setFirestoreID(String fstoreID) {firestoreID = fstoreID; }
+
+    /**
      * @return list of categories the Item instance belongs to.
      */
     public List<String> getCategories() {
