@@ -14,10 +14,16 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This test suite handles all test cases which apply to a 'GlassDoor' item specifically.
+ */
 public class GlassDoorUnitTest {
 
     Item glassDoor;
 
+    /**
+     * Create the GlassDoor instance that will be used for testing.
+     */
     @Before
     public void setup() {
         List<Long> dimensions = new ArrayList<>();
@@ -108,7 +114,8 @@ public class GlassDoorUnitTest {
     }
 
     /**
-     *
+     * Test that the material type attribute of a GlassDoor can be set correctly and then
+     * accessed as expected.
      */
     @Test
     public void TestGlassDoorEmptyConstructor() {

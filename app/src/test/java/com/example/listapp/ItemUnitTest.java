@@ -16,10 +16,17 @@ import com.example.listapp.model.WoodenDoor;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This test suite handles all test cases which apply to a 'Door' or 'Handle' subtype. Contrary to
+ * the specific unit test suites this class tests the general functionality of an Item instance.
+ */
 public class ItemUnitTest {
 
     Item woodenDoor, glassDoor, metalDoor, doorHandle;
 
+    /**
+     * Method to create the different types of doors that will be used for testing in this suite.
+     */
     @Before
     public void setup() {
         List<Long> dimensions = new ArrayList<>();
@@ -91,7 +98,8 @@ public class ItemUnitTest {
     }
 
     /**
-     *
+     * This test case checks that a Door type object behaves appropriately when it is created with
+     * the default constructor and its fields are populated manually through its setter methods.
      */
     @Test
     public void TestManuallySettingDoorAttributes() {
@@ -123,7 +131,8 @@ public class ItemUnitTest {
     }
 
     /**
-     *
+     * This test case checks that a Handle type object behaves appropriately when it is created with
+     * the default constructor and its fields are populated manually through its setter methods.
      */
     @Test
     public void TestManuallySettingHandleAttributes() {
@@ -152,7 +161,8 @@ public class ItemUnitTest {
     }
 
     /**
-     *
+     * This test case checks that the getMaterialType() function, when invoked on a glass door
+     * returns an empty string since a glass door does not have the a material type attribute.
      */
     @Test
     public void TestMaterialTypeAttribute() {
@@ -160,7 +170,7 @@ public class ItemUnitTest {
     }
 
     /**
-     * Check how Handle instances deal with having Door type responsibilities invoked on
+     * Checks how Handle instances deal with having Door type responsibilities invoked on
      * them.
      */
     @Test
@@ -178,7 +188,7 @@ public class ItemUnitTest {
     }
 
     /**
-     * Test if the view count of an item gets incremented correctly or not.
+     * Tests if the view count of a Door type item gets incremented correctly or not.
      */
     @Test
     public void TestViewCountIncrementDoor() {
@@ -191,7 +201,7 @@ public class ItemUnitTest {
     }
 
     /**
-     * Test if the view count of an item get reset correctly or not.
+     * Test if the view count of a Door type item get reset correctly or not.
      */
     @Test
     public void TestViewCountResetDoor() {
@@ -204,7 +214,7 @@ public class ItemUnitTest {
     }
 
     /**
-     * Test if the view count of an item gets incremented correctly or not.
+     * Tests if the view count of a Handle type item gets incremented correctly or not.
      */
     @Test
     public void TestViewCountIncrementHandle() {
@@ -217,7 +227,7 @@ public class ItemUnitTest {
     }
 
     /**
-     * Test if the view count of an item get reset correctly or not.
+     * Test if the view count of a Handle type item get reset correctly or not.
      */
     @Test
     public void TestViewCountResetHandle() {
