@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Notification;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -25,6 +26,7 @@ import com.example.listapp.model.Item;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.List;
+import java.util.Map;
 
 public class ListActivity extends AppCompatActivity implements ItemAdapter.OnItemClickListener {
 
@@ -122,6 +124,14 @@ public class ListActivity extends AppCompatActivity implements ItemAdapter.OnIte
                     return false;
                 }
             });
+
+            SharedPreferences sharedPreferences = getSharedPreferences("favourites", MODE_PRIVATE);
+            Map<String, String> map = (Map<String, String>) sharedPreferences.getAll();
+            for (String s : map.keySet()) {
+                Log.d("favourites????", s);
+            }
+
+
         } else {
             String formattedString = capitaliseWord(categoryName);
             dataLoader.getItemsByName(formattedString, new DataCallback() {

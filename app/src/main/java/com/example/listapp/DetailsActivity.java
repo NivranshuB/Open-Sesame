@@ -7,12 +7,15 @@ import androidx.viewpager.widget.ViewPager;
 import androidx.core.view.ViewCompat;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.Window;
+import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +29,7 @@ import com.example.listapp.model.IDataLoader;
 import com.example.listapp.model.Item;
 import com.example.listapp.model.WoodenDoor;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import android.view.animation.Animation;
@@ -33,6 +37,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.util.Log;
+import android.widget.ToggleButton;
 
 public class DetailsActivity extends AppCompatActivity {
 
@@ -107,6 +112,47 @@ public class DetailsActivity extends AppCompatActivity {
                 }
             }
         });
+
+        SharedPreferences sharedPreferences = getSharedPreferences("favourites", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+//        editor.clear();
+//        editor.commit();
+
+        ToggleButton favouritesToggle = (ToggleButton) findViewById(R.id.details_favourite_icon);
+        Drawable notToggledImage = getDrawable(R.drawable.ic_baseline_favorite_border_24);
+        Drawable toggledImage = getDrawable(R.drawable.ic_baseline_favorite_24);
+        favouritesToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    favouritesToggle.setBackground(toggledImage);
+                    Toast.makeText(getApplicationContext(), "Item added to favourites", Toast.LENGTH_SHORT).show();
+                    editor.putString(itemId, itemId);
+                    editor.commit();
+
+                } else {
+                    favouritesToggle.setBackground(notToggledImage);
+                    Toast.makeText(getApplicationContext(), "Item removed from favourites", Toast.LENGTH_SHORT).show();
+                    editor.remove(itemId);
+                    editor.commit();
+                }
+            }
+        });
+
+//        ImageView favouritesIcon = (ImageView) findViewById(R.id.details_favourite_icon);
+//        favouritesIcon.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Toast.makeText(getApplicationContext(), "fdsafdsa", Toast.LENGTH_SHORT).show();
+//                Drawable drawable = favouritesIcon.getDrawable();
+//                if (drawable.equals(R.drawable.ic_baseline_favorite_24)) {
+//                    favouritesIcon.setImageResource(R.drawable.ic_baseline_favorite_border_24);
+//                } else {
+//                    favouritesIcon.setImageResource(R.drawable.ic_baseline_favorite_24);
+//                }
+//
+//            }
+//        });
 
         if (itemId != null) {
             int id = Integer.parseInt(itemId);
