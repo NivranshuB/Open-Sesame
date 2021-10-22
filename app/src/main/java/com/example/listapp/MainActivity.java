@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements PanelViewAdapter.
                     mainActivityVH.panel_recycler_view.getViewTreeObserver().removeOnPreDrawListener(this);
 
                     Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_up);
-                    Animation panelViewAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_from_right);
+                    Animation panelViewAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.panel_view_slide_from_right);
                     mainActivityVH.wooden_category_button.startAnimation(animation);
                     mainActivityVH.metal_category_button.startAnimation(animation);
                     mainActivityVH.glass_category_button.startAnimation(animation);
@@ -156,15 +156,17 @@ public class MainActivity extends AppCompatActivity implements PanelViewAdapter.
         setSupportActionBar(toolbar);
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation_menu);
+
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
                 if (item.getItemId() == R.id.home_page) {
 
                     return true;
                 } else if (item.getItemId() == R.id.favourites_page) {
                     Intent listActivity = new Intent(getBaseContext(), ListActivity.class);
-                    listActivity.putExtra("type", "s");
+                    listActivity.putExtra("type", "favourites");
                     startActivity(listActivity);
                     overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
                     return true;

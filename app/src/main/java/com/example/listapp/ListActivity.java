@@ -1,5 +1,6 @@
 package com.example.listapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -21,6 +22,7 @@ import com.example.listapp.model.DataCallback;
 import com.example.listapp.model.DataLoader;
 import com.example.listapp.model.IDataLoader;
 import com.example.listapp.model.Item;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.List;
 
@@ -30,6 +32,8 @@ public class ListActivity extends AppCompatActivity implements ItemAdapter.OnIte
     RecyclerView recyclerView;
     IDataLoader dataLoader;
 
+    BottomNavigationView bottomNavigationView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +42,8 @@ public class ListActivity extends AppCompatActivity implements ItemAdapter.OnIte
 
         recyclerView = (RecyclerView) findViewById(R.id.grid_recycler_view);
         findViewById(R.id.no_results_found).setVisibility(View.INVISIBLE);
+
+        bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation_menu);
 
         Intent intent = getIntent();
         String categoryName = intent.getStringExtra("type");
@@ -100,6 +106,22 @@ public class ListActivity extends AppCompatActivity implements ItemAdapter.OnIte
                     // No implementation needed
                 }
             });
+        } else if (!(categoryName == null) && categoryName.equals("favourites")) {
+//            BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation_menu);
+            bottomNavigationView.setVisibility(View.VISIBLE);
+            bottomNavigationView.setSelectedItemId(R.id.favourites_page);
+            bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                    if (item.getItemId() == R.id.home_page) {
+                        Intent mainActivity = new Intent(getBaseContext(), MainActivity.class);
+                        startActivity(mainActivity);
+                        overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
+                        return true;
+                    }
+                    return false;
+                }
+            });
         } else {
             String formattedString = capitaliseWord(categoryName);
             dataLoader.getItemsByName(formattedString, new DataCallback() {
@@ -148,7 +170,6 @@ public class ListActivity extends AppCompatActivity implements ItemAdapter.OnIte
 //        startActivity(listActivity);
 
 
-
         ActivityOptionsCompat activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(this,
                 new Pair<>(view, "topPicksImageTransition"));
 
@@ -157,14 +178,14 @@ public class ListActivity extends AppCompatActivity implements ItemAdapter.OnIte
 //                startActivity(detailIntent);
     }
 
-    public static String capitaliseWord(String str){
+    public static String capitaliseWord(String str) {
         str = str.toLowerCase();
-        String words[]=str.split("\\s");
-        String capitalizeWord="";
-        for(String w:words){
-            String first=w.substring(0,1);
-            String afterfirst=w.substring(1);
-            capitalizeWord+=first.toUpperCase()+afterfirst+" ";
+        String words[] = str.split("\\s");
+        String capitalizeWord = "";
+        for (String w : words) {
+            String first = w.substring(0, 1);
+            String afterfirst = w.substring(1);
+            capitalizeWord += first.toUpperCase() + afterfirst + " ";
         }
         return capitalizeWord.trim();
     }
@@ -174,7 +195,7 @@ public class ListActivity extends AppCompatActivity implements ItemAdapter.OnIte
         // Handle presses on the action bar items
         switch (item.getItemId()) {
             case android.R.id.home:
-
+                bottomNavigationView.setSelectedItemId(R.id.home_page);
                 finish();
                 overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
                 return true;
