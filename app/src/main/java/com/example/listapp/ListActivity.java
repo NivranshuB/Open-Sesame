@@ -130,6 +130,9 @@ public class ListActivity extends AppCompatActivity implements ItemAdapter.OnIte
             for (String s : map.keySet()) {
                 Log.d("favourites????", s);
             }
+            for (String s : map.values()) {
+                Log.d("values: ", s);
+            }
 
 
         } else {

@@ -139,6 +139,14 @@ public class DetailsActivity extends AppCompatActivity {
             }
         });
 
+        if (sharedPreferences.getString(itemId, null) != null) {
+            favouritesToggle.setChecked(true);
+            favouritesToggle.setBackground(toggledImage);
+        }
+//        else {
+//            favouritesToggle.setBackground(notToggledImage);
+//        }
+
 //        ImageView favouritesIcon = (ImageView) findViewById(R.id.details_favourite_icon);
 //        favouritesIcon.setOnClickListener(new View.OnClickListener() {
 //            @Override
