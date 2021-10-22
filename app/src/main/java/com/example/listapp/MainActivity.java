@@ -1,5 +1,6 @@
 package com.example.listapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
@@ -42,6 +43,7 @@ import com.example.listapp.adapters.PanelViewAdapter;
 import com.example.listapp.model.DataCallback;
 import com.example.listapp.model.DataLoader;
 import com.example.listapp.model.Item;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -153,6 +155,24 @@ public class MainActivity extends AppCompatActivity implements PanelViewAdapter.
         Toolbar toolbar = (Toolbar) findViewById(R.id.custom_toolbar);
         setSupportActionBar(toolbar);
 
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation_menu);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                if (item.getItemId() == R.id.home_page) {
+
+                    return true;
+                } else if (item.getItemId() == R.id.favourites_page) {
+                    Intent listActivity = new Intent(getBaseContext(), ListActivity.class);
+                    listActivity.putExtra("type", "s");
+                    startActivity(listActivity);
+                    overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+                    return true;
+                }
+                return false;
+            }
+        });
+
 //        CardView cardView = (CardView) findViewById(R.id.card_view_1);
 //        cardView.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -261,6 +281,8 @@ public class MainActivity extends AppCompatActivity implements PanelViewAdapter.
 
         ActivityCompat.startActivity(this, listActivity, activityOptions.toBundle());
     }
+
+
 
     /**
     private void createCategoryClickListeners() {
