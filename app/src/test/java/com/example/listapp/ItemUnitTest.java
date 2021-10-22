@@ -5,8 +5,10 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+import com.example.listapp.model.Door;
 import com.example.listapp.model.DoorHandle;
 import com.example.listapp.model.GlassDoor;
+import com.example.listapp.model.Handle;
 import com.example.listapp.model.Item;
 import com.example.listapp.model.MetalDoor;
 import com.example.listapp.model.WoodenDoor;
@@ -320,28 +322,12 @@ public class ItemUnitTest {
     }
 
     /**
-     * Check the conversion of a Door subtype instance to a Handle subtype instance.
-     */
-    @Test
-    public void TestDoorToHandle() {
-
-    }
-
-    /**
-     * Check the conversion of a Handle subtype instance to a Door subtype instance.
-     */
-    @Test
-    public void TestHandleToDoor() {
-
-    }
-
-    /**
      * Check how Handle instances deal with having Door type responsibilities invoked on
      * them.
      */
     @Test
     public void TestSpecialDoorAttributesOnHandle() {
-
+        assertEquals("", doorHandle.getMaterialType());
     }
 
     /**
@@ -349,7 +335,34 @@ public class ItemUnitTest {
      */
     @Test
     public void TestSpecialHandleAttributesOnDoor() {
+        assertEquals(false, woodenDoor.getLockable());
+        assertEquals("", woodenDoor.getLockType());
+    }
 
+    /**
+     * Test if the view count of an item gets incremented correctly or not.
+     */
+    @Test
+    public void TestViewCountIncrement() {
+        metalDoor.resetViewCount();
+        for (int i = 0; i < 10; i++) {
+            metalDoor.incrementViewCount();
+        }
+
+        assertEquals(10, metalDoor.getViewCount());
+    }
+
+    /**
+     * Test if the view count of an item get reset correctly or not.
+     */
+    @Test
+    public void TestViewCountReset() {
+        for (int i = 0; i < 10; i++) {
+            glassDoor.incrementViewCount();
+        }
+        glassDoor.resetViewCount();
+
+        assertEquals(0, glassDoor.getViewCount());
     }
 
 }
