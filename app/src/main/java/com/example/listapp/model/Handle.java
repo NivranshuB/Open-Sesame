@@ -72,7 +72,7 @@ public abstract class Handle implements Item {
      * For a Handle object return the lock type of the object.
      */
     public String getLockType() {
-        return "";
+        return lockType;
     }
 
     public void setLockType(String lock) {
@@ -101,15 +101,7 @@ public abstract class Handle implements Item {
         return image.get(0);
     }
 
-    /**
-     * @return the list of all full qualified names of the images of this item instance (ignore the
-     * material image)
-     */
-    public List<String> getImage() {
-        return image;
-    }
-
-    public void setImages(List<String> newImageUrls) {
+    public void setImage(List<String> newImageUrls) {
         image = newImageUrls;
     }
 
@@ -131,7 +123,6 @@ public abstract class Handle implements Item {
         return viewCount;
     }
 
-
     /**
      * Increase the view count of this image by 1
      */
@@ -144,13 +135,6 @@ public abstract class Handle implements Item {
      */
     public void resetViewCount() {
         viewCount = 0;
-    }
-
-    /**
-     * @return the dimensions array of a Handle item.
-     */
-    public List<Long> getDimensions() {
-        return dimensions;
     }
 
     /**

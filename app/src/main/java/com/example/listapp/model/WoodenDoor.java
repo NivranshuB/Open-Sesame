@@ -44,8 +44,4 @@ public class WoodenDoor extends Door {
     public void setMaterialType(String type) {
         materialType = type;
     }
-
-    public void setMaterialImage(String newMaterialType) {
-        materialType = newMaterialType;
-    }
 }
