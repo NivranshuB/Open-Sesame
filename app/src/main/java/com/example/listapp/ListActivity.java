@@ -1,5 +1,6 @@
 package com.example.listapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -11,24 +12,35 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Notification;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.listapp.adapters.ItemAdapter;
 import com.example.listapp.model.DataCallback;
 import com.example.listapp.model.DataLoader;
 import com.example.listapp.model.IDataLoader;
 import com.example.listapp.model.Item;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class ListActivity extends AppCompatActivity implements ItemAdapter.OnItemClickListener {
 
     ItemAdapter itemAdapter;
     RecyclerView recyclerView;
     IDataLoader dataLoader;
+    SharedPreferences sharedPreferences;
+    Intent intent; //check
+
+    BottomNavigationView bottomNavigationView;
 
 
     @Override
@@ -36,13 +48,16 @@ public class ListActivity extends AppCompatActivity implements ItemAdapter.OnIte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
+        sharedPreferences = getSharedPreferences("favourites", MODE_PRIVATE);
+
         recyclerView = (RecyclerView) findViewById(R.id.grid_recycler_view);
         findViewById(R.id.no_results_found).setVisibility(View.INVISIBLE);
 
-        Intent intent = getIntent();
-        String categoryName = intent.getStringExtra("type");
+        bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation_menu);
 
-        DataLoader dataLoader = new DataLoader();
+        intent = getIntent(); //check
+        String categoryName = intent.getStringExtra("type");
+        dataLoader = new DataLoader();
         if (!(categoryName == null) && categoryName.equals("handle")) {
             Toolbar toolbar = findViewById(R.id.custom_toolbar_list);
             toolbar.setBackgroundColor(getResources().getColor(R.color.light_green));
@@ -100,6 +115,41 @@ public class ListActivity extends AppCompatActivity implements ItemAdapter.OnIte
                     // No implementation needed
                 }
             });
+        } else if (!(categoryName == null) && categoryName.equals("favourites")) {
+//            BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation_menu);
+
+            bottomNavigationView.setVisibility(View.VISIBLE);
+            bottomNavigationView.setSelectedItemId(R.id.favourites_page);
+            bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                    if (item.getItemId() == R.id.home_page) {
+                        Intent mainActivity = new Intent(getBaseContext(), MainActivity.class);
+                        startActivity(mainActivity);
+                        overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
+                        return true;
+                    }
+                    return false;
+                }
+            });
+
+
+            initFavouritesList();
+
+            Button clearButton = (Button) findViewById(R.id.clear_button);
+            clearButton.setVisibility(View.VISIBLE);
+            clearButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(getApplicationContext(), "Cleared favourites", Toast.LENGTH_SHORT).show();
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.clear();
+                    editor.commit();
+                    initFavouritesList();
+                }
+            });
+
+
         } else {
             String formattedString = capitaliseWord(categoryName);
             dataLoader.getItemsByName(formattedString, new DataCallback() {
@@ -148,23 +198,21 @@ public class ListActivity extends AppCompatActivity implements ItemAdapter.OnIte
 //        startActivity(listActivity);
 
 
-
         ActivityOptionsCompat activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(this,
                 new Pair<>(view, "topPicksImageTransition"));
 
         ActivityCompat.startActivity(this, listActivity, activityOptions.toBundle());
-//        startActivity(listActivity);
-//                startActivity(detailIntent);
+
     }
 
-    public static String capitaliseWord(String str){
+    public static String capitaliseWord(String str) {
         str = str.toLowerCase();
-        String words[]=str.split("\\s");
-        String capitalizeWord="";
-        for(String w:words){
-            String first=w.substring(0,1);
-            String afterfirst=w.substring(1);
-            capitalizeWord+=first.toUpperCase()+afterfirst+" ";
+        String words[] = str.split("\\s");
+        String capitalizeWord = "";
+        for (String w : words) {
+            String first = w.substring(0, 1);
+            String afterfirst = w.substring(1);
+            capitalizeWord += first.toUpperCase() + afterfirst + " ";
         }
         return capitalizeWord.trim();
     }
@@ -174,12 +222,55 @@ public class ListActivity extends AppCompatActivity implements ItemAdapter.OnIte
         // Handle presses on the action bar items
         switch (item.getItemId()) {
             case android.R.id.home:
-
+                bottomNavigationView.setSelectedItemId(R.id.home_page);
                 finish();
                 overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void initFavouritesList() {
+        SharedPreferences sharedPreferences = getSharedPreferences("favourites", MODE_PRIVATE);
+        Map<String, String> map = (Map<String, String>) sharedPreferences.getAll();
+        List<Integer> favouriteIDList = new ArrayList<>();
+        int count = 0;
+        if (map.keySet().size() > 0) {
+            for (String s : map.keySet()) {
+                if (count < 10) {
+                    favouriteIDList.add(Integer.parseInt(s));
+                    count++;
+                } else {
+                    break;
+                }
+            }
+            dataLoader.getItemsByID(favouriteIDList, new DataCallback() {
+                @Override
+                public void dataListCallback(List<Item> itemList) {
+                    itemAdapter = new ItemAdapter(ListActivity.this, R.layout.item_square, itemList, ListActivity.this);
+                    recyclerView.setAdapter(itemAdapter);
+                }
+                @Override
+                public void itemCallback(Item item) {
+                    // not needed
+                }
+            });
+        } else {
+            List<Item> emptyList = new ArrayList<>();
+            itemAdapter = new ItemAdapter(ListActivity.this, R.layout.item_square, emptyList, ListActivity.this);
+            recyclerView.setAdapter(itemAdapter);
+        }
+    }
+
+    @Override
+    public void onResume() {  // After a pause OR at startup
+        super.onResume();
+        //Refresh your stuff here
+        String categoryName = intent.getStringExtra("type");
+
+        if (!(categoryName == null) && categoryName.equals("favourites")) {
+            initFavouritesList();
         }
     }
 

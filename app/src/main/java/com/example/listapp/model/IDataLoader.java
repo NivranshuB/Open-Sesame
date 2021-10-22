@@ -58,9 +58,16 @@ public interface IDataLoader {
      * input.
      *
      * @param id: Id of item to retrieve from database
-     * @return Single item that has the name specified
+     * @return Single item that has the ID specified
      *         If no matches return 'null'
      */
     public void getItemByID(int id, DataCallback callback);
+
+    /**
+     * This method retrieves multiple objects based on the IDs supplied in List format.
+     * @param idList IDs of the items to retrieve from the database
+     * @param callback Multiple items that have an ID that matches one of the supplied IDs.
+     */
+    public void getItemsByID(List<Integer> idList, DataCallback callback);
 
 }

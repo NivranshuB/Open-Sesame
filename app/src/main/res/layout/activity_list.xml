@@ -12,7 +12,19 @@
         android:id="@+id/custom_toolbar_list"
         style="@style/CustomToolBarStyle"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize" />
+        android:layout_height="?attr/actionBarSize">
+
+        <Button
+            android:id="@+id/clear_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:background="@android:color/transparent"
+            android:text="CLEAR"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:visibility="gone" />
+    </androidx.appcompat.widget.Toolbar>
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -54,8 +66,18 @@
             android:text="No results found"
             android:textSize="28sp"
             android:textColor="@color/dark_turquoise">
-
         </TextView>
 
     </LinearLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation_menu"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimary"
+        app:itemIconTint="@color/bottom_navigation_view_color"
+        app:itemTextColor="@color/bottom_navigation_view_color"
+        app:menu="@menu/bottom_navigation_menu" />
 </RelativeLayout>

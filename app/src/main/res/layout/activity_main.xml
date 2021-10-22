@@ -9,6 +9,7 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/custom_toolbar"
         style="@style/CustomMainToolBarStyle"
@@ -49,8 +50,10 @@
         android:elevation="8dp" />
 
     <ScrollView
+        android:id="@+id/main_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@id/bottom_navigation_menu"
         android:layout_below="@id/custom_toolbar">
 
         <LinearLayout
@@ -73,10 +76,6 @@
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"></androidx.recyclerview.widget.RecyclerView>
 
-            <HorizontalScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"></HorizontalScrollView>
-
             <TextView
                 style="@style/MainActivityHeadingStyle"
                 android:layout_width="wrap_content"
@@ -88,9 +87,7 @@
                 android:id="@+id/relative_layout_wooden"
                 style="@style/CategoryCardView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp">
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:id="@+id/wooden_text"
@@ -206,5 +203,15 @@
             </RelativeLayout>
         </LinearLayout>
     </ScrollView>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation_menu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimary"
+        app:itemIconTint="@color/bottom_navigation_view_color"
+        app:itemTextColor="@color/bottom_navigation_view_color"
+        app:menu="@menu/bottom_navigation_menu" />
 
 </RelativeLayout>

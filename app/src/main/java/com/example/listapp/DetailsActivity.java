@@ -7,12 +7,18 @@ import androidx.viewpager.widget.ViewPager;
 import androidx.core.view.ViewCompat;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.os.Bundle;
+import android.transition.Fade;
+import android.transition.Transition;
+import android.transition.TransitionInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.Window;
+import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +32,7 @@ import com.example.listapp.model.IDataLoader;
 import com.example.listapp.model.Item;
 import com.example.listapp.model.WoodenDoor;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import android.view.animation.Animation;
@@ -33,6 +40,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.util.Log;
+import android.widget.ToggleButton;
 
 public class DetailsActivity extends AppCompatActivity {
 
@@ -92,14 +100,6 @@ public class DetailsActivity extends AppCompatActivity {
             public boolean onPreDraw() {
                 if (done) {
                     detailsActivityVh.viewPager.getViewTreeObserver().removeOnPreDrawListener(this);
-
-//                    Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_up);
-//                    Animation panelViewAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_from_right);
-//                    mainActivityVH.wooden_category_button.startAnimation(animation);
-//                    mainActivityVH.metal_category_button.startAnimation(animation);
-//                    mainActivityVH.glass_category_button.startAnimation(animation);
-//                    mainActivityVH.handle_category_button.startAnimation(animation);
-//                    findViewById(R.id.panelRecyclerView).startAnimation(panelViewAnimation);
                     startPostponedEnterTransition();
                     return true;
                 } else {
@@ -107,6 +107,35 @@ public class DetailsActivity extends AppCompatActivity {
                 }
             }
         });
+
+        SharedPreferences sharedPreferences = getSharedPreferences("favourites", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+//        editor.clear();
+//        editor.commit();
+
+        ToggleButton favouritesToggle = (ToggleButton) findViewById(R.id.details_favourite_icon);
+        Drawable notToggledImage = getDrawable(R.drawable.ic_baseline_favorite_border_24);
+        Drawable toggledImage = getDrawable(R.drawable.ic_baseline_favorite_24);
+        favouritesToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    favouritesToggle.setBackground(toggledImage);
+                    editor.putString(itemId, itemId);
+                    editor.commit();
+
+                } else {
+                    favouritesToggle.setBackground(notToggledImage);
+                    editor.remove(itemId);
+                    editor.commit();
+                }
+            }
+        });
+
+        if (sharedPreferences.getString(itemId, null) != null) {
+            favouritesToggle.setChecked(true);
+            favouritesToggle.setBackground(toggledImage);
+        }
 
         if (itemId != null) {
             int id = Integer.parseInt(itemId);
@@ -171,13 +200,24 @@ public class DetailsActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.description_relative_layout);
+        Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_down_details_activity);
+        relativeLayout.startAnimation(animation);
+//        getWindow().setEnterTransition(new Fade());
+        super.onBackPressed();
+
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle presses on the action bar items
         switch (item.getItemId()) {
             case android.R.id.home:
-
-                finish();
-                overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
+                supportFinishAfterTransition();
+                RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.description_relative_layout);
+                Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_down_details_activity);
+                relativeLayout.startAnimation(animation);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

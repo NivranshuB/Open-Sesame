@@ -25,9 +25,6 @@ import java.util.List;
 public class PanelViewAdapter extends RecyclerView.Adapter<PanelViewAdapter.PanelViewHolder> {
 
 //    Possible storage of image paths, item names and price. May be replaced with Item object itself.
-//    private ArrayList<String> itemImagePaths = new ArrayList<>();
-//    private ArrayList<String> itemNames = new ArrayList<>();
-//    private ArrayList<String> itemPrices = new ArrayList<>();
     private List<Item> itemList = new ArrayList<>();
     private Context current_context;
 
