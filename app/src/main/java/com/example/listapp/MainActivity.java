@@ -42,9 +42,11 @@ import com.example.listapp.adapters.ItemAdapter;
 import com.example.listapp.adapters.PanelViewAdapter;
 import com.example.listapp.model.DataCallback;
 import com.example.listapp.model.DataLoader;
+import com.example.listapp.model.IDataLoader;
 import com.example.listapp.model.Item;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements PanelViewAdapter.
         RelativeLayout metal_category_button;
         RelativeLayout glass_category_button;
         RelativeLayout handle_category_button;
+        BottomNavigationView bottomNavigationView;
         RecyclerView panel_recycler_view;
 
         public ViewHolder() {
@@ -65,12 +68,13 @@ public class MainActivity extends AppCompatActivity implements PanelViewAdapter.
             glass_category_button = findViewById(R.id.relative_layout_glass);
             handle_category_button = findViewById(R.id.relative_layout_handles);
             panel_recycler_view = findViewById(R.id.panelRecyclerView);
+            bottomNavigationView = findViewById(R.id.bottom_navigation_menu);
         }
     }
 
     //variables
     private List<Item> panelItems = new ArrayList<>();
-    DataLoader dataLoader = new DataLoader();
+    IDataLoader dataLoader = new DataLoader();
 
     ViewHolder mainActivityVH;
 
@@ -155,9 +159,8 @@ public class MainActivity extends AppCompatActivity implements PanelViewAdapter.
         Toolbar toolbar = (Toolbar) findViewById(R.id.custom_toolbar);
         setSupportActionBar(toolbar);
 
-        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation_menu);
 
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+        mainActivityVH.bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
@@ -193,6 +196,7 @@ public class MainActivity extends AppCompatActivity implements PanelViewAdapter.
     {  // After a pause OR at startup
         super.onResume();
         //Refresh your stuff here
+        mainActivityVH.bottomNavigationView.setSelectedItemId(R.id.home_page);
         initPanelRecyclerView();
     }
 
@@ -227,14 +231,21 @@ public class MainActivity extends AppCompatActivity implements PanelViewAdapter.
 
     private void initPanelItems() {
         // TODO: 05/10/2021 Requires implementation of code to retrieve data from Firestore DB and helper functions to sort and etc, in order to populate panelItems list.
-        dataLoader.getItemsByCriteria("metallic", new DataCallback() {
+        List<Integer> temp = new ArrayList<>();
+        temp.add(5);
+        temp.add(17);
+        temp.add(12);
+        temp.add(37);
+        temp.add(24);
+
+        dataLoader.getItemsByID(temp, new DataCallback() {
             @Override
             public void dataListCallback(List<Item> itemlist) {
                 for (Item i : itemlist) {
-                    Log.d("jchename", i.getName().toString());
-                    Log.d("jcheid", Integer.toString(i.getId()));
-                    Log.d("jcheViewCount", Integer.toString(i.getViewCount()));
-                    Log.d("jcheFirestoreID", i.getFirestoreID());
+                    Log.d("testname", i.getName().toString());
+                    Log.d("testid", Integer.toString(i.getId()));
+                    Log.d("testViewCount", Integer.toString(i.getViewCount()));
+                    Log.d("testFirestoreID", i.getFirestoreID());
                     dataLoader.persistData(i);
                 }
             }
@@ -257,9 +268,6 @@ public class MainActivity extends AppCompatActivity implements PanelViewAdapter.
         dataLoader.sortItemListByViewCount(new DataCallback() {
             @Override
             public void dataListCallback(List<Item> itemList) {
-//                ItemAdapter itemAdapter = new ItemAdapter(MainActivity.this, R.layout.item_square,
-//                        itemList, MainActivity.this);
-//                mainActivityVH.panel_recycler_view.setAdapter(itemAdapter);
                 PanelViewAdapter panelViewAdapter = new PanelViewAdapter(itemList, MainActivity.this, MainActivity.this);
                 mainActivityVH.panel_recycler_view.setAdapter(panelViewAdapter);
                 panelViewDone = true;

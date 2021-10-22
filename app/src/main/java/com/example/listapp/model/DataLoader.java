@@ -223,6 +223,53 @@ public class DataLoader implements IDataLoader {
     }
 
     /**
+     * Method that retrieves all Items whose IDs are supplied as a parameter.
+     *
+     * @param idList: list of ids of Items to retrieve from database
+     * @param callback      callback instance to send notification and data once the search is complete.
+     */
+    public void getItemsByID(List<Integer> idList, DataCallback callback) {
+        List<Item> resultList = new ArrayList<>();
+
+        doorRef.whereIn("id", idList).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                for (QueryDocumentSnapshot curr : queryDocumentSnapshots) {
+                    // Get data of each document to check the category type before deciding which type of Door child object to map to.
+                    Map<String, Object> currObj = curr.getData();
+                    for (String objType : (List<String>) currObj.get("categories")) {
+                        Item door = null;
+                        if (objType.equals(DOOR_TYPES[0])) {
+                            door = curr.toObject(MetalDoor.class);
+                        } else if (objType.equals(DOOR_TYPES[1])) {
+                            door = curr.toObject(GlassDoor.class);
+                        } else if (objType.equals(DOOR_TYPES[2])) {
+                            door = curr.toObject(WoodenDoor.class);
+                        }
+                        door.setFirestoreID(curr.getId());
+                        resultList.add(door);
+                    }
+                }
+                callback.dataListCallback(resultList);
+            }
+        });
+        handleRef.whereIn("id", idList).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                for (QueryDocumentSnapshot curr : queryDocumentSnapshots) {
+                    // Get data of each document to check the category type before deciding which type of Door child object to map to.
+                    Item handle = curr.toObject(DoorHandle.class);
+                    handle.setFirestoreID(curr.getId());
+                    resultList.add(handle);
+                }
+                callback.dataListCallback(resultList);
+            }
+        });
+    }
+
+
+
+    /**
      * Method to retrieve a list of items sorted by view count. Calls a callback function to return the result when transaction is completed.
      * @param callback callback instance to send notification and data once the search is complete.
      */
