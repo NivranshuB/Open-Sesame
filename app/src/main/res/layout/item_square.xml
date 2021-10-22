@@ -20,10 +20,8 @@
         <View
             android:id="@+id/materialEdgeTop"
             android:layout_width="match_parent"
-            android:layout_height="15dp"
-            android:background="@color/green"
-            android:rotation="0"
-            android:translationZ="90dp" />
+            android:layout_height="16dp"
+            android:background="@color/green" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -37,7 +35,6 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="20dp"
                 android:src="@drawable/door1"></ImageView>
-
 
             <TextView
                 android:id="@+id/panelName"
@@ -71,7 +68,6 @@
         </RelativeLayout>
 
     </androidx.cardview.widget.CardView>
-
 
 </RelativeLayout>
 

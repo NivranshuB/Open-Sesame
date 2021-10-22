@@ -113,6 +113,7 @@ public class ListActivity extends AppCompatActivity implements ItemAdapter.OnIte
             });
         } else if (!(categoryName == null) && categoryName.equals("favourites")) {
 //            BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation_menu);
+
             bottomNavigationView.setVisibility(View.VISIBLE);
             bottomNavigationView.setSelectedItemId(R.id.favourites_page);
             bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {

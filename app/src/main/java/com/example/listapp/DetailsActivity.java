@@ -13,6 +13,7 @@ import android.media.Image;
 import android.os.Bundle;
 import android.transition.Fade;
 import android.transition.Transition;
+import android.transition.TransitionInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -99,19 +100,6 @@ public class DetailsActivity extends AppCompatActivity {
             public boolean onPreDraw() {
                 if (done) {
                     detailsActivityVh.viewPager.getViewTreeObserver().removeOnPreDrawListener(this);
-
-//                    Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_up);
-//                    Animation panelViewAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_from_right);
-//                    mainActivityVH.wooden_category_button.startAnimation(animation);
-//                    mainActivityVH.metal_category_button.startAnimation(animation);
-//                    mainActivityVH.glass_category_button.startAnimation(animation);
-//                    mainActivityVH.handle_category_button.startAnimation(animation);
-//                    findViewById(R.id.panelRecyclerView).startAnimation(panelViewAnimation);
-                    Transition fade = new Fade();
-                    fade.excludeTarget(R.id.custom_toolbar_details, true);
-                    fade.excludeTarget(android.R.id.navigationBarBackground, true);
-                    getWindow().setExitTransition(fade);
-                    getWindow().setEnterTransition(fade);
                     startPostponedEnterTransition();
                     return true;
                 } else {
@@ -133,13 +121,11 @@ public class DetailsActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (b) {
                     favouritesToggle.setBackground(toggledImage);
-                    Toast.makeText(getApplicationContext(), "Item added to favourites", Toast.LENGTH_SHORT).show();
                     editor.putString(itemId, itemId);
                     editor.commit();
 
                 } else {
                     favouritesToggle.setBackground(notToggledImage);
-                    Toast.makeText(getApplicationContext(), "Item removed from favourites", Toast.LENGTH_SHORT).show();
                     editor.remove(itemId);
                     editor.commit();
                 }
@@ -150,24 +136,6 @@ public class DetailsActivity extends AppCompatActivity {
             favouritesToggle.setChecked(true);
             favouritesToggle.setBackground(toggledImage);
         }
-//        else {
-//            favouritesToggle.setBackground(notToggledImage);
-//        }
-
-//        ImageView favouritesIcon = (ImageView) findViewById(R.id.details_favourite_icon);
-//        favouritesIcon.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Toast.makeText(getApplicationContext(), "fdsafdsa", Toast.LENGTH_SHORT).show();
-//                Drawable drawable = favouritesIcon.getDrawable();
-//                if (drawable.equals(R.drawable.ic_baseline_favorite_24)) {
-//                    favouritesIcon.setImageResource(R.drawable.ic_baseline_favorite_border_24);
-//                } else {
-//                    favouritesIcon.setImageResource(R.drawable.ic_baseline_favorite_24);
-//                }
-//
-//            }
-//        });
 
         if (itemId != null) {
             int id = Integer.parseInt(itemId);
@@ -232,11 +200,24 @@ public class DetailsActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.description_relative_layout);
+        Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_down_details_activity);
+        relativeLayout.startAnimation(animation);
+//        getWindow().setEnterTransition(new Fade());
+        super.onBackPressed();
+
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle presses on the action bar items
         switch (item.getItemId()) {
             case android.R.id.home:
                 supportFinishAfterTransition();
+                RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.description_relative_layout);
+                Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_down_details_activity);
+                relativeLayout.startAnimation(animation);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

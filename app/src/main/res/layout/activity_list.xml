@@ -15,15 +15,15 @@
         android:layout_height="?attr/actionBarSize">
 
         <Button
+            android:id="@+id/clear_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="CLEAR"
+            android:layout_gravity="right"
             android:background="@android:color/transparent"
+            android:text="CLEAR"
             android:textColor="@color/white"
-            android:visibility="gone"
             android:textSize="14sp"
-            android:id="@+id/clear_button"
-            android:layout_gravity="right"/>
+            android:visibility="gone" />
     </androidx.appcompat.widget.Toolbar>
 
     <FrameLayout
