@@ -17,6 +17,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.listapp.adapters.ItemAdapter;
 import com.example.listapp.model.DataCallback;
@@ -50,7 +52,7 @@ public class ListActivity extends AppCompatActivity implements ItemAdapter.OnIte
         Intent intent = getIntent();
         String categoryName = intent.getStringExtra("type");
 
-        DataLoader dataLoader = new DataLoader();
+        IDataLoader dataLoader = new DataLoader();
         if (!(categoryName == null) && categoryName.equals("handle")) {
             Toolbar toolbar = findViewById(R.id.custom_toolbar_list);
             toolbar.setBackgroundColor(getResources().getColor(R.color.light_green));
@@ -125,6 +127,7 @@ public class ListActivity extends AppCompatActivity implements ItemAdapter.OnIte
                 }
             });
 
+
             SharedPreferences sharedPreferences = getSharedPreferences("favourites", MODE_PRIVATE);
             Map<String, String> map = (Map<String, String>) sharedPreferences.getAll();
             for (String s : map.keySet()) {
@@ -133,6 +136,32 @@ public class ListActivity extends AppCompatActivity implements ItemAdapter.OnIte
             for (String s : map.values()) {
                 Log.d("values: ", s);
             }
+
+            for (String s : map.keySet()) {
+                dataLoader.getItemByID(Integer.parseInt(s), new DataCallback() {
+                    @Override
+                    public void dataListCallback(List<Item> itemList) {
+                        // not needed
+                    }
+
+                    @Override
+                    public void itemCallback(Item item) {
+//                        itemAdapter = new ItemAdapter(ListActivity.this, R.layout.item_square, item, ListActivity.this);
+                    }
+                });
+            }
+
+            TextView clearButton = (TextView) findViewById(R.id.clear_button);
+            clearButton.setVisibility(View.VISIBLE);
+            clearButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(getApplicationContext(), "cleared favourites", Toast.LENGTH_SHORT).show();
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.clear();
+                    editor.commit();
+                }
+            });
 
 
         } else {
