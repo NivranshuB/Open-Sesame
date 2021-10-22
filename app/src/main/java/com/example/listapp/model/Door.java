@@ -117,7 +117,6 @@ public abstract class Door implements Item {
      * @return the full qualified name of the first image of this Item instance
      */
     public String getFirstImage() {
-        Log.d("doorImages", image.toString());
         return image.get(0);
     }
 

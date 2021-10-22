@@ -4,6 +4,10 @@ import java.util.List;
 
 public class DoorHandle extends Handle {
 
+    public DoorHandle() {
+
+    }
+
     @Override
     public List<String> getImage() {
         return image;
