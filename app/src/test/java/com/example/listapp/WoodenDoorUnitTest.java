@@ -14,10 +14,16 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This test suite handles all test cases which apply to a 'WoodenDoor' item specifically.
+ */
 public class WoodenDoorUnitTest {
 
     Item woodenDoor;
 
+    /**
+     * Create the WoodenDoor instance that will be used for testing.
+     */
     @Before
     public void setup() {
         List<Long> dimensions = new ArrayList<>();
@@ -108,7 +114,8 @@ public class WoodenDoorUnitTest {
     }
 
     /**
-     *
+     * Test that the material type attribute of a WoodenDoor can be set correctly and then
+     * accessed as expected.
      */
     @Test
     public void TestMaterialTypeWoodenDoor() {

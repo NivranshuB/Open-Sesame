@@ -15,10 +15,16 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This test suite handles all test cases which apply to a 'DoorHandle' item specifically.
+ */
 public class DoorHandleUnitTest {
 
     Item doorHandle;
 
+    /**
+     * Create the DoorHandle instance that will be used for testing.
+     */
     @Before
     public void setup() {
         List<Long> dimensions = new ArrayList<>();
