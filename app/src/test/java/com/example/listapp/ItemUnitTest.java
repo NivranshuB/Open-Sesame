@@ -94,8 +94,69 @@ public class ItemUnitTest {
      *
      */
     @Test
-    public void TestExclusiveDoorAttributes() {
-        assertNull(woodenDoor.getFirestoreID());
+    public void TestManuallySettingDoorAttributes() {
+        WoodenDoor wood = new WoodenDoor();
+        wood.setFirestoreID("6");
+        assertEquals("6", wood.getFirestoreID());
+
+        List<String> newName = new ArrayList<>();
+        newName.add("Smoked");
+        newName.add("Oak");
+        newName.add("Door");
+
+        wood.setName(newName);
+
+        List<String> newImages = new ArrayList<>();
+        newImages.add("Door10_1");
+        newImages.add("Door10_2");
+
+        wood.setImages(newImages);
+
+        wood.setDescription("Hello");
+
+        assertEquals(3, wood.getName().size());
+        assertEquals(2, wood.getImage().size());
+        assertEquals("Door10_1", wood.getFirstImage());
+        assertEquals("Hello", wood.getDescription());
+        assertNull(wood.getColour());
+        assertNull(wood.getCategories());
+    }
+
+    /**
+     *
+     */
+    @Test
+    public void TestManuallySettingHandleAttributes() {
+        DoorHandle handle = new DoorHandle();
+        handle.setFirestoreID("7");
+        assertEquals("7", handle.getFirestoreID());
+
+        handle.setLockType("Hinge");
+        handle.setLockable(true);
+
+        List<String> newImages = new ArrayList<>();
+        newImages.add("Handle5_1");
+        newImages.add("Handle5_2");
+
+        handle.setImage(newImages);
+
+        handle.setDescription("Hello");
+
+        assertEquals("Hinge", handle.getLockType());
+        assertTrue(handle.getLockable());
+
+        assertEquals(2, handle.getImage().size());
+        assertEquals("Handle5_1", handle.getFirstImage());
+        assertEquals("Hello", handle.getDescription());
+        assertEquals("handle", handle.getCategories().get(0));
+    }
+
+    /**
+     *
+     */
+    @Test
+    public void TestMaterialTypeAttribute() {
+        assertEquals("", glassDoor.getMaterialType());
     }
 
     /**
@@ -120,7 +181,7 @@ public class ItemUnitTest {
      * Test if the view count of an item gets incremented correctly or not.
      */
     @Test
-    public void TestViewCountIncrement() {
+    public void TestViewCountIncrementDoor() {
         metalDoor.resetViewCount();
         for (int i = 0; i < 10; i++) {
             metalDoor.incrementViewCount();
@@ -133,13 +194,39 @@ public class ItemUnitTest {
      * Test if the view count of an item get reset correctly or not.
      */
     @Test
-    public void TestViewCountReset() {
+    public void TestViewCountResetDoor() {
         for (int i = 0; i < 10; i++) {
             glassDoor.incrementViewCount();
         }
         glassDoor.resetViewCount();
 
         assertEquals(0, glassDoor.getViewCount());
+    }
+
+    /**
+     * Test if the view count of an item gets incremented correctly or not.
+     */
+    @Test
+    public void TestViewCountIncrementHandle() {
+        doorHandle.resetViewCount();
+        for (int i = 0; i < 10; i++) {
+            doorHandle.incrementViewCount();
+        }
+
+        assertEquals(10, doorHandle.getViewCount());
+    }
+
+    /**
+     * Test if the view count of an item get reset correctly or not.
+     */
+    @Test
+    public void TestViewCountResetHandle() {
+        for (int i = 0; i < 10; i++) {
+            doorHandle.incrementViewCount();
+        }
+        doorHandle.resetViewCount();
+
+        assertEquals(0, doorHandle.getViewCount());
     }
 
 }

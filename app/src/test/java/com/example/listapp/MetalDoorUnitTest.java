@@ -104,4 +104,17 @@ public class MetalDoorUnitTest {
             assertEquals(metalDoorImages.get(i), metalDoor.getImage().get(i));
         }
     }
+
+    /**
+     *
+     */
+    @Test
+    public void TestMaterialTypeMetalDoor() {
+        MetalDoor metal = new MetalDoor();
+        metal = (MetalDoor) metalDoor;
+
+        metal.setMaterialType("Aluminium");
+
+        assertEquals("Aluminium", metal.getMaterialType());
+    }
 }
