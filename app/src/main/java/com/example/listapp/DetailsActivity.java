@@ -11,6 +11,8 @@ import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.os.Bundle;
+import android.transition.Fade;
+import android.transition.Transition;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -105,6 +107,11 @@ public class DetailsActivity extends AppCompatActivity {
 //                    mainActivityVH.glass_category_button.startAnimation(animation);
 //                    mainActivityVH.handle_category_button.startAnimation(animation);
 //                    findViewById(R.id.panelRecyclerView).startAnimation(panelViewAnimation);
+                    Transition fade = new Fade();
+                    fade.excludeTarget(R.id.custom_toolbar_details, true);
+                    fade.excludeTarget(android.R.id.navigationBarBackground, true);
+                    getWindow().setExitTransition(fade);
+                    getWindow().setEnterTransition(fade);
                     startPostponedEnterTransition();
                     return true;
                 } else {
@@ -229,9 +236,7 @@ public class DetailsActivity extends AppCompatActivity {
         // Handle presses on the action bar items
         switch (item.getItemId()) {
             case android.R.id.home:
-
-                finish();
-                overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
+                supportFinishAfterTransition();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

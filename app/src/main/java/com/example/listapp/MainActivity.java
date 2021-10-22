@@ -204,6 +204,7 @@ public class MainActivity extends AppCompatActivity implements PanelViewAdapter.
         MenuItem menuItem = menu.findItem(R.id.search);
         SearchView searchView = (SearchView) menuItem.getActionView();
         searchView.setQueryHint("Search an item!");
+        searchView.setIconifiedByDefault(false);
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -280,7 +281,6 @@ public class MainActivity extends AppCompatActivity implements PanelViewAdapter.
 
                 ActivityOptionsCompat activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(this,
                 view, "topPicksImageTransition"); //new Pair<>(view, "topPicksImageTransition")
-
         ActivityCompat.startActivity(this, listActivity, activityOptions.toBundle());
     }
 

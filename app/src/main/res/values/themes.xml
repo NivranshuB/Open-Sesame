@@ -15,10 +15,20 @@
         <!-- Customize your theme here. -->
         <item name="android:textColorHint">@color/white</item>
         <item name="android:editTextColor">@color/white</item>
+        <item name="android:windowBackground">@color/colorPrimaryVariant</item>
+        <item name="android:colorBackground">@color/colorPrimaryVariant</item>
+        <item name="android:windowEnterTransition">@android:transition/no_transition</item>
+        <item name="android:windowExitTransition">@android:transition/no_transition</item>
+
+        <item name="autoCompleteTextViewStyle">@style/CursorStyle</item>
     </style>
 
     <style name="Theme.ListApp.SplashScreenTheme">
         <item name="android:windowBackground">@drawable/splash_screen</item>
+    </style>
+
+    <style name="CursorStyle" parent="Widget.AppCompat.AutoCompleteTextView">
+        <item name="android:textCursorDrawable">@drawable/cursor</item>
     </style>
 
     <style name="CustomToolBarStyle" parent="CustomMainToolBarStyle">
@@ -32,7 +42,7 @@
         <item name="android:background">@color/colorPrimary</item>
         <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
         <item name="buttonGravity">center_vertical</item>
-        <item name="elevation">8dp</item>
+        <item name="elevation">80dp</item>
 
     </style>
 
@@ -57,7 +67,7 @@
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:paddingLeft">8dp</item>
-        <item name="android:paddingTop">8dp</item>
+
     </style>
 
     <style name="MainActivityCategoryTitle">

@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -151,7 +152,7 @@ public class ListActivity extends AppCompatActivity implements ItemAdapter.OnIte
                 });
             }
 
-            TextView clearButton = (TextView) findViewById(R.id.clear_button);
+            Button clearButton = (Button) findViewById(R.id.clear_button);
             clearButton.setVisibility(View.VISIBLE);
             clearButton.setOnClickListener(new View.OnClickListener() {
                 @Override
