@@ -108,6 +108,8 @@ public class WoodenDoorUnitTest {
         woodenDoorImages.add("door21_2");
         woodenDoorImages.add("door21_3");
 
+        assertEquals(woodenDoorImages.get(0), woodenDoor.getFirstImage());
+
         for (int i = 0; i < woodenDoor.getImage().size(); i++) {
             assertEquals(woodenDoorImages.get(i), woodenDoor.getImage().get(i));
         }

@@ -107,24 +107,8 @@ public class ItemUnitTest {
         wood.setFirestoreID("6");
         assertEquals("6", wood.getFirestoreID());
 
-        List<String> newName = new ArrayList<>();
-        newName.add("Smoked");
-        newName.add("Oak");
-        newName.add("Door");
-
-        wood.setName(newName);
-
-        List<String> newImages = new ArrayList<>();
-        newImages.add("Door10_1");
-        newImages.add("Door10_2");
-
-        wood.setImages(newImages);
-
         wood.setDescription("Hello");
 
-        assertEquals(3, wood.getName().size());
-        assertEquals(2, wood.getImage().size());
-        assertEquals("Door10_1", wood.getFirstImage());
         assertEquals("Hello", wood.getDescription());
         assertNull(wood.getColour());
         assertNull(wood.getCategories());
@@ -143,19 +127,11 @@ public class ItemUnitTest {
         handle.setLockType("Hinge");
         handle.setLockable(true);
 
-        List<String> newImages = new ArrayList<>();
-        newImages.add("Handle5_1");
-        newImages.add("Handle5_2");
-
-        handle.setImage(newImages);
-
         handle.setDescription("Hello");
 
         assertEquals("Hinge", handle.getLockType());
         assertTrue(handle.getLockable());
 
-        assertEquals(2, handle.getImage().size());
-        assertEquals("Handle5_1", handle.getFirstImage());
         assertEquals("Hello", handle.getDescription());
         assertEquals("handle", handle.getCategories().get(0));
     }
@@ -183,6 +159,8 @@ public class ItemUnitTest {
      */
     @Test
     public void TestSpecialHandleAttributesOnDoor() {
+        woodenDoor.setLockable(true);
+        woodenDoor.setLockType("Should not be set on Door type.");
         assertEquals(false, woodenDoor.getLockable());
         assertEquals("", woodenDoor.getLockType());
     }
