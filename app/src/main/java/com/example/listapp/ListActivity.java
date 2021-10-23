@@ -18,8 +18,10 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.example.listapp.adapters.ItemAdapter;
 import com.example.listapp.model.DataCallback;
@@ -34,14 +36,33 @@ import java.util.Map;
 
 public class ListActivity extends AppCompatActivity implements ItemAdapter.OnItemClickListener {
 
+    private class ViewHolder {
+        RecyclerView recyclerView;
+        BottomNavigationView bottomNavigationView;
+        LinearLayout noResultsFoundView;
+        Toolbar toolbar;
+        View roundCornersView;
+        Button clearButton;
+
+        public ViewHolder() {
+            recyclerView = findViewById(R.id.grid_recycler_view);
+            bottomNavigationView = findViewById(R.id.bottom_navigation_menu);
+            noResultsFoundView = findViewById(R.id.no_results_found);
+            toolbar = findViewById(R.id.custom_toolbar_list);
+            roundCornersView = findViewById(R.id.rounded_corners);
+            clearButton = findViewById(R.id.clear_button);
+        }
+    }
+
+    ViewHolder listActivityVH;
+
     ItemAdapter itemAdapter;
-    RecyclerView recyclerView;
     IDataLoader dataLoader;
     SharedPreferences sharedPreferences;
     Intent intent; //check
-
-    BottomNavigationView bottomNavigationView;
-
+    String categoryName;
+    
+    final static String TOP_PICKS_IMAGE_TRANSITION = "topPicksImageTransition";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,138 +71,137 @@ public class ListActivity extends AppCompatActivity implements ItemAdapter.OnIte
 
         sharedPreferences = getSharedPreferences("favourites", MODE_PRIVATE);
 
-        recyclerView = (RecyclerView) findViewById(R.id.grid_recycler_view);
-        findViewById(R.id.no_results_found).setVisibility(View.INVISIBLE);
+        listActivityVH = new ViewHolder();
 
-        bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation_menu);
+        listActivityVH.noResultsFoundView.setVisibility(View.INVISIBLE);
 
         intent = getIntent(); //check
-        String categoryName = intent.getStringExtra("type");
+        categoryName = intent.getStringExtra("type");
         dataLoader = new DataLoader();
+
         if (!(categoryName == null) && categoryName.equals("handle")) {
-            Toolbar toolbar = findViewById(R.id.custom_toolbar_list);
-            toolbar.setBackgroundColor(getResources().getColor(R.color.light_green));
-            View view = findViewById(R.id.rounded_corners);
-            view.setBackgroundResource(R.drawable.light_green_rounded_corners_background);
-            getWindow().setStatusBarColor(getResources().getColor(R.color.light_green));
-            dataLoader.getItemsByCriteria(categoryName, new DataCallback() {
-                @Override
-                public void dataListCallback(List<Item> itemList) {
-
-
-                    itemAdapter = new ItemAdapter(ListActivity.this, R.layout.door_handle_square,
-                            itemList, ListActivity.this);
-                    recyclerView.setAdapter(itemAdapter);
-                    ViewCompat.setTransitionName(findViewById(R.id.custom_toolbar_list), "listActivityTransition");
-                }
-
-                @Override
-                public void itemCallback(Item item) {
-                    // No implementation needed
-                }
-            });
+            getHandles();
         } else if (!(categoryName == null) && (categoryName.equals("wooden") ||
                 categoryName.equals("glass") || categoryName.equals("metallic"))) {
-
-            int colorId = 0;
-            int cornersId = 0;
-            if (categoryName.equals("wooden")) {
-                colorId = R.color.brown;
-                cornersId = R.drawable.brown_rounded_corners_background;
-            } else if (categoryName.equals("metallic")) {
-                colorId = R.color.grey;
-                cornersId = R.drawable.grey_rounded_corners_background;
-            } else if (categoryName.equals("glass")) {
-                colorId = R.color.light_blue;
-                cornersId = R.drawable.light_blue_rounded_corners_background;
-            }
-            Toolbar toolbar = findViewById(R.id.custom_toolbar_list);
-            toolbar.setBackgroundColor(getResources().getColor(colorId));
-            View view = findViewById(R.id.rounded_corners);
-            view.setBackgroundResource(cornersId);
-            getWindow().setStatusBarColor(getResources().getColor(colorId));
-
-            dataLoader.getItemsByCriteria(categoryName, new DataCallback() {
-                @Override
-                public void dataListCallback(List<Item> itemList) {
-                    itemAdapter = new ItemAdapter(ListActivity.this, R.layout.item_square,
-                            itemList, ListActivity.this);
-                    recyclerView.setAdapter(itemAdapter);
-                    startPostponedEnterTransition();
-                }
-
-                @Override
-                public void itemCallback(Item item) {
-                    // No implementation needed
-                }
-            });
+            getDoors();
         } else if (!(categoryName == null) && categoryName.equals("favourites")) {
-//            BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation_menu);
-
-            bottomNavigationView.setVisibility(View.VISIBLE);
-            bottomNavigationView.setSelectedItemId(R.id.favourites_page);
-            bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-                @Override
-                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                    if (item.getItemId() == R.id.home_page) {
-                        Intent mainActivity = new Intent(getBaseContext(), MainActivity.class);
-                        startActivity(mainActivity);
-                        overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
-                        return true;
-                    }
-                    return false;
-                }
-            });
-
-
-            initFavouritesList();
-
-            Button clearButton = (Button) findViewById(R.id.clear_button);
-            clearButton.setVisibility(View.VISIBLE);
-            clearButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Toast.makeText(getApplicationContext(), "Cleared favourites", Toast.LENGTH_SHORT).show();
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.clear();
-                    editor.commit();
-                    initFavouritesList();
-                }
-            });
-
+            getFavourites();
 
         } else {
-            String formattedString = capitaliseWord(categoryName);
-            dataLoader.getItemsByName(formattedString, new DataCallback() {
-                @Override
-                public void dataListCallback(List<Item> itemList) {
-                    Log.d("Check", "ItemList size is " + itemList.size());
-                    itemAdapter = new ItemAdapter(ListActivity.this, R.layout.item_square,
-                            itemList, ListActivity.this);
-                    recyclerView.setAdapter(itemAdapter);
-                    if (itemList.size() < 1 || itemList == null) {
-                        findViewById(R.id.no_results_found).setVisibility(View.VISIBLE);
-                    }
-                }
-
-                @Override
-                public void itemCallback(Item item) {
-                    // No implementation needed
-                }
-            });
-
+            getSearch();
         }
 
-
         if (!(categoryName == null)) {
-            Toolbar toolbar = (Toolbar) findViewById(R.id.custom_toolbar_list);
-            toolbar.setTitle(categoryName.toUpperCase());
-            setSupportActionBar(toolbar);
+            listActivityVH.toolbar.setTitle(categoryName.toUpperCase());
+            setSupportActionBar(listActivityVH.toolbar);
             ActionBar ab = getSupportActionBar();
             ab.setDisplayHomeAsUpEnabled(true);
         }
+    }
 
+    private void getHandles() {
+        listActivityVH.toolbar.setBackgroundColor(getResources().getColor(R.color.light_green));
+        listActivityVH.roundCornersView.setBackgroundResource(R.drawable.light_green_rounded_corners_background);
+        getWindow().setStatusBarColor(getResources().getColor(R.color.light_green));
+        dataLoader.getItemsByCriteria(categoryName, new DataCallback() {
+            @Override
+            public void dataListCallback(List<Item> itemList) {
+                itemAdapter = new ItemAdapter(ListActivity.this, R.layout.door_handle_square,
+                        itemList, ListActivity.this);
+                listActivityVH.recyclerView.setAdapter(itemAdapter);
+            }
 
+            @Override
+            public void itemCallback(Item item) {
+                // No implementation needed
+            }
+        });
+    }
+
+    private void getDoors() {
+        int colorId = 0;
+        int cornersId = 0;
+        if (categoryName.equals("wooden")) {
+            colorId = R.color.brown;
+            cornersId = R.drawable.brown_rounded_corners_background;
+        } else if (categoryName.equals("metallic")) {
+            colorId = R.color.grey;
+            cornersId = R.drawable.grey_rounded_corners_background;
+        } else if (categoryName.equals("glass")) {
+            colorId = R.color.light_blue;
+            cornersId = R.drawable.light_blue_rounded_corners_background;
+        }
+
+        listActivityVH.toolbar.setBackgroundColor(getResources().getColor(colorId));
+        listActivityVH.roundCornersView.setBackgroundResource(cornersId);
+        getWindow().setStatusBarColor(getResources().getColor(colorId));
+
+        dataLoader.getItemsByCriteria(categoryName, new DataCallback() {
+            @Override
+            public void dataListCallback(List<Item> itemList) {
+                itemAdapter = new ItemAdapter(ListActivity.this, R.layout.item_square,
+                        itemList, ListActivity.this);
+                listActivityVH.recyclerView.setAdapter(itemAdapter);
+                startPostponedEnterTransition();
+            }
+
+            @Override
+            public void itemCallback(Item item) {
+                // No implementation needed
+            }
+        });
+    }
+
+    private void getFavourites() {
+        listActivityVH.bottomNavigationView.setVisibility(View.VISIBLE);
+        listActivityVH.bottomNavigationView.setSelectedItemId(R.id.favourites_page);
+        listActivityVH.bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                if (item.getItemId() == R.id.home_page) {
+                    Intent mainActivity = new Intent(getBaseContext(), MainActivity.class);
+                    startActivity(mainActivity);
+                    overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        initFavouritesList();
+
+        listActivityVH.clearButton.setVisibility(View.VISIBLE);
+        listActivityVH.clearButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "Cleared favourites", Toast.LENGTH_SHORT).show();
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.clear();
+                editor.commit();
+                initFavouritesList();
+            }
+        });
+    }
+
+    private void getSearch() {
+        String formattedString = capitaliseWord(categoryName);
+        dataLoader.getItemsByName(formattedString, new DataCallback() {
+            @Override
+            public void dataListCallback(List<Item> itemList) {
+                itemAdapter = new ItemAdapter(ListActivity.this, R.layout.item_square,
+                        itemList, ListActivity.this);
+                listActivityVH.recyclerView.setAdapter(itemAdapter);
+
+                if (itemList.size() < 1 || itemList == null) {
+                    listActivityVH.noResultsFoundView.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void itemCallback(Item item) {
+                // No implementation needed
+            }
+        });
     }
 
     @Override
@@ -192,14 +212,11 @@ public class ListActivity extends AppCompatActivity implements ItemAdapter.OnIte
 
     @Override
     public void onItemClick(int itemId, View view) {
-        Log.d("CREATION", "onNoteClick: Clicked item id " + itemId);
         Intent listActivity = new Intent(getBaseContext(), DetailsActivity.class);
         listActivity.putExtra("id", "" + itemId);
-//        startActivity(listActivity);
-
 
         ActivityOptionsCompat activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(this,
-                new Pair<>(view, "topPicksImageTransition"));
+                new Pair<>(view, TOP_PICKS_IMAGE_TRANSITION));
 
         ActivityCompat.startActivity(this, listActivity, activityOptions.toBundle());
 
@@ -222,7 +239,7 @@ public class ListActivity extends AppCompatActivity implements ItemAdapter.OnIte
         // Handle presses on the action bar items
         switch (item.getItemId()) {
             case android.R.id.home:
-                bottomNavigationView.setSelectedItemId(R.id.home_page);
+                listActivityVH.bottomNavigationView.setSelectedItemId(R.id.home_page);
                 finish();
                 overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
                 return true;
@@ -249,8 +266,9 @@ public class ListActivity extends AppCompatActivity implements ItemAdapter.OnIte
                 @Override
                 public void dataListCallback(List<Item> itemList) {
                     itemAdapter = new ItemAdapter(ListActivity.this, R.layout.item_square, itemList, ListActivity.this);
-                    recyclerView.setAdapter(itemAdapter);
+                    listActivityVH.recyclerView.setAdapter(itemAdapter);
                 }
+
                 @Override
                 public void itemCallback(Item item) {
                     // not needed
@@ -259,7 +277,7 @@ public class ListActivity extends AppCompatActivity implements ItemAdapter.OnIte
         } else {
             List<Item> emptyList = new ArrayList<>();
             itemAdapter = new ItemAdapter(ListActivity.this, R.layout.item_square, emptyList, ListActivity.this);
-            recyclerView.setAdapter(itemAdapter);
+            listActivityVH.recyclerView.setAdapter(itemAdapter);
         }
     }
 

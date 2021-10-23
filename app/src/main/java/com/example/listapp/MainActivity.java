@@ -203,7 +203,7 @@ public class MainActivity extends AppCompatActivity implements PanelViewAdapter.
         listActivity.putExtra("id", "" + itemId);
 
         ActivityOptionsCompat activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(this,
-                view, "topPicksImageTransition");
+                view, ListActivity.TOP_PICKS_IMAGE_TRANSITION);
         ActivityCompat.startActivity(this, listActivity, activityOptions.toBundle());
     }
 

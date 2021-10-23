@@ -182,7 +182,7 @@ public class DetailsActivity extends AppCompatActivity {
                     Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_up_details_view);
                     relativeLayout.startAnimation(animation);
 
-                    ViewCompat.setTransitionName(findViewById(R.id.imageViewPager), "topPicksImageTransition");
+                    ViewCompat.setTransitionName(findViewById(R.id.imageViewPager), ListActivity.TOP_PICKS_IMAGE_TRANSITION);
 
                     ViewPager viewPager = findViewById(R.id.imageViewPager);
                     ImageAdapter adapter = new ImageAdapter(DetailsActivity.this, itemSelected.getImage());
