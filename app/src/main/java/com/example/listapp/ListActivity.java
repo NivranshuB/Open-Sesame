@@ -61,7 +61,7 @@ public class ListActivity extends AppCompatActivity implements ItemAdapter.OnIte
     SharedPreferences sharedPreferences;
     Intent intent; //check
     String categoryName;
-    
+
     final static String TOP_PICKS_IMAGE_TRANSITION = "topPicksImageTransition";
 
     @Override

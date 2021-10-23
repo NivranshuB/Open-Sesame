@@ -55,6 +55,9 @@ public class DetailsActivity extends AppCompatActivity {
         TextView category;
 
         ViewPager viewPager;
+        Toolbar toolbar;
+        ToggleButton favouritesToggle;
+        RelativeLayout descriptionRelativeLayout;
 
         public ViewHolder() {
             //The elements common among all items assigned here
@@ -66,11 +69,15 @@ public class DetailsActivity extends AppCompatActivity {
             category = findViewById(R.id.category_text);
             price = findViewById(R.id.item_price);
             viewPager = findViewById(R.id.imageViewPager);
+            toolbar = findViewById(R.id.custom_toolbar_details);
+            favouritesToggle = findViewById(R.id.details_favourite_icon);
+            descriptionRelativeLayout = findViewById(R.id.description_relative_layout);
         }
     }
 
     Item itemSelected;
     IDataLoader dataLoader = new DataLoader();
+    ViewHolder detailsActivityVH;
 
     String nameString = "";
 
@@ -81,25 +88,22 @@ public class DetailsActivity extends AppCompatActivity {
         postponeEnterTransition();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
-        Log.d("detailsActivity", "Details activity launched");
-        System.out.println("Details activity launched");
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.custom_toolbar_details);
-        toolbar.setTitle("");
-        setSupportActionBar(toolbar);
+        detailsActivityVH = new ViewHolder();
+
+        detailsActivityVH.toolbar.setTitle("");
+        setSupportActionBar(detailsActivityVH.toolbar);
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
-
-        ViewHolder detailsActivityVh = new ViewHolder();
 
         Intent thisIntent = getIntent();
         String itemId = thisIntent.getStringExtra("id");
 
-        detailsActivityVh.viewPager.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+        detailsActivityVH.viewPager.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override
             public boolean onPreDraw() {
                 if (done) {
-                    detailsActivityVh.viewPager.getViewTreeObserver().removeOnPreDrawListener(this);
+                    detailsActivityVH.viewPager.getViewTreeObserver().removeOnPreDrawListener(this);
                     startPostponedEnterTransition();
                     return true;
                 } else {
@@ -108,34 +112,7 @@ public class DetailsActivity extends AppCompatActivity {
             }
         });
 
-        SharedPreferences sharedPreferences = getSharedPreferences("favourites", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-//        editor.clear();
-//        editor.commit();
-
-        ToggleButton favouritesToggle = (ToggleButton) findViewById(R.id.details_favourite_icon);
-        Drawable notToggledImage = getDrawable(R.drawable.ic_baseline_favorite_border_24);
-        Drawable toggledImage = getDrawable(R.drawable.ic_baseline_favorite_24);
-        favouritesToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b) {
-                    favouritesToggle.setBackground(toggledImage);
-                    editor.putString(itemId, itemId);
-                    editor.commit();
-
-                } else {
-                    favouritesToggle.setBackground(notToggledImage);
-                    editor.remove(itemId);
-                    editor.commit();
-                }
-            }
-        });
-
-        if (sharedPreferences.getString(itemId, null) != null) {
-            favouritesToggle.setChecked(true);
-            favouritesToggle.setBackground(toggledImage);
-        }
+        createFavourites(itemId);
 
         if (itemId != null) {
             int id = Integer.parseInt(itemId);
@@ -148,7 +125,6 @@ public class DetailsActivity extends AppCompatActivity {
                 @Override
                 public void itemCallback(Item item) {
                     itemSelected = item;
-                    Log.d("Update", "Item's view count being updated has id: " + item.getName() + ":" + item.getId());
                     itemSelected.incrementViewCount();
                     dataLoader.persistData(itemSelected);
 
@@ -160,49 +136,72 @@ public class DetailsActivity extends AppCompatActivity {
                         List<Long> dimensions = itemSelected.getDimensions();
                         String dimensionString = dimensions.get(0) + " x " + dimensions.get(1) + " x " +
                                 dimensions.get(2) + " (mm)";
-                        detailsActivityVh.itemSpecification.setText(dimensionString);
+                        detailsActivityVH.itemSpecification.setText(dimensionString);
                     } else {
                         if (itemSelected.getLockable()) {
-                            detailsActivityVh.itemSpecification.setText("Lockable: Yes");
+                            detailsActivityVH.itemSpecification.setText("Lockable: Yes");
                         } else {
-                            detailsActivityVh.itemSpecification.setText("Lockable: No");
+                            detailsActivityVH.itemSpecification.setText("Lockable: No");
                         }
                     }
 
-                    detailsActivityVh.weight.setText("Weight: " + itemSelected.getWeight() + "kg");
-                    detailsActivityVh.viewCount.setText(String.valueOf(itemSelected.getViewCount()));
+                    detailsActivityVH.weight.setText("Weight: " + itemSelected.getWeight() + "kg");
+                    detailsActivityVH.viewCount.setText(String.valueOf(itemSelected.getViewCount()));
 
-                    detailsActivityVh.itemName.setText(nameString);
-                    detailsActivityVh.description.setText(itemSelected.getDescription());
-                    detailsActivityVh.price.setText("$" + String.format("%.2f", itemSelected.getPrice()));
-                    detailsActivityVh.category.setText("Category: " + itemSelected.getCategories().get(0));
+                    detailsActivityVH.itemName.setText(nameString);
+                    detailsActivityVH.description.setText(itemSelected.getDescription());
+                    detailsActivityVH.price.setText("$" + String.format("%.2f", itemSelected.getPrice()));
+                    detailsActivityVH.category.setText("Category: " + itemSelected.getCategories().get(0));
 
+                    createTransition();
 
-                    RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.description_relative_layout);
-                    Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_up_details_view);
-                    relativeLayout.startAnimation(animation);
-
-                    ViewCompat.setTransitionName(findViewById(R.id.imageViewPager), ListActivity.TOP_PICKS_IMAGE_TRANSITION);
-
-                    ViewPager viewPager = findViewById(R.id.imageViewPager);
                     ImageAdapter adapter = new ImageAdapter(DetailsActivity.this, itemSelected.getImage());
-                    viewPager.setAdapter(adapter);
+                    detailsActivityVH.viewPager.setAdapter(adapter);
                     startPostponedEnterTransition();
                     done = true;
                 }
             });
-        } else {
-            //createDefaultItem();
         }
+    }
 
+    private void createFavourites(String itemId) {
+        SharedPreferences sharedPreferences = getSharedPreferences("favourites", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        Drawable notToggledImage = getDrawable(R.drawable.ic_baseline_favorite_border_24);
+        Drawable toggledImage = getDrawable(R.drawable.ic_baseline_favorite_24);
+        detailsActivityVH.favouritesToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    detailsActivityVH.favouritesToggle.setBackground(toggledImage);
+                    editor.putString(itemId, itemId);
+
+                } else {
+                    detailsActivityVH.favouritesToggle.setBackground(notToggledImage);
+                    editor.remove(itemId);
+                }
+                editor.commit();
+            }
+        });
+
+        if (sharedPreferences.getString(itemId, null) != null) {
+            detailsActivityVH.favouritesToggle.setChecked(true);
+            detailsActivityVH.favouritesToggle.setBackground(toggledImage);
+        }
+    }
+
+    private void createTransition() {
+        Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_up_details_view);
+        detailsActivityVH.descriptionRelativeLayout.startAnimation(animation);
+
+        ViewCompat.setTransitionName(detailsActivityVH.viewPager, ListActivity.TOP_PICKS_IMAGE_TRANSITION);
     }
 
     @Override
     public void onBackPressed() {
-        RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.description_relative_layout);
         Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_down_details_activity);
-        relativeLayout.startAnimation(animation);
-//        getWindow().setEnterTransition(new Fade());
+        detailsActivityVH.descriptionRelativeLayout.startAnimation(animation);
         super.onBackPressed();
 
     }
@@ -213,9 +212,8 @@ public class DetailsActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 supportFinishAfterTransition();
-                RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.description_relative_layout);
                 Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_down_details_activity);
-                relativeLayout.startAnimation(animation);
+                detailsActivityVH.descriptionRelativeLayout.startAnimation(animation);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
