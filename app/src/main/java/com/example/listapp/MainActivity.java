@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements PanelViewAdapter.
 
     //variables
     private List<Item> panelItems = new ArrayList<>();
-    IDataLoader dataLoader = new DataLoader();
+    IDataLoader dataLoader = DataLoader.getDataLoader();
 
     ViewHolder mainActivityVH;
 
@@ -143,7 +143,7 @@ public class MainActivity extends AppCompatActivity implements PanelViewAdapter.
 
 
     private void initPanelRecyclerView() {
-        dataLoader = new DataLoader();
+        dataLoader = DataLoader.getDataLoader();
         dataLoader.sortItemListByViewCount(new IDataCallback() {
             @Override
             public void dataListCallback(List<Item> itemList) {

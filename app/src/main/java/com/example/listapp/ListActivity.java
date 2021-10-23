@@ -72,7 +72,7 @@ public class ListActivity extends AppCompatActivity implements ItemAdapter.OnIte
 
         intent = getIntent(); //check
         categoryName = intent.getStringExtra("type");
-        dataLoader = new DataLoader();
+        dataLoader = DataLoader.getDataLoader();
 
         if (!(categoryName == null) && categoryName.equals("handle")) {
             getHandles();

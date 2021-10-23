@@ -34,6 +34,18 @@ public class DataLoader implements IDataLoader {
     private CollectionReference doorRef = db.collection("door");
     private CollectionReference handleRef = db.collection("handle");
 
+    private static DataLoader instance;
+
+    private DataLoader() {}
+
+    public static DataLoader getDataLoader() {
+        if (instance == null) {
+            instance = new DataLoader();
+        }
+
+        return instance;
+    }
+
 
     /**
      * Method to retrieve Item objects from the Firestore database by matching the user specified search string to the stored names of Item documents on Firestore.

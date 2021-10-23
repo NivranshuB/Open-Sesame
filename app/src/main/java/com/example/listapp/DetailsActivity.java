@@ -62,7 +62,7 @@ public class DetailsActivity extends AppCompatActivity {
     }
 
     Item itemSelected;
-    IDataLoader dataLoader = new DataLoader();
+    IDataLoader dataLoader = DataLoader.getDataLoader();
     ViewHolder detailsActivityVH;
 
     String nameString = "";
