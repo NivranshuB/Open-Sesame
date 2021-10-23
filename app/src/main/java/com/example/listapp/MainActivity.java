@@ -31,8 +31,28 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements PanelViewAdapter.OnItemClickListener, ItemAdapter.OnItemClickListener {
+/**
+ * This class is responsible for creating the MainActivity page of our application. This class also
+ * creates the most viewed panel using the PanelViewAdapter to create the horizontal recycler view.
+ * The MainActivity also has a bottom bar that allows you to toggle from this page to the favourites
+ * page and vice versa.
+ *
+ * This class has an inner view holder class that holds the view of activity_main.xml.
+ */
+public class MainActivity extends AppCompatActivity implements PanelViewAdapter.OnItemClickListener,
+        ItemAdapter.OnItemClickListener {
 
+    //variables
+    private List<Item> panelItems = new ArrayList<>();
+    IDataLoader dataLoader = DataLoader.getDataLoader();
+
+    ViewHolder mainActivityVH;
+
+    boolean panelViewDone = false;
+
+    /**
+     * Inner class that holds the different views of the MainActivity page.
+     */
     private class ViewHolder {
         //The views in main activity go here
         RelativeLayout wooden_category_button;
@@ -55,14 +75,12 @@ public class MainActivity extends AppCompatActivity implements PanelViewAdapter.
         }
     }
 
-    //variables
-    private List<Item> panelItems = new ArrayList<>();
-    IDataLoader dataLoader = DataLoader.getDataLoader();
-
-    ViewHolder mainActivityVH;
-
-    boolean panelViewDone = false;
-
+    /**
+     * Overriding method which is called during the creation of the MainActivity page of our
+     * application. This method also instantiates the most viewed panel sort in descending order
+     * with respect to item views.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,6 +100,10 @@ public class MainActivity extends AppCompatActivity implements PanelViewAdapter.
 
     }
 
+    /**
+     * This method is used to ensure that the most viewed panel refreshes when a user clicks back
+     * from another activity back to the MainActivity page.
+     */
     @Override
     public void onResume() {  // After a pause OR at startup
         super.onResume();
@@ -90,6 +112,13 @@ public class MainActivity extends AppCompatActivity implements PanelViewAdapter.
         initPanelRecyclerView();
     }
 
+    /**
+     * Set all the UI components of the action bar of MainActivity. This includes the app name, the
+     * app logo and the search view.
+     *
+     * @param menu
+     * @return
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -100,6 +129,8 @@ public class MainActivity extends AppCompatActivity implements PanelViewAdapter.
         searchView.setQueryHint("Search an item!");
         searchView.setIconifiedByDefault(false);
 
+        //Set on click listener that listens to search queries and then passes this information to
+        //list activity
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
@@ -119,6 +150,10 @@ public class MainActivity extends AppCompatActivity implements PanelViewAdapter.
         return true;
     }
 
+    /**
+     * Links the interactive components of the MainActivity page to the intended animation such that
+     * these components will transition as designed to.
+     */
     private void startAnimation() {
         mainActivityVH.panel_recycler_view.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override
@@ -141,13 +176,18 @@ public class MainActivity extends AppCompatActivity implements PanelViewAdapter.
         });
     }
 
-
+    /**
+     * Initialises the panel recycler view by passing a list of items sorted by view count to a
+     * new PanelViewAdapter instance. The sorted list of items is retrieved through the use of the
+     * DataLoader singleton instance.
+     */
     private void initPanelRecyclerView() {
         dataLoader = DataLoader.getDataLoader();
         dataLoader.sortItemListByViewCount(new IDataCallback() {
             @Override
             public void dataListCallback(List<Item> itemList) {
-                PanelViewAdapter panelViewAdapter = new PanelViewAdapter(itemList, MainActivity.this, MainActivity.this);
+                PanelViewAdapter panelViewAdapter = new PanelViewAdapter(itemList,
+                        MainActivity.this, MainActivity.this);
                 mainActivityVH.panel_recycler_view.setAdapter(panelViewAdapter);
                 panelViewDone = true;
             }
@@ -159,6 +199,10 @@ public class MainActivity extends AppCompatActivity implements PanelViewAdapter.
         });
     }
 
+    /**
+     * Initialises the bottom navigation view of the MainActivity page. This bar contains two
+     * buttons, the favourites button and the home button.
+     */
     private void initBottomNavigationView() {
         mainActivityVH.bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -178,6 +222,12 @@ public class MainActivity extends AppCompatActivity implements PanelViewAdapter.
         });
     }
 
+    /**
+     * This method reacts to the click of an item in the most viewed panel and then opens up the
+     * DetailsActivity page for that particular item.
+     * @param itemId
+     * @param view
+     */
     @Override
     public void onItemClick(int itemId, View view) {
         Intent listActivity = new Intent(getBaseContext(), DetailsActivity.class);
@@ -188,6 +238,11 @@ public class MainActivity extends AppCompatActivity implements PanelViewAdapter.
         ActivityCompat.startActivity(this, listActivity, activityOptions.toBundle());
     }
 
+    /**
+     * This method creates the category listeners for each of the four category buttons in the
+     * MainActivity page. Clicking on any of the category buttons takes the user to the relevant
+     * category ListActivity page.
+     */
     private void createCategoryClickListeners() {
         mainActivityVH.wooden_category_button.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -31,8 +31,28 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * This class is responsible for creating the ListActivity page of our application. The ListActivity
+ * page is used for the different category list views, the search view as well as the favourites
+ * view.
+ *
+ * This class has an inner view holder class that holds the view of activity_list.xml.
+ */
 public class ListActivity extends AppCompatActivity implements ItemAdapter.OnItemClickListener {
 
+    ViewHolder listActivityVH;
+
+    ItemAdapter itemAdapter;
+    IDataLoader dataLoader;
+    SharedPreferences sharedPreferences;
+    Intent intent; //check
+    String categoryName;
+
+    final static String TOP_PICKS_IMAGE_TRANSITION = "topPicksImageTransition";
+
+    /**
+     * Inner class that holds the different views of the ListActivity page.
+     */
     private class ViewHolder {
         RecyclerView recyclerView;
         BottomNavigationView bottomNavigationView;
@@ -51,16 +71,13 @@ public class ListActivity extends AppCompatActivity implements ItemAdapter.OnIte
         }
     }
 
-    ViewHolder listActivityVH;
-
-    ItemAdapter itemAdapter;
-    IDataLoader dataLoader;
-    SharedPreferences sharedPreferences;
-    Intent intent; //check
-    String categoryName;
-
-    final static String TOP_PICKS_IMAGE_TRANSITION = "topPicksImageTransition";
-
+    /**
+     * This overriding method which is called during the creation of the ListActivity page of our
+     * application. This method also reads the intent extra data to decide which category list of
+     * items it should create, or whether it should create the search list view or favourites list
+     * view.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,6 +93,7 @@ public class ListActivity extends AppCompatActivity implements ItemAdapter.OnIte
         categoryName = intent.getStringExtra("type");
         dataLoader = DataLoader.getDataLoader();
 
+        //Decide on which type of ListActivity to create by using the intents extra data passed
         if (!(categoryName == null) && categoryName.equals("handle")) {
             getHandles();
         } else if (!(categoryName == null) && (categoryName.equals("wooden") ||
@@ -96,6 +114,10 @@ public class ListActivity extends AppCompatActivity implements ItemAdapter.OnIte
         }
     }
 
+    /**
+     * This method gets all the handle type items through the use of the DataLoader singleton
+     * instance.
+     */
     private void getHandles() {
         listActivityVH.toolbar.setBackgroundColor(getResources().getColor(R.color.light_green));
         listActivityVH.roundCornersView.setBackgroundResource(R.drawable.light_green_rounded_corners_background);
@@ -115,6 +137,10 @@ public class ListActivity extends AppCompatActivity implements ItemAdapter.OnIte
         });
     }
 
+    /**
+     * This method gets all the door type items through the use of the DataLoader singleton
+     * instance.
+     */
     private void getDoors() {
         int colorId = 0;
         int cornersId = 0;
@@ -149,10 +175,15 @@ public class ListActivity extends AppCompatActivity implements ItemAdapter.OnIte
         });
     }
 
+    /**
+     * This method gets all the favourited items and uses these items to construct the list view
+     * content for the favourites page.
+     */
     private void getFavourites() {
         listActivityVH.bottomNavigationView.setVisibility(View.VISIBLE);
         listActivityVH.bottomNavigationView.setSelectedItemId(R.id.favourites_page);
-        listActivityVH.bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+        listActivityVH.bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView
+                .OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 if (item.getItemId() == R.id.home_page) {
@@ -180,6 +211,10 @@ public class ListActivity extends AppCompatActivity implements ItemAdapter.OnIte
         });
     }
 
+    /**
+     * This method gets all the different types of items specified by the search string using the
+     * DataLoader singleton instance.
+     */
     private void getSearch() {
         String formattedString = capitaliseWord(categoryName);
         dataLoader.getItemsByName(formattedString, new IDataCallback() {
@@ -201,12 +236,20 @@ public class ListActivity extends AppCompatActivity implements ItemAdapter.OnIte
         });
     }
 
+    /**
+     * React as required when the back button in the action bar is pressed with the correct
+     * transition animation.
+     */
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
     }
 
+    /**
+     * React as required when an item is pressed with the correct transition animation. Switches the
+     * application context to the DetailsActivity page of the item clicked.
+     */
     @Override
     public void onItemClick(int itemId, View view) {
         Intent listActivity = new Intent(getBaseContext(), DetailsActivity.class);
@@ -220,7 +263,11 @@ public class ListActivity extends AppCompatActivity implements ItemAdapter.OnIte
     }
 
 
-
+    /**
+     * React accordingly when components of the options bar are clicked.
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle presses on the action bar items
@@ -235,6 +282,10 @@ public class ListActivity extends AppCompatActivity implements ItemAdapter.OnIte
         }
     }
 
+    /**
+     * Initialises the users favourite list and populates this ListActivity page with their
+     * favourited items.
+     */
     private void initFavouritesList() {
         SharedPreferences sharedPreferences = getSharedPreferences("favourites", MODE_PRIVATE);
         Map<String, String> map = (Map<String, String>) sharedPreferences.getAll();
@@ -252,7 +303,8 @@ public class ListActivity extends AppCompatActivity implements ItemAdapter.OnIte
             dataLoader.getItemsByID(favouriteIDList, new IDataCallback() {
                 @Override
                 public void dataListCallback(List<Item> itemList) {
-                    itemAdapter = new ItemAdapter(ListActivity.this, R.layout.item_square, itemList, ListActivity.this);
+                    itemAdapter = new ItemAdapter(ListActivity.this, R.layout.item_square,
+                            itemList, ListActivity.this);
                     listActivityVH.recyclerView.setAdapter(itemAdapter);
                 }
 
@@ -263,11 +315,16 @@ public class ListActivity extends AppCompatActivity implements ItemAdapter.OnIte
             });
         } else {
             List<Item> emptyList = new ArrayList<>();
-            itemAdapter = new ItemAdapter(ListActivity.this, R.layout.item_square, emptyList, ListActivity.this);
+            itemAdapter = new ItemAdapter(ListActivity.this, R.layout.item_square, emptyList,
+                    ListActivity.this);
             listActivityVH.recyclerView.setAdapter(itemAdapter);
         }
     }
 
+    /**
+     * When returning back from the DetailsActivity page to the ListActivity page ensure that the
+     * screen refreshes.
+     */
     @Override
     public void onResume() {  // After a pause OR at startup
         super.onResume();

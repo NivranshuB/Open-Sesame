@@ -31,8 +31,25 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ToggleButton;
 
+/**
+ * This class is responsible for creating the DetailsActivity page of our application. The
+ * DetailsActivity page is used display all the attributes of a specific item of our application.
+ *
+ * This class has an inner view holder class that holds the view of activity_details.xml.
+ */
 public class DetailsActivity extends AppCompatActivity {
 
+    Item itemSelected;
+    IDataLoader dataLoader = DataLoader.getDataLoader();
+    ViewHolder detailsActivityVH;
+
+    String nameString = "";
+
+    boolean done = false;
+
+    /**
+     * Inner class that holds the different views of the DetailsActivity page.
+     */
     private class ViewHolder {
         //The views in details activity go here
         TextView itemName;
@@ -64,14 +81,11 @@ public class DetailsActivity extends AppCompatActivity {
         }
     }
 
-    Item itemSelected;
-    IDataLoader dataLoader = DataLoader.getDataLoader();
-    ViewHolder detailsActivityVH;
-
-    String nameString = "";
-
-    boolean done = false;
-
+    /**
+     * Overriding method which is called during the creation of the DetailsActivity page of our
+     * application.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         postponeEnterTransition();
@@ -148,6 +162,11 @@ public class DetailsActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Create the favourite toggle button at the top right corner of the details activity. Setting
+     * this button adds this item to favourites while unsetting it removes it from favourites.
+     * @param itemId
+     */
     private void createFavourites(String itemId) {
         SharedPreferences sharedPreferences = getSharedPreferences("favourites", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -175,6 +194,9 @@ public class DetailsActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Add transition to the DetailsActivity page.
+     */
     private void createTransition() {
         Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_up_details_view);
         detailsActivityVH.descriptionRelativeLayout.startAnimation(animation);
@@ -182,6 +204,9 @@ public class DetailsActivity extends AppCompatActivity {
         ViewCompat.setTransitionName(detailsActivityVH.viewPager, ListActivity.TOP_PICKS_IMAGE_TRANSITION);
     }
 
+    /**
+     * Add the designed transition to when the back button is pressed.
+     */
     @Override
     public void onBackPressed() {
         Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_down_details_activity);
@@ -190,6 +215,11 @@ public class DetailsActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Add transitions related to the the action bar components of the DetailsActivity page.
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle presses on the action bar items
