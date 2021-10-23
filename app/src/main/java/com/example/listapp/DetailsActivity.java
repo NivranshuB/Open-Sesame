@@ -9,37 +9,23 @@ import androidx.core.view.ViewCompat;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.os.Bundle;
-import android.transition.Fade;
-import android.transition.Transition;
-import android.transition.TransitionInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.ViewTreeObserver;
-import android.view.Window;
 import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.listapp.adapters.ImageAdapter;
-import com.example.listapp.model.DataCallback;
+import com.example.listapp.model.IDataCallback;
 import com.example.listapp.model.DataLoader;
-import com.example.listapp.model.Door;
 import com.example.listapp.model.DoorHandle;
 import com.example.listapp.model.IDataLoader;
 import com.example.listapp.model.Item;
-import com.example.listapp.model.WoodenDoor;
 
-import java.time.Duration;
-import java.util.ArrayList;
 import java.util.List;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.util.Log;
 import android.widget.ToggleButton;
 
 public class DetailsActivity extends AppCompatActivity {
@@ -116,7 +102,7 @@ public class DetailsActivity extends AppCompatActivity {
 
         if (itemId != null) {
             int id = Integer.parseInt(itemId);
-            dataLoader.getItemByID(id, new DataCallback() {
+            dataLoader.getItemByID(id, new IDataCallback() {
                 @Override
                 public void dataListCallback(List<Item> itemList) {
                     // No implementation needed

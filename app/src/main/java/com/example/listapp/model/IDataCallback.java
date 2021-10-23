@@ -2,7 +2,7 @@ package com.example.listapp.model;
 
 import java.util.List;
 
-public interface DataCallback {
+public interface IDataCallback {
 
     void dataListCallback(List<Item> itemList);
 

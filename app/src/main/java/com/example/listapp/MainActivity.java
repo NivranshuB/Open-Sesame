@@ -4,49 +4,30 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.ActivityOptionsCompat;
-import androidx.core.util.Pair;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.ClipData;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-
-import android.transition.Explode;
-import android.transition.Fade;
-import android.transition.Transition;
-import android.transition.TransitionManager;
-
-import android.util.Log;
 
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
-import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.provider.Settings;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.listapp.adapters.ItemAdapter;
 import com.example.listapp.adapters.PanelViewAdapter;
-import com.example.listapp.model.DataCallback;
+import com.example.listapp.model.IDataCallback;
 import com.example.listapp.model.DataLoader;
 import com.example.listapp.model.IDataLoader;
 import com.example.listapp.model.Item;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -163,7 +144,7 @@ public class MainActivity extends AppCompatActivity implements PanelViewAdapter.
 
     private void initPanelRecyclerView() {
         dataLoader = new DataLoader();
-        dataLoader.sortItemListByViewCount(new DataCallback() {
+        dataLoader.sortItemListByViewCount(new IDataCallback() {
             @Override
             public void dataListCallback(List<Item> itemList) {
                 PanelViewAdapter panelViewAdapter = new PanelViewAdapter(itemList, MainActivity.this, MainActivity.this);
