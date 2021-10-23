@@ -1,5 +1,8 @@
 package com.example.listapp;
 
+import static com.example.listapp.data.TextFormatting.formatDimensions;
+import static com.example.listapp.data.TextFormatting.mergeStringList;
+
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -17,10 +20,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.listapp.adapters.ImageAdapter;
-import com.example.listapp.model.IDataCallback;
-import com.example.listapp.model.DataLoader;
+import com.example.listapp.data.IDataCallback;
+import com.example.listapp.data.DataLoader;
 import com.example.listapp.model.DoorHandle;
-import com.example.listapp.model.IDataLoader;
+import com.example.listapp.data.IDataLoader;
 import com.example.listapp.model.Item;
 
 import java.util.List;
@@ -114,15 +117,10 @@ public class DetailsActivity extends AppCompatActivity {
                     itemSelected.incrementViewCount();
                     dataLoader.persistData(itemSelected);
 
-                    for (String s : itemSelected.getName()) {
-                        nameString += s + " ";
-                    }
+                    nameString = mergeStringList(item.getName());
 
                     if (itemSelected.getClass() != DoorHandle.class) {
-                        List<Long> dimensions = itemSelected.getDimensions();
-                        String dimensionString = dimensions.get(0) + " x " + dimensions.get(1) + " x " +
-                                dimensions.get(2) + " (mm)";
-                        detailsActivityVH.itemSpecification.setText(dimensionString);
+                        detailsActivityVH.itemSpecification.setText(formatDimensions(itemSelected.getDimensions()));
                     } else {
                         if (itemSelected.getLockable()) {
                             detailsActivityVH.itemSpecification.setText("Lockable: Yes");

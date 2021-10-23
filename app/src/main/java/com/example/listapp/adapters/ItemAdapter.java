@@ -1,5 +1,8 @@
 package com.example.listapp.adapters;
 
+import static com.example.listapp.data.TextFormatting.formatPrice;
+import static com.example.listapp.data.TextFormatting.mergeStringList;
+
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
@@ -140,16 +143,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> { 
         }
     }
 
-    private String mergeStringList(List<String> stringList) {
-        String mergedString = "";
-
-        for (String s : stringList) {
-            mergedString += s + " ";
-        }
-
-        return mergedString;
-    }
-
     @Override
     public int getItemCount() {
         return items.size();
@@ -185,7 +178,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> { 
         holder.panelImage.setImageResource(imageId);
 
         holder.panelName.setText(mergeStringList(currentItem.getName()));
-        holder.panelPrice.setText("NZ$" + String.format("%.2f", currentItem.getPrice()));
+        holder.panelPrice.setText(formatPrice(currentItem.getPrice()));
     }
 
     /**
@@ -196,13 +189,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> { 
      */
     private void populateHandleItem(Item currentItem, HandleViewHolder holder) {
 
-        String name = "";
-
-        for (String s : currentItem.getName()) {
-            name += s + " ";
-        }
-
-        holder.panelName.setText(name);
+        holder.panelName.setText(mergeStringList(currentItem.getName()));
 
         //Set the attributed of list_view_number_item views
         int imageId = mContext.getResources().getIdentifier(
@@ -231,6 +218,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> { 
                 holder.lockStatus.setVisibility(View.VISIBLE);
             }
         }
-        holder.panelPrice.setText("NZ$" + String.format("%.2f", currentItem.getPrice()));
+        holder.panelPrice.setText(formatPrice(currentItem.getPrice()));
     }
 }

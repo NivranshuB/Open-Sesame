@@ -1,5 +1,8 @@
 package com.example.listapp.adapters;
 
+import static com.example.listapp.data.TextFormatting.formatPrice;
+import static com.example.listapp.data.TextFormatting.mergeStringList;
+
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
@@ -47,8 +50,8 @@ public class PanelViewAdapter extends RecyclerView.Adapter<PanelViewAdapter.Pane
 
         Item currentItem = itemList.get(position);
         Drawable material = current_context.getResources().getDrawable(R.drawable.handle_edge);
-        holder.panelName.setText(combineNameArray(itemList.get(position).getName()));
-        holder.panelPrice.setText("NZ$" + String.format("%.2f", currentItem.getPrice()));
+        holder.panelName.setText(mergeStringList(itemList.get(position).getName()));
+        holder.panelPrice.setText(formatPrice(currentItem.getPrice()));
         holder.id = itemList.get(position).getId();
 
         int imageId = current_context.getResources().getIdentifier(
@@ -66,14 +69,6 @@ public class PanelViewAdapter extends RecyclerView.Adapter<PanelViewAdapter.Pane
         if (holder.materialEdgeTop != null) {
             holder.materialEdgeTop.setBackground(material);
         }
-    }
-
-    private String combineNameArray(List<String> input) {
-        String output = "";
-        for (String s : input) {
-            output = output + s + " ";
-        }
-        return output;
     }
 
     @Override

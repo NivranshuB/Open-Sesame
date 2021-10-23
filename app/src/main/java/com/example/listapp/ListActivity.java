@@ -1,5 +1,7 @@
 package com.example.listapp;
 
+import static com.example.listapp.data.TextFormatting.capitaliseWord;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,9 +21,9 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.listapp.adapters.ItemAdapter;
-import com.example.listapp.model.IDataCallback;
-import com.example.listapp.model.DataLoader;
-import com.example.listapp.model.IDataLoader;
+import com.example.listapp.data.IDataCallback;
+import com.example.listapp.data.DataLoader;
+import com.example.listapp.data.IDataLoader;
 import com.example.listapp.model.Item;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -217,17 +219,7 @@ public class ListActivity extends AppCompatActivity implements ItemAdapter.OnIte
 
     }
 
-    public static String capitaliseWord(String str) {
-        str = str.toLowerCase();
-        String words[] = str.split("\\s");
-        String capitalizeWord = "";
-        for (String w : words) {
-            String first = w.substring(0, 1);
-            String afterfirst = w.substring(1);
-            capitalizeWord += first.toUpperCase() + afterfirst + " ";
-        }
-        return capitalizeWord.trim();
-    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

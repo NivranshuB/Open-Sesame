@@ -1,4 +1,6 @@
-package com.example.listapp.model;
+package com.example.listapp.data;
+
+import com.example.listapp.model.Item;
 
 import java.util.List;
 

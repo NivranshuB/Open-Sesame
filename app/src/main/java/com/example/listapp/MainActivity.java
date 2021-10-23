@@ -22,9 +22,9 @@ import android.widget.RelativeLayout;
 
 import com.example.listapp.adapters.ItemAdapter;
 import com.example.listapp.adapters.PanelViewAdapter;
-import com.example.listapp.model.IDataCallback;
-import com.example.listapp.model.DataLoader;
-import com.example.listapp.model.IDataLoader;
+import com.example.listapp.data.IDataCallback;
+import com.example.listapp.data.DataLoader;
+import com.example.listapp.data.IDataLoader;
 import com.example.listapp.model.Item;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 

@@ -1,10 +1,16 @@
-package com.example.listapp.model;
+package com.example.listapp.data;
 
 import android.os.Build;
-import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
+import com.example.listapp.model.Door;
+import com.example.listapp.model.DoorHandle;
+import com.example.listapp.model.GlassDoor;
+import com.example.listapp.model.Handle;
+import com.example.listapp.model.Item;
+import com.example.listapp.model.MetalDoor;
+import com.example.listapp.model.WoodenDoor;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -15,7 +21,6 @@ import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
