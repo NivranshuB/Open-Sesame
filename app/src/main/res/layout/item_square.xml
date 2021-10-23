@@ -12,6 +12,7 @@
         android:id="@+id/item_card"
         android:layout_width="match_parent"
         android:layout_height="270dp"
+        style="@style/CardBackgroundStyle"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         app:cardCornerRadius="8dp"
@@ -60,10 +61,9 @@
                 android:layout_gravity="center|bottom"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-
+                style="@style/CardItemSecondaryTextStyle"
                 android:padding="4dp"
                 android:text="$100.00"
-                android:textColor="@color/dark_grey"
                 android:textSize="16sp"></TextView>
         </RelativeLayout>
 

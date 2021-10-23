@@ -84,6 +84,14 @@
         <item name="android:textAllCaps">true</item>
     </style>
 
+    <style name="DetailsActivityDescriptionBackgroundStyle">
+        <item name="android:background">@drawable/item_details_description_background</item>
+    </style>
+
+    <style name="DetailsActivityDescriptionCardBackground">
+        <item name="cardBackgroundColor">@color/white</item>
+    </style>
+
     <style name="DetailsActivityItemNameStyle">
         <item name="android:textSize">24sp</item>
         <item name="android:layout_marginTop">4dp</item>
@@ -106,5 +114,31 @@
     <style name="CardItemTextStyle">
         <item name="android:layout_marginTop">4dp</item>
         <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="CardItemSecondaryTextStyle">
+        <item name="android:textColor">@color/dark_grey</item>
+    </style>
+
+    <style name="CardBackgroundStyle">
+        <item name="cardBackgroundColor">@color/white</item>
+    </style>
+
+    <style name="RoundedCornerBackgroundDefault">
+        <item name="android:background">@drawable/rounded_corners_background</item>
+    </style>
+
+    <style name="BottomNavigationViewStyle">
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="itemIconTint">@color/bottom_navigation_view_color</item>
+        <item name="itemTextColor">@color/bottom_navigation_view_color</item>
+    </style>
+
+    <style name="BackgroundStyle">
+        <item name="android:background">@color/backgroundColor</item>
+    </style>
+
+    <style name="DetailsBackgroundStyle" parent="BackgroundStyle">
+        <item name="android:background">@color/white</item>
     </style>
 </resources>

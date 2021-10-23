@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/backgroundColor"
+    style="@style/BackgroundStyle"
     android:orientation="vertical"
     tools:context=".ListActivity">
 
@@ -30,8 +30,8 @@
         android:layout_width="match_parent"
         android:layout_height="16dp"
         android:id="@+id/rounded_corners"
+        style="@style/RoundedCornerBackgroundDefault"
         android:layout_below="@id/custom_toolbar_list"
-        android:background="@drawable/rounded_corners_background"
         android:elevation="8dp" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -63,9 +63,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="@style/TextStyle"
             android:text="No results found"
-            android:textSize="28sp"
-            android:textColor="@color/dark_turquoise">
+            android:textSize="28sp">
         </TextView>
 
     </LinearLayout>
@@ -76,8 +76,6 @@
         android:visibility="gone"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/colorPrimary"
-        app:itemIconTint="@color/bottom_navigation_view_color"
-        app:itemTextColor="@color/bottom_navigation_view_color"
+        style="@style/BottomNavigationViewStyle"
         app:menu="@menu/bottom_navigation_menu" />
 </RelativeLayout>

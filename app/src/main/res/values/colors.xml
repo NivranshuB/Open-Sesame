@@ -21,4 +21,8 @@
     <color name="light_green">#00695c</color>
     <color name="green">#004d40</color>
     <color name="dark_turquoise">#005662</color>
+
+    <!--dark mode colours-->
+    <color name="colorPrimaryDark">#121212</color>
+    <color name="backgroundColorDark">@color/black</color>
 </resources>
