@@ -47,6 +47,8 @@
                 android:layout_marginTop="4dp"
                 android:ellipsize="end"
                 android:gravity="center"
+                android:paddingLeft="4dp"
+                android:paddingRight="4dp"
                 android:maxLines="2"
                 android:text="Door"
                 android:textAlignment="center"

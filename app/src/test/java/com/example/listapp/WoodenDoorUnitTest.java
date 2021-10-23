@@ -2,10 +2,7 @@ package com.example.listapp;
 
 import static org.junit.Assert.assertEquals;
 
-import com.example.listapp.model.DoorHandle;
-import com.example.listapp.model.GlassDoor;
 import com.example.listapp.model.Item;
-import com.example.listapp.model.MetalDoor;
 import com.example.listapp.model.WoodenDoor;
 
 import org.junit.Before;
@@ -107,6 +104,8 @@ public class WoodenDoorUnitTest {
         woodenDoorImages.add("door21_1");
         woodenDoorImages.add("door21_2");
         woodenDoorImages.add("door21_3");
+
+        assertEquals(woodenDoorImages.get(0), woodenDoor.getFirstImage());
 
         for (int i = 0; i < woodenDoor.getImage().size(); i++) {
             assertEquals(woodenDoorImages.get(i), woodenDoor.getImage().get(i));
