@@ -163,11 +163,9 @@ public class DetailsActivity extends AppCompatActivity {
                         detailsActivityVh.itemSpecification.setText(dimensionString);
                     } else {
                         if (itemSelected.getLockable()) {
-                            detailsActivityVh.itemSpecification.setText("Handle has a completely " +
-                                    "functioning locking mechanism");
+                            detailsActivityVh.itemSpecification.setText("Lockable: Yes");
                         } else {
-                            detailsActivityVh.itemSpecification.setText("Handle does not contain a " +
-                                    "locking mechanism");
+                            detailsActivityVh.itemSpecification.setText("Lockable: No");
                         }
                     }
 
