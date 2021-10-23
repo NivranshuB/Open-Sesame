@@ -3,17 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.acard_view_1ndroid.com/tools"
     android:id="@+id/main_root_view"
+    style="@style/BackgroundStyle"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    style="@style/BackgroundStyle"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/custom_toolbar"
         style="@style/CustomMainToolBarStyle"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
         app:collapseIcon="@drawable/ic_baseline_arrow_back_24">
 
         <RelativeLayout
@@ -27,7 +25,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/toolbar_logo"
-                android:paddingLeft="8dp"
                 android:text="@string/app_name" />
 
             <ImageView
@@ -42,11 +39,8 @@
     </androidx.appcompat.widget.Toolbar>
 
     <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="16dp"
         style="@style/RoundedCornerBackgroundDefault"
-        android:layout_below="@id/custom_toolbar"
-        android:elevation="8dp" />
+        android:layout_below="@id/custom_toolbar" />
 
     <ScrollView
         android:id="@+id/main_scroll_view"
@@ -73,13 +67,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"></androidx.recyclerview.widget.RecyclerView>
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
             <TextView
                 style="@style/MainActivityHeadingStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="8dp"
                 android:text="Categories" />
 
             <RelativeLayout
@@ -91,23 +84,17 @@
                 <TextView
                     android:id="@+id/wooden_text"
                     style="@style/MainActivityCategoryTitle"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="48dp"
                     android:text="Wooden" />
 
                 <androidx.cardview.widget.CardView
+                    style="@style/MainActivityCategoryCardStyle"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:elevation="8dp"
-                    app:cardCornerRadius="4dp">
+                    android:layout_height="wrap_content">
 
                     <ImageView
                         android:id="@+id/wooden_image_background"
-                        android:layout_width="match_parent"
-                        android:layout_height="96dp"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/door8" />
+                        style="@style/MainActivityCategoryImageStyle"
+                        android:src="@drawable/wooden_category_background_image" />
                 </androidx.cardview.widget.CardView>
 
             </RelativeLayout>
@@ -116,29 +103,22 @@
                 android:id="@+id/relative_layout_metal"
                 style="@style/CategoryCardView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp">
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    app:cardCornerRadius="4dp">
-
-                    <ImageView
-                        android:id="@+id/metal_image_background"
-                        android:layout_width="match_parent"
-                        android:layout_height="96dp"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/door9" />
-                </androidx.cardview.widget.CardView>
+                android:layout_height="wrap_content">
 
                 <TextView
                     style="@style/MainActivityCategoryTitle"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="48dp"
                     android:text="Metal" />
+
+                <androidx.cardview.widget.CardView
+                    style="@style/MainActivityCategoryCardStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/metal_image_background"
+                        style="@style/MainActivityCategoryImageStyle"
+                        android:src="@drawable/metal_category_background_image" />
+                </androidx.cardview.widget.CardView>
 
             </RelativeLayout>
 
@@ -146,29 +126,22 @@
                 android:id="@+id/relative_layout_glass"
                 style="@style/CategoryCardView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp">
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    app:cardCornerRadius="4dp">
-
-                    <ImageView
-                        android:id="@+id/glass_image_background"
-                        android:layout_width="match_parent"
-                        android:layout_height="96dp"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/door5" />
-                </androidx.cardview.widget.CardView>
+                android:layout_height="wrap_content">
 
                 <TextView
                     style="@style/MainActivityCategoryTitle"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="48dp"
                     android:text="Glass" />
+
+                <androidx.cardview.widget.CardView
+                    style="@style/MainActivityCategoryCardStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/glass_image_background"
+                        style="@style/MainActivityCategoryImageStyle"
+                        android:src="@drawable/glass_category_background_image" />
+                </androidx.cardview.widget.CardView>
 
             </RelativeLayout>
 
@@ -176,39 +149,33 @@
                 android:id="@+id/relative_layout_handles"
                 style="@style/CategoryCardView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp">
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    app:cardCornerRadius="4dp">
-
-                    <ImageView
-                        android:id="@+id/handle_image_background"
-                        android:layout_width="match_parent"
-                        android:layout_height="96dp"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/handle_category_background_image" />
-                </androidx.cardview.widget.CardView>
+                android:layout_height="wrap_content">
 
                 <TextView
                     style="@style/MainActivityCategoryTitle"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="48dp"
                     android:text="Handles" />
+
+                <androidx.cardview.widget.CardView
+                    style="@style/MainActivityCategoryCardStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/handle_image_background"
+                        style="@style/MainActivityCategoryImageStyle"
+                        android:src="@drawable/handle_category_background_image" />
+                </androidx.cardview.widget.CardView>
+
             </RelativeLayout>
         </LinearLayout>
     </ScrollView>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation_menu"
+        style="@style/BottomNavigationViewStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        style="@style/BottomNavigationViewStyle"
         app:menu="@menu/bottom_navigation_menu" />
 
 </RelativeLayout>

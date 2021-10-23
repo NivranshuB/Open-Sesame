@@ -31,7 +31,7 @@
                 android:id="@+id/panelImage"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
-                android:src="@drawable/door3" />
+                android:src="@drawable/door20_1" />
 
             <TextView
                 android:id="@+id/panelName"

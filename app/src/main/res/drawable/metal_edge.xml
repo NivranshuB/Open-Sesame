@@ -3,15 +3,4 @@
     <solid android:color="@color/dark_grey"/>
 </shape>
 
-<!--<?xml version="1.0" encoding="utf-8"?>-->
-<!--<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >-->
-<!--&lt;!&ndash;    <item>&ndash;&gt;-->
-<!--&lt;!&ndash;        <shape android:shape="rectangle" >&ndash;&gt;-->
-<!--&lt;!&ndash;            <gradient android:startColor="#7CB342"&ndash;&gt;-->
-<!--&lt;!&ndash;                android:endColor="#424242"&ndash;&gt;-->
-<!--&lt;!&ndash;                android:angle="-90"/>&ndash;&gt;-->
-<!--&lt;!&ndash;        </shape>&ndash;&gt;-->
-<!--&lt;!&ndash;    </item>&ndash;&gt;-->
-<!--</layer-list>-->
-
 

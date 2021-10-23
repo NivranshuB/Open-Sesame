@@ -40,7 +40,7 @@ public class PanelViewAdapter extends RecyclerView.Adapter<PanelViewAdapter.Pane
     @NonNull
     @Override
     public PanelViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.panel_view_item, parent, false); //item_square
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.panel_view_square, parent, false); //item_square
         return new PanelViewHolder(view, mOnItemClickListener);
     }
 
