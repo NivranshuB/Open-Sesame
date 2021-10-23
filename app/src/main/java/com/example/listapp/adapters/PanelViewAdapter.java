@@ -20,12 +20,10 @@ import com.example.listapp.model.WoodenDoor;
 import java.util.ArrayList;
 import java.util.List;
 
-//Todo : Fix setting the panelImage programatically from image path specified in Item model
-
 public class PanelViewAdapter extends RecyclerView.Adapter<PanelViewAdapter.PanelViewHolder> {
 
 //    Possible storage of image paths, item names and price. May be replaced with Item object itself.
-    private List<Item> itemList = new ArrayList<>();
+    private List<Item> itemList;
     private Context current_context;
 
     private OnItemClickListener mOnItemClickListener;
@@ -49,7 +47,6 @@ public class PanelViewAdapter extends RecyclerView.Adapter<PanelViewAdapter.Pane
 
         Item currentItem = itemList.get(position);
         Drawable material = current_context.getResources().getDrawable(R.drawable.handle_edge);
-        //holder.panelImage.setImageResource(itemList.get(position).getFirstImage());
         holder.panelName.setText(combineNameArray(itemList.get(position).getName()));
         holder.panelPrice.setText("NZ$" + String.format("%.2f", currentItem.getPrice()));
         holder.id = itemList.get(position).getId();

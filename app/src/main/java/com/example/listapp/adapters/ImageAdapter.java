@@ -37,7 +37,6 @@ public class ImageAdapter extends PagerAdapter {
                 imageNames.get(position), "drawable", mContext.getPackageName());
 
         ImageView imageView = new ImageView(mContext);
-//        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         imageView.setImageResource(imageId);
         container.addView(imageView, 0);
         return imageView;

@@ -68,7 +68,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> { 
             super(currentListViewItem, oicl);
             //The special items of door items (wood door, metal door, glass door) assigned here
             materialEdgeTop = currentListViewItem.findViewById(R.id.materialEdgeTop);
-            //materialEdgeBottom = currentListViewItem.findViewById(R.id.materialEdgeBottom);
         }
     }
 
@@ -166,15 +165,11 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> { 
     private void populateDoorItem(Item currentItem, DoorViewHolder holder) {
 
         Drawable material = mContext.getResources().getDrawable(R.drawable.handle_edge);
-        String materialName = "";
 
         if (currentItem.getClass() == WoodenDoor.class) {
             material = mContext.getResources().getDrawable(R.drawable.wood_edge);
-//            holder.panelPrice.setBackgroundResource(R.);
-            materialName = stringListToString(currentItem.getName());
         } else if (currentItem.getClass() == MetalDoor.class) {
             material = mContext.getResources().getDrawable(R.drawable.metal_edge);
-            materialName = stringListToString(currentItem.getName());
         } else if (currentItem.getClass() == GlassDoor.class) {
             material = mContext.getResources().getDrawable(R.drawable.glass_edge);
         }
@@ -236,16 +231,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> { 
                 holder.lockStatus.setVisibility(View.VISIBLE);
             }
         }
-
-
         holder.panelPrice.setText("NZ$" + String.format("%.2f", currentItem.getPrice()));
-    }
-
-    private String stringListToString(List<String> stringList) {
-        String name = "";
-        for (String s : stringList) {
-            name = name + s;
-        }
-        return name.trim();
     }
 }
