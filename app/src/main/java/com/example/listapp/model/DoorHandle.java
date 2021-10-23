@@ -8,16 +8,6 @@ public class DoorHandle extends Handle {
 
     }
 
-    @Override
-    public List<String> getImage() {
-        return image;
-    }
-
-    @Override
-    public List<Long> getDimensions() {
-        return dimensions;
-    }
-
     public DoorHandle(int id, int weight, int viewCount, float price,
                      List<Long> dimensions, List<String> name, String description,
                      List<String> colour, List<String> image, Boolean lockable) {

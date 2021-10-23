@@ -50,6 +50,9 @@ public abstract class Handle implements Item {
         return firestoreID;
     }
 
+    /**
+     * @param fstoreID Firestore ID of the Item
+     */
     public void setFirestoreID(String fstoreID) { firestoreID = fstoreID; }
 
     /**
@@ -75,14 +78,26 @@ public abstract class Handle implements Item {
         return lockType;
     }
 
+    /**
+     * Sets lockable status to true or false
+     * @param lock String of lock type
+     */
     public void setLockType(String lock) {
         lockType = lock;
     }
 
+    /**
+     * if a Handle object is lockable or not
+     * @return
+     */
     public boolean getLockable() {
         return lockable;
     }
 
+    /**
+     * Sets lockable status to true or false
+     * @param lockStatus Boolean of lock status
+     */
     public void setLockable(boolean lockStatus) {
         lockable = lockStatus;
     }
@@ -95,14 +110,24 @@ public abstract class Handle implements Item {
     }
 
     /**
+     * @return list of colours the Item is available in.
+     */
+    public List<String> getColour() {
+        return colour;
+    }
+
+    /**
      * @return the full qualified name of the first image of this Item instance
      */
     public String getFirstImage() {
         return image.get(0);
     }
 
-    public void setImage(List<String> newImageUrls) {
-        image = newImageUrls;
+    /**
+     * @return list of full qualified name of images
+     */
+    public List<String> getImage() {
+        return image;
     }
 
     /**
@@ -112,8 +137,18 @@ public abstract class Handle implements Item {
         return description;
     }
 
+    /**
+     * @param newDescription sets description
+     */
     public void setDescription(String newDescription) {
         description = newDescription;
+    }
+
+    /**
+     * @return list of dimensions in Long format
+     */
+    public List<Long> getDimensions() {
+        return dimensions;
     }
 
     /**

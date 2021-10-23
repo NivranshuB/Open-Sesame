@@ -59,6 +59,54 @@ public abstract class Door implements Item {
     public void setFirestoreID(String fstoreID) {firestoreID = fstoreID; }
 
     /**
+     * @return the price of this Item instance.
+     */
+    public float getPrice(){ return price;}
+
+    /**
+     * If a door has a material type (wooden doors and metal doors) then this method will be
+     * overriden by the sub class and will return the materialType field value. Else this method
+     * returns an empty string.
+     */
+    public String getMaterialType() {
+        return "";
+    }
+
+    /**
+     * A door instance cannot have a lock type only a handle instance can so return an empty string
+     * for lockType.
+     */
+    public String getLockType() {
+        return "";
+    }
+
+    /**
+     * Does nothing as Door cannot have a lock type.
+     * @param lock
+     */
+    public void setLockType(String lock) {}
+
+    /**
+     * A door instance cannot be lockable only a handle instance can therefore return false.
+     */
+    public boolean getLockable() {
+        return false;
+    }
+
+    /**
+     * Does nothing as Door cannot be lockable
+     * @param lockStatus
+     */
+    public void setLockable(boolean lockStatus) {}
+
+    /**
+     * @return the name of this Item instance
+     */
+    public List<String> getName() {
+        return name;
+    }
+
+    /**
      * @return list of categories the Item instance belongs to.
      */
     public List<String> getCategories() {
@@ -86,33 +134,6 @@ public abstract class Door implements Item {
         return colour;
     }
 
-
-    /**
-     * @return the price of this Item instance.
-     */
-    public float getPrice(){ return price;}
-
-
-    /**
-     * If a door has a material type (wooden doors and metal doors) then this method will be
-     * overriden by the sub class and will return the materialType field value. Else this method
-     * returns an empty string.
-     */
-    public String getMaterialType() {
-        return "";
-    }
-
-    /**
-     * @return the name of this Item instance
-     */
-    public List<String> getName() {
-        return name;
-    }
-
-    public void setName(List<String> newName) {
-        name = newName;
-    }
-
     /**
      * @return the full qualified name of the first image of this Item instance
      */
@@ -126,10 +147,6 @@ public abstract class Door implements Item {
      */
     public List<String> getImage() {
         return image;
-    }
-
-    public void setImages(List<String> newImageUrls) {
-        image = newImageUrls;
     }
 
     /**
@@ -150,7 +167,6 @@ public abstract class Door implements Item {
         return viewCount;
     }
 
-
     /**
      * Increase the view count of this image by 1
      */
@@ -165,19 +181,8 @@ public abstract class Door implements Item {
         viewCount = 0;
     }
 
-    /**
-     * A door instance cannot be lockable only a handle instance can therefore return false.
-     */
-    public boolean getLockable() {
-        return false;
-    }
 
-    /**
-     * A door instance cannot have a lock type only a handle instance can so return an empty string
-     * for lockType.
-     */
-    public String getLockType() {
-        return "";
-    }
+
+
 
 }
