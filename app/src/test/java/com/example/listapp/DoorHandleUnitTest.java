@@ -4,10 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
 import com.example.listapp.model.DoorHandle;
-import com.example.listapp.model.GlassDoor;
 import com.example.listapp.model.Item;
-import com.example.listapp.model.MetalDoor;
-import com.example.listapp.model.WoodenDoor;
 
 import org.junit.Before;
 import org.junit.Test;

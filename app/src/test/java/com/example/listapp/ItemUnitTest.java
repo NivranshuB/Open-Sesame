@@ -5,10 +5,8 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-import com.example.listapp.model.Door;
 import com.example.listapp.model.DoorHandle;
 import com.example.listapp.model.GlassDoor;
-import com.example.listapp.model.Handle;
 import com.example.listapp.model.Item;
 import com.example.listapp.model.MetalDoor;
 import com.example.listapp.model.WoodenDoor;
@@ -161,7 +159,7 @@ public class ItemUnitTest {
     public void TestSpecialHandleAttributesOnDoor() {
         woodenDoor.setLockable(true);
         woodenDoor.setLockType("Should not be set on Door type.");
-        assertEquals(false, woodenDoor.getLockable());
+        assertFalse(woodenDoor.getLockable());
         assertEquals("", woodenDoor.getLockType());
     }
 
