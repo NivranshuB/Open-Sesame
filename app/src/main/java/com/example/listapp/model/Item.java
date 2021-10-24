@@ -39,6 +39,11 @@ public interface Item {
     float getPrice();
 
     /**
+     * @return list of colours the Item is available in.
+     */
+    List<String> getColour();
+
+    /**
      * @return the full qualified name of the first image of this Item instance
      */
     String getFirstImage();
@@ -80,14 +85,32 @@ public interface Item {
     boolean getLockable();
 
     /**
+     * Sets lockable status to true or false
+     * @param lockStatus Boolean of lock status
+     */
+    void setLockable(boolean lockStatus);
+
+    /**
      * @return the string representing the type of lock for a Handle object
      */
     String getLockType();
 
     /**
+     * Sets lock type to corresponding String
+     * @param lock String of lock type
+     */
+    void setLockType(String lock);
+
+    /**
      * @return list of dimensions of the items (height, length, width)
      */
     List<Long> getDimensions();
+
+    /**
+     * Sets description of item
+     * @param newDescription
+     */
+    void setDescription(String newDescription);
 
     /**
      * @return weight of Item instance.

@@ -4,10 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
 import com.example.listapp.model.DoorHandle;
-import com.example.listapp.model.GlassDoor;
 import com.example.listapp.model.Item;
-import com.example.listapp.model.MetalDoor;
-import com.example.listapp.model.WoodenDoor;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -86,6 +83,16 @@ public class DoorHandleUnitTest {
      */
     @Test
     public void TestHandleReferences() {
+
+        List<String> colour = new ArrayList<>();
+        colour.add("#000000");
+        colour.add("#ffffff");
+        colour.add("#00ff00");
+
+        for (int i = 0; i < doorHandle.getColour().size(); i++) {
+            assertEquals(colour.get(i), doorHandle.getColour().get(i));
+        }
+
         List<String> nameDoorHandle = new ArrayList<>();
         nameDoorHandle.add("Sleek");
         nameDoorHandle.add("Golden");
@@ -101,6 +108,7 @@ public class DoorHandleUnitTest {
         doorHandleImages.add("handle11_2");
         doorHandleImages.add("handle11_3");
 
+        assertEquals(doorHandleImages.get(0), doorHandle.getFirstImage());
         for (int i = 0; i < doorHandle.getImage().size(); i++) {
             assertEquals(doorHandleImages.get(i), doorHandle.getImage().get(i));
         }

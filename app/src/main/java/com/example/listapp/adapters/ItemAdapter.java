@@ -1,5 +1,8 @@
 package com.example.listapp.adapters;
 
+import static com.example.listapp.data.TextFormatting.formatPrice;
+import static com.example.listapp.data.TextFormatting.mergeStringList;
+
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
@@ -21,16 +24,31 @@ import com.example.listapp.model.WoodenDoor;
 import java.util.List;
 
 /**
- * This adapter class adapts and decides the user interface layout of an Item instance in Recycler
- * or ListView. The card view representing the item instance will be different depending on what
- * category that item belongs to.
+ * This class is responsible to adapt an Item of our application to a recycler view UI component.
+ * This adapter is used in ListActivity page, to showcase the different category list item, the
+ * Search Activity page and the Favourites page.
  */
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> { //ArrayAdapter,
 
+    private static int DOOR_TYPE = 1;
+    private static int HANDLE_TYPE = 2;
+
+    Context mContext;
+    int layoutID;
+    List<Item> items;
+    private OnItemClickListener mOnItemClickListener;
+
+    /**
+     * An interface which needs to be implemented by any activity class that wants to provide an
+     * on click functionality when an item is clicked.
+     */
     public interface OnItemClickListener {
         void onItemClick(int id, View view);
     }
 
+    /**
+     * Inner view holder class which holds all the common views of an item card.
+     */
     protected class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         //The common views of an item card go here
         ImageView panelImage;
@@ -60,6 +78,10 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> { 
         }
     }
 
+    /**
+     * This inner door view holder class only holds the views in an item card that are exclusive to
+     * Door type objects.
+     */
     private class DoorViewHolder extends ViewHolder {
         //The special views of a door card go here
         View materialEdgeTop;
@@ -68,28 +90,33 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> { 
             super(currentListViewItem, oicl);
             //The special items of door items (wood door, metal door, glass door) assigned here
             materialEdgeTop = currentListViewItem.findViewById(R.id.materialEdgeTop);
-            //materialEdgeBottom = currentListViewItem.findViewById(R.id.materialEdgeBottom);
         }
     }
 
+    /**
+     * This inner handle view holder class only holds the views in an item card that are exclusive
+     * to Handle type objects.
+     */
     private class HandleViewHolder extends ViewHolder {
-        //The special views of an doorknob card go here
+        //The special views of a door handle card go here
         ImageView lockStatus, galleryImage1, galleryImage2;
 
         public HandleViewHolder(View currentListViewItem, OnItemClickListener oicl) {
             super(currentListViewItem, oicl);
-            //The elements special to doorknobs assigned here
+            //The elements special to door handles assigned here
             lockStatus = currentListViewItem.findViewById(R.id.lockStatus);
             galleryImage1 = currentListViewItem.findViewById(R.id.galleryImage1);
             galleryImage2 = currentListViewItem.findViewById(R.id.galleryImage2);
         }
     }
 
-    Context mContext;
-    int layoutID;
-    List<Item> items;
-    private OnItemClickListener mOnItemClickListener;
-
+    /**
+     * Explicit constructor that constructs an initialises an ItemAdapter instance.
+     * @param context
+     * @param resource
+     * @param objects
+     * @param onItemClickListener
+     */
     public ItemAdapter(@NonNull Context context, int resource, List<Item> objects,
                        OnItemClickListener onItemClickListener) {
         mContext = context;
@@ -98,9 +125,12 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> { 
         mOnItemClickListener = onItemClickListener;
     }
 
-    private static int DOOR_TYPE = 1;
-    private static int HANDLE_TYPE = 2;
-
+    /**
+     * Return the item view type at a given position in the list. The item view type can either be
+     * Door type or Handle type.
+     * @param position
+     * @return
+     */
     @Override
     public int getItemViewType(int position) {
         Item currentItem = items.get(position);
@@ -113,6 +143,13 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> { 
         return 0;
     }
 
+    /**
+     * Instantiates a viewHolder instance depending on the type of item that it is creating the item
+     * view for.
+     * @param parent
+     * @param viewType
+     * @return viewHolder
+     */
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -126,6 +163,12 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> { 
         }
     }
 
+    /**
+     * Given the position of the item on the list and a view holder that contains all the views
+     * required to construct that item's UI card, populates this UI component dynamically.
+     * @param holder
+     * @param position
+     */
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         //Get the Number object for the current position
@@ -141,16 +184,9 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> { 
         }
     }
 
-    private String mergeStringList(List<String> stringList) {
-        String mergedString = "";
-
-        for (String s : stringList) {
-            mergedString += s + " ";
-        }
-
-        return mergedString;
-    }
-
+    /**
+     * @return The number of items held in this adapter
+     */
     @Override
     public int getItemCount() {
         return items.size();
@@ -165,16 +201,13 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> { 
      */
     private void populateDoorItem(Item currentItem, DoorViewHolder holder) {
 
+        //Top edge colour of an Item card
         Drawable material = mContext.getResources().getDrawable(R.drawable.handle_edge);
-        String materialName = "";
 
         if (currentItem.getClass() == WoodenDoor.class) {
             material = mContext.getResources().getDrawable(R.drawable.wood_edge);
-//            holder.panelPrice.setBackgroundResource(R.);
-            materialName = stringListToString(currentItem.getName());
         } else if (currentItem.getClass() == MetalDoor.class) {
             material = mContext.getResources().getDrawable(R.drawable.metal_edge);
-            materialName = stringListToString(currentItem.getName());
         } else if (currentItem.getClass() == GlassDoor.class) {
             material = mContext.getResources().getDrawable(R.drawable.glass_edge);
         }
@@ -183,33 +216,27 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> { 
             holder.materialEdgeTop.setBackground(material);
         }
 
-        //Set the attributed of list_view_number_item views
+        //Set the panel image, name and price of the card
         int imageId = mContext.getResources().getIdentifier(
                 currentItem.getFirstImage(), "drawable", mContext.getPackageName());
 
         holder.panelImage.setImageResource(imageId);
 
         holder.panelName.setText(mergeStringList(currentItem.getName()));
-        holder.panelPrice.setText("NZ$" + String.format("%.2f", currentItem.getPrice()));
+        holder.panelPrice.setText(formatPrice(currentItem.getPrice()));
     }
 
     /**
-     * Special method that creates a unique view for an artistic door item
-     *
+     * Special method that creates a unique view for a handle item depending on what it's handle
+     * specific attributes are.
      * @param currentItem
      * @param holder
      */
     private void populateHandleItem(Item currentItem, HandleViewHolder holder) {
 
-        String name = "";
+        holder.panelName.setText(mergeStringList(currentItem.getName()));
 
-        for (String s : currentItem.getName()) {
-            name += s + " ";
-        }
-
-        holder.panelName.setText(name);
-
-        //Set the attributed of list_view_number_item views
+        //Set all three images of a handle type card
         int imageId = mContext.getResources().getIdentifier(
                 currentItem.getFirstImage(), "drawable", mContext.getPackageName());
 
@@ -229,6 +256,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> { 
             holder.galleryImage2.setImageResource(galleryImage2Id);
         }
 
+        //Set the lock status component of the handle UI card
         if (holder.lockStatus != null) {
             if (!currentItem.getLockable()) {
                 holder.lockStatus.setVisibility(View.INVISIBLE);
@@ -237,15 +265,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> { 
             }
         }
 
-
-        holder.panelPrice.setText("NZ$" + String.format("%.2f", currentItem.getPrice()));
-    }
-
-    private String stringListToString(List<String> stringList) {
-        String name = "";
-        for (String s : stringList) {
-            name = name + s;
-        }
-        return name.trim();
+        //Set the panel price of a UI card
+        holder.panelPrice.setText(formatPrice(currentItem.getPrice()));
     }
 }

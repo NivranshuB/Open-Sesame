@@ -1,5 +1,8 @@
 package com.example.listapp;
 
+import static com.example.listapp.data.TextFormatting.formatDimensions;
+import static com.example.listapp.data.TextFormatting.mergeStringList;
+
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -9,41 +12,44 @@ import androidx.core.view.ViewCompat;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.os.Bundle;
-import android.transition.Fade;
-import android.transition.Transition;
-import android.transition.TransitionInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.ViewTreeObserver;
-import android.view.Window;
 import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.listapp.adapters.ImageAdapter;
-import com.example.listapp.model.DataCallback;
-import com.example.listapp.model.DataLoader;
-import com.example.listapp.model.Door;
+import com.example.listapp.data.IDataCallback;
+import com.example.listapp.data.DataLoader;
 import com.example.listapp.model.DoorHandle;
-import com.example.listapp.model.IDataLoader;
+import com.example.listapp.data.IDataLoader;
 import com.example.listapp.model.Item;
-import com.example.listapp.model.WoodenDoor;
 
-import java.time.Duration;
-import java.util.ArrayList;
 import java.util.List;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.util.Log;
 import android.widget.ToggleButton;
 
+/**
+ * This class is responsible for creating the DetailsActivity page of our application. The
+ * DetailsActivity page is used display all the attributes of a specific item of our application.
+ *
+ * This class has an inner view holder class that holds the view of activity_details.xml.
+ */
 public class DetailsActivity extends AppCompatActivity {
 
+    Item itemSelected;
+    IDataLoader dataLoader = DataLoader.getDataLoader();
+    ViewHolder detailsActivityVH;
+
+    String nameString = "";
+
+    boolean done = false;
+
+    /**
+     * Inner class that holds the different views of the DetailsActivity page.
+     */
     private class ViewHolder {
         //The views in details activity go here
         TextView itemName;
@@ -55,6 +61,9 @@ public class DetailsActivity extends AppCompatActivity {
         TextView category;
 
         ViewPager viewPager;
+        Toolbar toolbar;
+        ToggleButton favouritesToggle;
+        RelativeLayout descriptionRelativeLayout;
 
         public ViewHolder() {
             //The elements common among all items assigned here
@@ -66,40 +75,38 @@ public class DetailsActivity extends AppCompatActivity {
             category = findViewById(R.id.category_text);
             price = findViewById(R.id.item_price);
             viewPager = findViewById(R.id.imageViewPager);
+            toolbar = findViewById(R.id.custom_toolbar_details);
+            favouritesToggle = findViewById(R.id.details_favourite_icon);
+            descriptionRelativeLayout = findViewById(R.id.description_relative_layout);
         }
     }
 
-    Item itemSelected;
-    IDataLoader dataLoader = new DataLoader();
-
-    String nameString = "";
-
-    boolean done = false;
-
+    /**
+     * Overriding method which is called during the creation of the DetailsActivity page of our
+     * application.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         postponeEnterTransition();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
-        Log.d("detailsActivity", "Details activity launched");
-        System.out.println("Details activity launched");
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.custom_toolbar_details);
-        toolbar.setTitle("");
-        setSupportActionBar(toolbar);
+        detailsActivityVH = new ViewHolder();
+
+        detailsActivityVH.toolbar.setTitle("");
+        setSupportActionBar(detailsActivityVH.toolbar);
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
-
-        ViewHolder detailsActivityVh = new ViewHolder();
 
         Intent thisIntent = getIntent();
         String itemId = thisIntent.getStringExtra("id");
 
-        detailsActivityVh.viewPager.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+        detailsActivityVH.viewPager.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override
             public boolean onPreDraw() {
                 if (done) {
-                    detailsActivityVh.viewPager.getViewTreeObserver().removeOnPreDrawListener(this);
+                    detailsActivityVH.viewPager.getViewTreeObserver().removeOnPreDrawListener(this);
                     startPostponedEnterTransition();
                     return true;
                 } else {
@@ -108,38 +115,11 @@ public class DetailsActivity extends AppCompatActivity {
             }
         });
 
-        SharedPreferences sharedPreferences = getSharedPreferences("favourites", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-//        editor.clear();
-//        editor.commit();
-
-        ToggleButton favouritesToggle = (ToggleButton) findViewById(R.id.details_favourite_icon);
-        Drawable notToggledImage = getDrawable(R.drawable.ic_baseline_favorite_border_24);
-        Drawable toggledImage = getDrawable(R.drawable.ic_baseline_favorite_24);
-        favouritesToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b) {
-                    favouritesToggle.setBackground(toggledImage);
-                    editor.putString(itemId, itemId);
-                    editor.commit();
-
-                } else {
-                    favouritesToggle.setBackground(notToggledImage);
-                    editor.remove(itemId);
-                    editor.commit();
-                }
-            }
-        });
-
-        if (sharedPreferences.getString(itemId, null) != null) {
-            favouritesToggle.setChecked(true);
-            favouritesToggle.setBackground(toggledImage);
-        }
+        createFavourites(itemId);
 
         if (itemId != null) {
             int id = Integer.parseInt(itemId);
-            dataLoader.getItemByID(id, new DataCallback() {
+            dataLoader.getItemByID(id, new IDataCallback() {
                 @Override
                 public void dataListCallback(List<Item> itemList) {
                     // No implementation needed
@@ -148,76 +128,106 @@ public class DetailsActivity extends AppCompatActivity {
                 @Override
                 public void itemCallback(Item item) {
                     itemSelected = item;
-                    Log.d("Update", "Item's view count being updated has id: " + item.getName() + ":" + item.getId());
                     itemSelected.incrementViewCount();
                     dataLoader.persistData(itemSelected);
 
-                    for (String s : itemSelected.getName()) {
-                        nameString += s + " ";
-                    }
+                    nameString = mergeStringList(item.getName());
 
                     if (itemSelected.getClass() != DoorHandle.class) {
-                        List<Long> dimensions = itemSelected.getDimensions();
-                        String dimensionString = dimensions.get(0) + " x " + dimensions.get(1) + " x " +
-                                dimensions.get(2) + " (mm)";
-                        detailsActivityVh.itemSpecification.setText(dimensionString);
+                        detailsActivityVH.itemSpecification.setText(formatDimensions(itemSelected.getDimensions()));
                     } else {
                         if (itemSelected.getLockable()) {
-                            detailsActivityVh.itemSpecification.setText("Handle has a completely " +
-                                    "functioning locking mechanism");
+                            detailsActivityVH.itemSpecification.setText("Lockable: Yes");
                         } else {
-                            detailsActivityVh.itemSpecification.setText("Handle does not contain a " +
-                                    "locking mechanism");
+                            detailsActivityVH.itemSpecification.setText("Lockable: No");
                         }
                     }
 
-                    detailsActivityVh.weight.setText("Weight: " + itemSelected.getWeight() + "kg");
-                    detailsActivityVh.viewCount.setText(String.valueOf(itemSelected.getViewCount()));
+                    detailsActivityVH.weight.setText("Weight: " + itemSelected.getWeight() + "kg");
+                    detailsActivityVH.viewCount.setText(String.valueOf(itemSelected.getViewCount()));
 
-                    detailsActivityVh.itemName.setText(nameString);
-                    detailsActivityVh.description.setText(itemSelected.getDescription());
-                    detailsActivityVh.price.setText("$" + String.format("%.2f", itemSelected.getPrice()));
-                    detailsActivityVh.category.setText("Category: " + itemSelected.getCategories().get(0));
+                    detailsActivityVH.itemName.setText(nameString);
+                    detailsActivityVH.description.setText(itemSelected.getDescription());
+                    detailsActivityVH.price.setText("$" + String.format("%.2f", itemSelected.getPrice()));
+                    detailsActivityVH.category.setText("Category: " + itemSelected.getCategories().get(0));
 
+                    createTransition();
 
-                    RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.description_relative_layout);
-                    Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_up_details_view);
-                    relativeLayout.startAnimation(animation);
-
-                    ViewCompat.setTransitionName(findViewById(R.id.imageViewPager), "topPicksImageTransition");
-
-                    ViewPager viewPager = findViewById(R.id.imageViewPager);
                     ImageAdapter adapter = new ImageAdapter(DetailsActivity.this, itemSelected.getImage());
-                    viewPager.setAdapter(adapter);
+                    detailsActivityVH.viewPager.setAdapter(adapter);
                     startPostponedEnterTransition();
                     done = true;
                 }
             });
-        } else {
-            //createDefaultItem();
         }
-
     }
 
+    /**
+     * Create the favourite toggle button at the top right corner of the details activity. Setting
+     * this button adds this item to favourites while unsetting it removes it from favourites.
+     * @param itemId
+     */
+    private void createFavourites(String itemId) {
+        SharedPreferences sharedPreferences = getSharedPreferences("favourites", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        Drawable notToggledImage = getDrawable(R.drawable.ic_baseline_favorite_border_24);
+        Drawable toggledImage = getDrawable(R.drawable.ic_baseline_favorite_24);
+        detailsActivityVH.favouritesToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    detailsActivityVH.favouritesToggle.setBackground(toggledImage);
+                    editor.putString(itemId, itemId);
+
+                } else {
+                    detailsActivityVH.favouritesToggle.setBackground(notToggledImage);
+                    editor.remove(itemId);
+                }
+                editor.commit();
+            }
+        });
+
+        if (sharedPreferences.getString(itemId, null) != null) {
+            detailsActivityVH.favouritesToggle.setChecked(true);
+            detailsActivityVH.favouritesToggle.setBackground(toggledImage);
+        }
+    }
+
+    /**
+     * Add transition to the DetailsActivity page.
+     */
+    private void createTransition() {
+        Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_up_details_view);
+        detailsActivityVH.descriptionRelativeLayout.startAnimation(animation);
+
+        ViewCompat.setTransitionName(detailsActivityVH.viewPager, ListActivity.TOP_PICKS_IMAGE_TRANSITION);
+    }
+
+    /**
+     * Add the designed transition to when the back button is pressed.
+     */
     @Override
     public void onBackPressed() {
-        RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.description_relative_layout);
         Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_down_details_activity);
-        relativeLayout.startAnimation(animation);
-//        getWindow().setEnterTransition(new Fade());
+        detailsActivityVH.descriptionRelativeLayout.startAnimation(animation);
         super.onBackPressed();
 
     }
 
+    /**
+     * Add transitions related to the the action bar components of the DetailsActivity page.
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle presses on the action bar items
         switch (item.getItemId()) {
             case android.R.id.home:
                 supportFinishAfterTransition();
-                RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.description_relative_layout);
                 Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_down_details_activity);
-                relativeLayout.startAnimation(animation);
+                detailsActivityVH.descriptionRelativeLayout.startAnimation(animation);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

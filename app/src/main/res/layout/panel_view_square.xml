@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    style="@style/CardBackgroundStyle"
     android:layout_margin="8dp"
     android:elevation="8dp"
     app:cardCornerRadius="8dp">
@@ -30,7 +31,7 @@
                 android:id="@+id/panelImage"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
-                android:src="@drawable/door3" />
+                android:src="@drawable/door20_1" />
 
             <TextView
                 android:id="@+id/panelName"
@@ -46,12 +47,11 @@
 
             <TextView
                 android:id="@+id/panelPrice"
-                style="@style/CardItemTextStyle"
+                style="@style/CardItemSecondaryTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="$654.98"
-                android:textColor="#484848" />
+                android:text="$654.98" />
         </LinearLayout>
 
     </LinearLayout>

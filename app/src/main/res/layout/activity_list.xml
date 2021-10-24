@@ -2,9 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/BackgroundStyle"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/backgroundColor"
     android:orientation="vertical"
     tools:context=".ListActivity">
 
@@ -27,12 +27,9 @@
     </androidx.appcompat.widget.Toolbar>
 
     <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="16dp"
         android:id="@+id/rounded_corners"
-        android:layout_below="@id/custom_toolbar_list"
-        android:background="@drawable/rounded_corners_background"
-        android:elevation="8dp" />
+        style="@style/RoundedCornerBackgroundDefault"
+        android:layout_below="@id/custom_toolbar_list" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/grid_recycler_view"
@@ -49,35 +46,33 @@
 
     <LinearLayout
         android:id="@+id/no_results_found"
-        android:visibility="invisible"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="invisible">
 
         <ImageView
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@drawable/search_no_results"
-            android:layout_gravity="center"></ImageView>
+            android:layout_gravity="center"
+            android:src="@drawable/search_no_results"></ImageView>
+
         <TextView
+            style="@style/TextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="No results found"
-            android:textSize="28sp"
-            android:textColor="@color/dark_turquoise">
-        </TextView>
+            android:textSize="28sp"></TextView>
 
     </LinearLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation_menu"
+        style="@style/BottomNavigationViewStyle"
         android:layout_width="match_parent"
-        android:visibility="gone"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/colorPrimary"
-        app:itemIconTint="@color/bottom_navigation_view_color"
-        app:itemTextColor="@color/bottom_navigation_view_color"
+        android:visibility="gone"
         app:menu="@menu/bottom_navigation_menu" />
 </RelativeLayout>

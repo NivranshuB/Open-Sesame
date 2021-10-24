@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/DetailsBackgroundStyle"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     android:orientation="vertical"
     tools:context=".DetailsActivity">
 
@@ -11,7 +11,7 @@
         android:id="@+id/custom_toolbar_details"
         style="@style/CustomToolBarStyle"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize" >
+        android:layout_height="?attr/actionBarSize">
 
         <ToggleButton
             android:id="@+id/details_favourite_icon"
@@ -25,10 +25,8 @@
     </androidx.appcompat.widget.Toolbar>
 
     <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="16dp"
+        style="@style/RoundedCornerBackgroundDefault"
         android:layout_below="@id/custom_toolbar_details"
-        android:background="@drawable/rounded_corners_background"
         android:elevation="8dp" />
 
     <ScrollView
@@ -48,14 +46,15 @@
                 android:layout_height="360dp"></androidx.viewpager.widget.ViewPager>
 
             <androidx.cardview.widget.CardView
+                style="@style/DetailsActivityDescriptionCardBackground"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
                 <RelativeLayout
                     android:id="@+id/description_relative_layout"
+                    style="@style/DetailsActivityDescriptionBackgroundStyle"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/item_details_description_background"
                     android:minHeight="400dp"
                     android:padding="16dp">
 
@@ -87,8 +86,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_below="@id/title_box"
-                        android:background="@drawable/border_bar"
                         android:layout_marginTop="8dp"
+                        android:background="@drawable/border_bar"
                         android:paddingTop="8dp" />
 
                     <LinearLayout
@@ -98,37 +97,33 @@
                         android:layout_below="@id/title_box"
                         android:layout_marginTop="16dp"
                         android:orientation="vertical"
-                        android:paddingBottom="16dp"
->
+                        android:paddingBottom="16dp">
 
                         <TextView
                             android:id="@+id/item_description_text"
                             style="@style/DetailsActivityDescriptionTextStyle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
                             android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris et mattis elit, in fringilla tellus. Etiam aliquam efficitur urna, id facilisis ligula porta id. Curabitur libero ligula, pulvinar ac convallis nec, hendrerit a lacus." />
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:paddingTop="8dp"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:paddingTop="8dp">
+
                             <ImageView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_gravity="center"
                                 android:layout_marginTop="2dp"
-                                android:src="@drawable/view_count_icon"
-                                android:layout_gravity="center"/>
+                                android:src="@drawable/view_count_icon" />
+
                             <TextView
                                 android:id="@+id/view_count_text"
-                                android:gravity="center"
-                                android:layout_gravity="center"
-
-                                android:layout_marginLeft="4dp"
-                                android:includeFontPadding="false"
                                 style="@style/DetailsActivityDescriptionTextStyle"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="4dp"
+                                android:gravity="center"
+                                android:includeFontPadding="false"
                                 android:text="300" />
                         </LinearLayout>
 
@@ -159,22 +154,16 @@
                         <TextView
                             android:id="@+id/item_specification_text"
                             style="@style/DetailsActivityDescriptionTextStyle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
                             android:text="1560 x 651 x 42mm" />
 
                         <TextView
                             android:id="@+id/weight_text"
                             style="@style/DetailsActivityDescriptionTextStyle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
                             android:text="Weight: 20kg" />
 
                         <TextView
                             android:id="@+id/category_text"
                             style="@style/DetailsActivityDescriptionTextStyle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
                             android:text="Category: wooden" />
 
 

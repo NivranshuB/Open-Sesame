@@ -8,7 +8,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="colorPrimary">#00838f</color>
-    <color name="colorPrimaryVariant">#ff9e80</color>
+    <color name="colorPrimaryVariant">#ff8a65</color>
 
     <color name="backgroundColor">#f2f2f2</color>
 
@@ -21,4 +21,8 @@
     <color name="light_green">#00695c</color>
     <color name="green">#004d40</color>
     <color name="dark_turquoise">#005662</color>
+
+    <!--dark mode colours-->
+    <color name="colorPrimaryDark">#121212</color>
+    <color name="backgroundColorDark">@color/black</color>
 </resources>

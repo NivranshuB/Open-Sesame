@@ -1,4 +1,6 @@
-package com.example.listapp.model;
+package com.example.listapp.data;
+
+import com.example.listapp.model.Item;
 
 import java.util.List;
 
@@ -13,12 +15,6 @@ import java.util.List;
 public interface IDataLoader {
 
     /**
-     * This method retrieves all the items stored in the database and stores them in a list.
-     * (Potentially not needed if every retrieval is straight from the database).
-     */
-    public void initialiseData();
-
-    /**
      * This method retrieves all the items from the database that contain the input string in their
      * name, ignoring the casing of the input string.
      *
@@ -26,7 +22,7 @@ public interface IDataLoader {
      * @return List of matching items
      *         If not matches return 'null'
      */
-    public void getItemsByName(String matchString, DataCallback callback);
+    public void getItemsByName(String matchString, IDataCallback callback);
 
     /**
      * This method retrieves all the items from the database that belong to the same category as
@@ -36,7 +32,7 @@ public interface IDataLoader {
      * @return List of matching items from the specified category
      *         If no matches return 'null'
      */
-    public void getItemsByCriteria(String categoryName, DataCallback callback);
+    public void getItemsByCriteria(String categoryName, IDataCallback callback);
 
 
     /**
@@ -45,7 +41,7 @@ public interface IDataLoader {
      *
      * @return Sorted list (by view count) of all items in the database
      */
-    public void sortItemListByViewCount(DataCallback callback);
+    public void sortItemListByViewCount(IDataCallback callback);
 
     /**
      * When a change is made to any item that needs to be persisted calling this method will persist
@@ -61,13 +57,13 @@ public interface IDataLoader {
      * @return Single item that has the ID specified
      *         If no matches return 'null'
      */
-    public void getItemByID(int id, DataCallback callback);
+    public void getItemByID(int id, IDataCallback callback);
 
     /**
      * This method retrieves multiple objects based on the IDs supplied in List format.
      * @param idList IDs of the items to retrieve from the database
      * @param callback Multiple items that have an ID that matches one of the supplied IDs.
      */
-    public void getItemsByID(List<Integer> idList, DataCallback callback);
+    public void getItemsByID(List<Integer> idList, IDataCallback callback);
 
 }
